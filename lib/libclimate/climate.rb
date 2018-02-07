@@ -659,7 +659,7 @@ class Climate
 		check_parameter name, 'name', allow_nil: false, types: [ ::String, ::Symbol ]
 		raise ArgumentError, "must supply at least one alias" if aliases.empty?
 
-		self.aliases << CLASP.Option(name, aliases: aliases)
+		self.aliases << CLASP.Alias(name, aliases: aliases)
 	end
 end # class Climate
 

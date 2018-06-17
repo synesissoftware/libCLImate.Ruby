@@ -5,7 +5,7 @@
 # Purpose:      Definition of the ::LibCLImate::Climate class
 #
 # Created:      13th July 2015
-# Updated:      4th February 2018
+# Updated:      17th June 2018
 #
 # Home:         http://github.com/synesissoftware/libCLImate.Ruby
 #
@@ -183,7 +183,7 @@ class Climate
 		# algorithm:
 		#
 		# 1. PROGRAM_VERSION: loaded from ctxt / global
-		# 2. PROGRAM_VER(SION)_(MAJOR|MINOR|REVISION|BUILD): loaded from
+		# 2. PROGRAM_VER(SION)_(MAJOR|MINOR|(PATCH|REVISION)|BUILD): loaded from
 		#    ctxt / global
 
 		if ctxt
@@ -202,9 +202,15 @@ class Climate
 
 					ver << ctxt.const_get(:PROGRAM_VER_MINOR)
 
-					if ctxt.const_defined? :PROGRAM_VER_REVISION
+					if ctxt.const_defined?(:PROGRAM_VER_REVISION) || ctxt.const_defined?(:PROGRAM_VER_PATCH)
 
-						ver << ctxt.const_get(:PROGRAM_VER_REVISION)
+						if ctxt.const_defined?(:PROGRAM_VER_PATCH)
+
+							ver << ctxt.const_get(:PROGRAM_VER_PATCH)
+						else
+
+							ver << ctxt.const_get(:PROGRAM_VER_REVISION)
+						end
 
 						if ctxt.const_defined? :PROGRAM_VER_BUILD
 
@@ -229,9 +235,15 @@ class Climate
 
 					ver << PROGRAM_VER_MINOR
 
-					if defined? PROGRAM_VER_REVISION
+					if defined?(PROGRAM_VER_REVISION) || defined?(PROGRAM_VER_PATCH)
 
-						ver << PROGRAM_VER_REVISION
+						if defined?(PROGRAM_VER_PATCH)
+
+							ver << PROGRAM_VER_PATCH
+						else
+
+							ver << PROGRAM_VER_REVISION
+						end
 
 						if defined? PROGRAM_VER_BUILD
 

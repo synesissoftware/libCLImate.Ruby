@@ -82,6 +82,30 @@ class Test_Climate_infer_PROGRAM_VERSION_as_array < Test::Unit::TestCase
 	end
 end
 
+class Test_Climate_infer_version_3_2_99_via_PATCH < Test::Unit::TestCase
+
+	PROGRAM_VER_MINOR	=	7
+	PROGRAM_VER_PATCH	=	101
+
+	def test_inference_of_version
+
+		strout = StringIO.new
+
+		climate = LibCLImate::Climate.new(version_context: self) do |cl|
+
+			cl.program_name		=	'myprog'
+			cl.stdout			=	strout
+
+			cl.exit_on_usage	=	false
+		end.run [ 'myprog', '--version' ]
+
+		s = strout.string
+
+		assert_equal "myprog 3.7.101", s.chomp
+	end
+end
+
+
 # ############################## end of file ############################# #
 
 

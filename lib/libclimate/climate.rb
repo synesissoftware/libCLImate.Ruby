@@ -5,7 +5,7 @@
 # Purpose:      Definition of the ::LibCLImate::Climate class
 #
 # Created:      13th July 2015
-# Updated:      17th June 2018
+# Updated:      6th September 2018
 #
 # Home:         http://github.com/synesissoftware/libCLImate.Ruby
 #
@@ -272,7 +272,7 @@ class Climate
 	# * *Options*:
 	#   - +:no_help_flag+:: Prevents the use of the CLASP::Flag.Help flag-alias
 	#   - +:no_version_flag+:: Prevents the use of the CLASP::Version.Help flag-alias
-	#   - +:program_name+:: [ ::String ] An explicit program-name, which is
+	#   - +:program_name+:: (::String) An explicit program-name, which is
 	#     inferred from +$0+ if this is +nil+
 	#   - +:version+:: A version specification. If not specified, this is
 	#     inferred
@@ -323,32 +323,32 @@ class Climate
 	end
 
 	# An array of aliases attached to the climate instance, whose contents should be modified by adding (or removing) CLASP aliases
-	# @return [Array] The aliases
+	# @return (::Array) The aliases
 	attr_reader :aliases
 	# Indicates whether exit will be called (with non-zero exit code) when a
 	# required command-line option is missing
-	# @return [Boolean]
+	# @return (boolean)
 	# @return *true* exit(1) will be called
 	# @return *false* exit will not be called
 	attr_accessor :exit_on_missing
 	# Indicates whether exit will be called (with non-zero exit code) when an unknown command-line flag or option is encountered
-	# @return [Boolean]
+	# @return (boolean)
 	# @return *true* exit(1) will be called
 	# @return *false* exit will not be called
 	attr_accessor :exit_on_unknown
-	# @return [Boolean] Indicates whether exit will be called (with zero exit code) when usage/version is requested on the command-line
+	# @return (boolean) Indicates whether exit will be called (with zero exit code) when usage/version is requested on the command-line
 	attr_accessor :exit_on_usage
-	# @return [Array] Optional array of string of program-information that will be written before the rest of the usage block when usage is requested on the command-line
+	# @return (::Array) Optional array of string of program-information that will be written before the rest of the usage block when usage is requested on the command-line
 	attr_accessor :info_lines
-	# @return [String] A program name; defaults to the name of the executing script
+	# @return (::String) A program name; defaults to the name of the executing script
 	attr_accessor :program_name
-	# @return [IO] The output stream for normative output; defaults to $stdout
+	# @return (::IO) The output stream for normative output; defaults to $stdout
 	attr_accessor :stdout
-	# @return [IO] The output stream for contingent output; defaults to $stderr
+	# @return (::IO) The output stream for contingent output; defaults to $stderr
 	attr_accessor :stderr
-	# @return [String] Optional string to describe the program values, eg \<xyz "[ { <<directory> | &lt;file> } ]"
+	# @return (::String) Optional string to describe the program values, eg \<xyz "[ { <<directory> | &lt;file> } ]"
 	attr_accessor :usage_values
-	# @return [String, Array] A version string or an array of integers representing the version component(s)
+	# @return (::String, ::Array) A version string or an array of integers representing the version component(s)
 	attr_accessor :version
 
 	# Executes the prepared Climate instance

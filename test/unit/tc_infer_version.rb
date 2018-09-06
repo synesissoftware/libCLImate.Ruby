@@ -105,7 +105,6 @@ class Test_Climate_infer_version_3_2_99_via_PATCH < Test::Unit::TestCase
 	end
 end
 
-
 # ############################## end of file ############################# #
 
 

@@ -312,12 +312,11 @@ class Climate
 		yield self if block_given?
 	end
 
+	# [DEPRECATED] This method is now deprecated. Instead use
+	#  +program_name=+
+	#
+	# @deprecated
 	def set_program_name name
-
-		if defined? Colcon
-
-			name = "#{::Colcon::Decorations::Bold}#{name}#{::Colcon::Decorations::Unbold}"
-		end
 
 		@program_name	=	name
 	end
@@ -341,7 +340,18 @@ class Climate
 	# @return (::Array) Optional array of string of program-information that will be written before the rest of the usage block when usage is requested on the command-line
 	attr_accessor :info_lines
 	# @return (::String) A program name; defaults to the name of the executing script
-	attr_accessor :program_name
+	def program_name
+
+		name = @program_name
+
+		if defined?(Colcon) && @stdout.tty?
+
+			name = "#{::Colcon::Decorations::Bold}#{name}#{::Colcon::Decorations::Unbold}"
+		end
+
+		name
+	end
+	attr_writer :program_name
 	# @return (::IO) The output stream for normative output; defaults to $stdout
 	attr_accessor :stdout
 	# @return (::IO) The output stream for contingent output; defaults to $stderr

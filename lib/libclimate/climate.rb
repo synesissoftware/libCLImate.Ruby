@@ -302,6 +302,7 @@ class Climate
 		set_program_name pr_name
 		@stdout				=	$stdout
 		@stderr				=	$stderr
+		@constrain_values	=	nil
 		@usage_values		=	usage_values
 		version_context		=	options[:version_context]
 		@version			=	options[:version] || infer_version_(version_context)
@@ -356,6 +357,9 @@ class Climate
 	attr_accessor :stdout
 	# @return (::IO) The output stream for contingent output; defaults to $stderr
 	attr_accessor :stderr
+	# @return (::Integer, ::Range) Optional constraint on the values that
+	#  must be provided to the program
+	attr_accessor :constrain_values
 	# @return (::String) Optional string to describe the program values, eg \<xyz "[ { <<directory> | &lt;file> } ]"
 	attr_accessor :usage_values
 	# @return (::String, ::Array) A version string or an array of integers representing the version component(s)
@@ -552,6 +556,60 @@ class Climate
 				results[:missing_option_aliases] << a
 			end
 		end
+
+		# now police the values
+
+		values_constraint	=	constrain_values
+		values_constraint	=	values_constraint.begin if ::Range === values_constraint && values_constraint.end == values_constraint.begin
+
+		case values_constraint
+		when nil
+
+			;
+		when ::Integer
+
+			unless values.size == values_constraint
+
+				message = "wrong number of values: #{values.size} given, #{values_constraint} required; use --help for usage"
+
+				if exit_on_unknown
+
+					self.abort message
+				else
+
+					if program_name && !program_name.empty?
+
+						message = "#{program_name}: #{message}"
+					end
+
+					stderr.puts message
+				end
+			end
+		when ::Range
+
+			unless values_constraint.include? values.size
+
+				message = "wrong number of values: #{values.size} givens, #{values_constraint.begin} - #{values_constraint.end - (values_constraint.exclude_end? ? 1 : 0)} required; use --help for usage"
+
+				if exit_on_unknown
+
+					self.abort message
+				else
+
+					if program_name && !program_name.empty?
+
+						message = "#{program_name}: #{message}"
+					end
+
+					stderr.puts message
+				end
+			end
+		else
+
+			warn "value of 'constrain_values' attribute - '#{constrain_values}' (#{constrain_values.class}) - of wrong type : must be #{::Integer}, #{::Range}, or nil"
+		end
+
+
 
 		def results.flags
 

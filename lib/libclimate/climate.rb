@@ -519,38 +519,38 @@ class Climate
 		end
 
 
-			# now police any required options
+		# now police any required options
 
-			required_aliases = aliases.select do |a|
+		required_aliases = aliases.select do |a|
 
-				a.kind_of?(::CLASP::Option) && a.required?
-			end
+			a.kind_of?(::CLASP::Option) && a.required?
+		end
 
-			required_aliases = Hash[required_aliases.map { |a| [ a.name, a ] }]
+		required_aliases = Hash[required_aliases.map { |a| [ a.name, a ] }]
 
-			given_options = Hash[results[:options][:given].map { |o| [ o.name, o ]}]
+		given_options = Hash[results[:options][:given].map { |o| [ o.name, o ]}]
 
-			required_aliases.each do |k, a|
+		required_aliases.each do |k, a|
 
-				unless given_options.has_key? k
+			unless given_options.has_key? k
 
-					message = a.required_message
+				message = a.required_message
 
-					if exit_on_missing
+				if exit_on_missing
 
-						self.abort message
-					else
+					self.abort message
+				else
 
-						if program_name && !program_name.empty?
+					if program_name && !program_name.empty?
 
-							message = "#{program_name}: #{message}"
-						end
-
-						stderr.puts message
+						message = "#{program_name}: #{message}"
 					end
 
-					results[:missing_option_aliases] << a
+					stderr.puts message
 				end
+
+				results[:missing_option_aliases] << a
+			end
 		end
 
 		def results.flags

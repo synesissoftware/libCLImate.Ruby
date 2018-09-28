@@ -5,7 +5,7 @@
 # Purpose:      Definition of the ::LibCLImate::Climate class
 #
 # Created:      13th July 2015
-# Updated:      6th September 2018
+# Updated:      18th September 2018
 #
 # Home:         http://github.com/synesissoftware/libCLImate.Ruby
 #
@@ -304,6 +304,7 @@ class Climate
 		@stderr				=	$stderr
 		@constrain_values	=	nil
 		@usage_values		=	usage_values
+		@value_names		=	[]
 		version_context		=	options[:version_context]
 		@version			=	options[:version] || infer_version_(version_context)
 
@@ -362,6 +363,10 @@ class Climate
 	attr_accessor :constrain_values
 	# @return (::String) Optional string to describe the program values, eg \<xyz "[ { <<directory> | &lt;file> } ]"
 	attr_accessor :usage_values
+	# @return (::Array) Zero-based array of names for values to be used when
+	#  that value is not present (according to the +:constrain_values+
+	#  attribute)
+	attr_accessor :value_names
 	# @return (::String, ::Array) A version string or an array of integers representing the version component(s)
 	attr_accessor :version
 
@@ -561,6 +566,7 @@ class Climate
 
 		values_constraint	=	constrain_values
 		values_constraint	=	values_constraint.begin if ::Range === values_constraint && values_constraint.end == values_constraint.begin
+		val_names			=	::Array === value_names ? value_names : []
 
 		case values_constraint
 		when nil
@@ -570,7 +576,13 @@ class Climate
 
 			unless values.size == values_constraint
 
-				message = "wrong number of values: #{values.size} given, #{values_constraint} required; use --help for usage"
+				if name = val_names[values.size]
+
+					message = name + ' not specified; use --help for usage'
+				else
+
+					message = "wrong number of values: #{values.size} given, #{values_constraint} required; use --help for usage"
+				end
 
 				if exit_on_unknown
 
@@ -589,7 +601,13 @@ class Climate
 
 			unless values_constraint.include? values.size
 
-				message = "wrong number of values: #{values.size} givens, #{values_constraint.begin} - #{values_constraint.end - (values_constraint.exclude_end? ? 1 : 0)} required; use --help for usage"
+				if name = val_names[values.size]
+
+					message = name + ' not specified; use --help for usage'
+				else
+
+					message = "wrong number of values: #{values.size} givens, #{values_constraint.begin} - #{values_constraint.end - (values_constraint.exclude_end? ? 1 : 0)} required; use --help for usage"
+				end
 
 				if exit_on_unknown
 

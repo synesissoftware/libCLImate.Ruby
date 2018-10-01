@@ -146,7 +146,7 @@ module LibCLImate
 #       program_options[:flavour] = check_flavour(o.value) or cl.abort "Invalid flavour '#{o.value}'; use --help for usage"
 #     end
 #
-#     cl.usage_value = '<value-1> [ ... <value-N> ]'
+#     cl.usage_values = '<value-1> [ ... <value-N> ]'
 #
 #     cl.info_lines = [
 #
@@ -169,6 +169,7 @@ class Climate
 		options.merge! stream: stdout, program_name: program_name, version: version, exit: exit_on_usage ? 0 : nil
 		options[:info_lines] = info_lines if info_lines
 		options[:values] = usage_values if usage_values
+		options[:flags_and_options] = flags_and_options if flags_and_options
 
 		CLASP.show_usage aliases, options
 	end
@@ -297,10 +298,11 @@ class Climate
 		unless pr_name
 
 			pr_name	=	File.basename($0)
-			pr_name	=	(pr_name =~ /\.rb$/) ? "#$`(#$&)" : pr_name
+			pr_name	=	(pr_name =~ /\.(?:bat|cmd|rb|sh)$/) ? "#$`(#$&)" : pr_name
 		end
 
 		@aliases			=	[]
+		@ignore_unknown		=	false
 		@exit_on_unknown	=	true
 		@exit_on_missing	=	true
 		@exit_on_usage		=	true
@@ -309,6 +311,7 @@ class Climate
 		@stdout				=	$stdout
 		@stderr				=	$stderr
 		@constrain_values	=	nil
+		@flags_and_options	=	flags_and_options
 		@usage_values		=	usage_values
 		@value_names		=	[]
 		version_context		=	options[:version_context]
@@ -338,6 +341,9 @@ class Climate
 	# @return *true* exit(1) will be called
 	# @return *false* exit will not be called
 	attr_accessor :exit_on_missing
+	# Indicates whether unknown flags or options will be ignored. This
+	# overrides +:exit_on_unknown+
+	attr_accessor :ignore_unknown
 	# Indicates whether exit will be called (with non-zero exit code) when an unknown command-line flag or option is encountered
 	# @return (boolean)
 	# @return *true* exit(1) will be called
@@ -367,6 +373,9 @@ class Climate
 	# @return (::Integer, ::Range) Optional constraint on the values that
 	#  must be provided to the program
 	attr_accessor :constrain_values
+	# @return (::String) Optional string to describe the flags and options
+	# section
+	attr_accessor :flags_and_options
 	# @return (::String) Optional string to describe the program values, eg \<xyz "[ { <<directory> | &lt;file> } ]"
 	attr_accessor :usage_values
 	# @return (::Array) Zero-based array of names for values to be used when
@@ -459,7 +468,12 @@ class Climate
 
 				message = "unrecognised flag '#{f}'; use --help for usage"
 
-				if exit_on_unknown
+				if false
+
+				elsif ignore_unknown
+
+					;
+				elsif exit_on_unknown
 
 					self.abort message
 				else
@@ -516,7 +530,12 @@ class Climate
 
 				message = "unrecognised option '#{o}'; use --help for usage"
 
-				if exit_on_unknown
+				if false
+
+				elsif ignore_unknown
+
+					;
+				elsif exit_on_unknown
 
 					self.abort message
 				else

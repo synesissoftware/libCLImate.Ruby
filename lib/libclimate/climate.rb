@@ -5,7 +5,7 @@
 # Purpose:      Definition of the ::LibCLImate::Climate class
 #
 # Created:      13th July 2015
-# Updated:      18th September 2018
+# Updated:      1st October 2018
 #
 # Home:         http://github.com/synesissoftware/libCLImate.Ruby
 #
@@ -270,12 +270,16 @@ class Climate
 	#   - +options:+:: An options hash, containing any of the following options.
 	#
 	# * *Options*:
-	#   - +:no_help_flag+:: Prevents the use of the CLASP::Flag.Help flag-alias
-	#   - +:no_version_flag+:: Prevents the use of the CLASP::Version.Help flag-alias
+	#   - +:no_help_flag+:: (boolean) Prevents the use of the
+	#     +CLASP::Flag.Help+ flag-alias
+	#   - +:no_version_flag+:: (boolean) Prevents the use of the
+	#     +CLASP::Flag.Version+ flag-alias
 	#   - +:program_name+:: (::String) An explicit program-name, which is
 	#     inferred from +$0+ if this is +nil+
 	#   - +:version+:: A version specification. If not specified, this is
 	#     inferred
+	#   - +:version_context+:: Object or class that defines a context for
+	#     searching the version. Ignored if +:version+ is specified
 	#
 	# * *Block*:: An optional block which receives the constructing instance, allowing the user to modify the attributes.
 	def initialize(options={}) # :yields: climate
@@ -284,6 +288,8 @@ class Climate
 
 		options ||=	{}
 
+		check_option options, :no_help_flag, type: :boolean, allow_nil: true
+		check_option options, :no_version_flag, type: :boolean, allow_nil: true
 		check_option options, :program_name, type: ::String, allow_nil: true
 
 		pr_name		=	options[:program_name]

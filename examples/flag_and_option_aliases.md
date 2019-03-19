@@ -77,25 +77,11 @@ USAGE: flag_and_option_aliases.rb [ ... flags and options ... ]
 
 flags/options:
 
-	-d
-	--debug
-		runs in Debug mode
-
-	-c --verbosity=chatty
-	-v <value>
-	--verbosity=<value>
-		specifies the verbosity
-		where <value> one of:
-			terse
-			quiet
-			silent
-			chatty
-
 	--help
-		shows this help and terminates
+		Shows usage and terminates
 
 	--version
-		shows version and terminates
+		Shows version and terminates
 ```
 
 ### Specify flags and options in long-form

@@ -99,11 +99,25 @@ USAGE: show_usage_and_version.rb [ ... flags and options ... ]
 
 flags/options:
 
+	-d
+	--debug
+		runs in Debug mode
+
+	-c --verbosity=chatty
+	-v <value>
+	--verbosity=<value>
+		specifies the verbosity
+		where <value> one of:
+			terse
+			quiet
+			silent
+			chatty
+
 	--help
-		Shows usage and terminates
+		shows this help and terminates
 
 	--version
-		Shows version and terminates
+		shows version and terminates
 ```
 
 ### Show version

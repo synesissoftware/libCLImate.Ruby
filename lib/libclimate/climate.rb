@@ -5,13 +5,13 @@
 # Purpose:      Definition of the ::LibCLImate::Climate class
 #
 # Created:      13th July 2015
-# Updated:      1st October 2018
+# Updated:      12th March 2019
 #
 # Home:         http://github.com/synesissoftware/libCLImate.Ruby
 #
 # Author:       Matthew Wilson
 #
-# Copyright (c) 2015-2018, Matthew Wilson and Synesis Software
+# Copyright (c) 2015-2019, Matthew Wilson and Synesis Software
 # All rights reserved.
 #
 # Redistribution and use in source and binary forms, with or without
@@ -725,7 +725,7 @@ class Climate
 	# === Signature
 	#
 	# * *Parameters*
-	#   - +name+:: The flag name
+	#   - +name_or_flag+:: The flag name or instance of CLASP::Flag
 	#   - +options+:: An options hash, containing any of the following options.
 	#
 	# * *Options*
@@ -733,13 +733,26 @@ class Climate
 	#   - +:alias+:: 
 	#   - +:aliases+:: 
 	#   - +:extras+:: 
-	def add_flag(name, options={}, &block)
+	def add_flag(name_or_flag, options={}, &block)
 
-		check_parameter name, 'name', allow_nil: false, types: [ ::String, ::Symbol ]
+		check_parameter name_or_flag, 'name_or_flag', allow_nil: false, types: [ ::String, ::Symbol, ::CLASP::Flag ]
 
-		aliases << CLASP.Flag(name, **options, &block)
+		if ::CLASP::Flag === name_or_flag
+
+			aliases << name_or_flag
+		else
+
+			aliases << CLASP.Flag(name_or_flag, **options, &block)
+		end
 	end
 
+	# Adds an option to +aliases+
+	#
+	# === Signature
+	#
+	# * *Parameters*
+	#   - +name_or_option+:: The option name or instance of CLASP::Option
+	#   - +options+:: An options hash, containing any of the following options.
 	#
 	# * *Options*
 	#   - +:alias+:: 
@@ -748,19 +761,25 @@ class Climate
 	#   - +:values_range+:: 
 	#   - +:default_value+:: 
 	#   - +:extras+:: 
-	def add_option(name, options={}, &block)
+	def add_option(name_or_option, options={}, &block)
 
-		check_parameter name, 'name', allow_nil: false, types: [ ::String, ::Symbol ]
+		check_parameter name_or_option, 'name_or_option', allow_nil: false, types: [ ::String, ::Symbol, ::CLASP::Option ]
 
-		aliases << CLASP.Option(name, **options, &block)
+		if ::CLASP::Option === name_or_option
+
+			aliases << name_or_option
+		else
+
+			aliases << CLASP.Option(name_or_option, **options, &block)
+		end
 	end
 
-	# Adds a flag to +aliases+
+	# Adds an alias to +aliases+
 	#
 	# === Signature
 	#
 	# * *Parameters*
-	#   - +name+:: The flag/option name or the valued option
+	#   - +name_or_alias+:: The flag/option name or the valued option
 	#   - +aliases+:: One or more aliases
 	#
 	# === Examples
@@ -793,12 +812,22 @@ class Climate
 	# +climate.add_option('--verbosity')+
 	# +climate.add_alias('--verbosity=succinct', '-s')+
 	# +climate.add_alias('--verbosity=verbose', '-v')+
-	def add_alias(name, *aliases)
+	def add_alias(name_or_alias, *aliases)
 
-		check_parameter name, 'name', allow_nil: false, types: [ ::String, ::Symbol ]
+		check_parameter name_or_alias, 'name_or_alias', allow_nil: false, types: [ ::String, ::Symbol, ::CLASP::Flag, ::CLASP::Option ]
 		raise ArgumentError, "must supply at least one alias" if aliases.empty?
 
-		self.aliases << CLASP.Alias(name, aliases: aliases)
+		case name_or_alias
+		when ::CLASP::Flag
+
+			self.aliases << name_or_alias
+		when ::CLASP::Option
+
+			self.aliases << name_or_alias
+		else
+
+			self.aliases << CLASP.Alias(name_or_alias, aliases: aliases)
+		end
 	end
 end # class Climate
 

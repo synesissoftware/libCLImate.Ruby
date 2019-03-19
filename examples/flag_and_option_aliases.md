@@ -98,6 +98,10 @@ USAGE: flag_and_option_aliases.rb [ ... flags and options ... ]
 
 flags/options:
 
+	-d
+	--debug
+		runs in Debug mode
+
 	-c --verbosity=chatty
 	-v <value>
 	--verbosity=<value>

@@ -78,10 +78,6 @@ USAGE: show_usage_and_version.rb [ ... flags and options ... ]
 
 flags/options:
 
-	-d
-	--debug
-		runs in Debug mode
-
 	--help
 		shows this help and terminates
 

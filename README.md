@@ -17,7 +17,8 @@ libCLImate, for Ruby
 1. [Introduction](#introduction)
 2. [Installation](#installation)
 3. [Components](#components)
-4. [Project Information](#project-information)
+4. [Examples](#examples)
+5. [Project Information](#project-information)
 
 ## Installation
 
@@ -32,12 +33,18 @@ or add it to your `Gemfile`.
 Use via **require***, as in:
 
 ```Ruby
-require 'libclimate-ruby'
+require 'libclimate'
 ```
 
 ## Components
 
 T.B.C.
+
+## Examples
+
+Examples are provided in the ```examples``` directory, along with a markdown description for each. A detailed list TOC of them is provided in [EXAMPLES.md](./EXAMPLES.md).
+
+It is instructive to see how much more succinct they are than those (offering precisely the same functionality) presented in [**CLASP.Ruby**](https://github.com/synesissoftware/CLASP.Ruby).
 
 ## Project Information
 

@@ -65,12 +65,12 @@ Defect reports, feature requests, and pull requests are welcome on https://githu
 
 ### Related projects
 
-* [**libCLImate C/C++](https://github.com/synesissoftware/libCLImate.Ruby)
 * [**CLASP**](https://github.com/synesissoftware/CLASP/)
 * [**CLASP.Go**](https://github.com/synesissoftware/CLASP.Go/)
 * [**CLASP.js**](https://github.com/synesissoftware/CLASP.js/)
 * [**CLASP.Ruby**](https://github.com/synesissoftware/CLASP.Ruby/)
-* [xqsr3](https://github.com/synesissoftware.com/libCLImate.Ruby-xml/)
+* [**libCLImate** (C/C++)](https://github.com/synesissoftware/libCLImate.Ruby)
+* [**xqsr3**](https://github.com/synesissoftware.com/libCLImate.Ruby-xml/)
 
 ### License
 

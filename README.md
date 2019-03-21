@@ -30,7 +30,7 @@ Install via **gem** as in:
 
 or add it to your `Gemfile`.
 
-Use via **require***, as in:
+Use via **require**, as in:
 
 ```Ruby
 require 'libclimate'

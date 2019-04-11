@@ -5,7 +5,7 @@
 # Purpose:      Definition of the ::LibCLImate::Climate class
 #
 # Created:      13th July 2015
-# Updated:      10th April 2019
+# Updated:      12th April 2019
 #
 # Home:         http://github.com/synesissoftware/libCLImate.Ruby
 #
@@ -267,10 +267,10 @@ class Climate
 	#
 	# === Signature
 	#
-	# * *Parameters*:
+	# * *Parameters:*
 	#   - +options:+:: An options hash, containing any of the following options.
 	#
-	# * *Options*:
+	# * *Options:*
 	#   - +:no_help_flag+:: (boolean) Prevents the use of the
 	#     +CLASP::Flag.Help+ flag-specification
 	#   - +:no_version_flag+:: (boolean) Prevents the use of the
@@ -391,7 +391,7 @@ class Climate
 	#
 	# == Signature
 	#
-	# * *Parameters*:
+	# * *Parameters:*
 	#   - +argv+:: The array of arguments; defaults to <tt>ARGV</tt>
 	#
 	# * *Returns*:
@@ -683,11 +683,11 @@ class Climate
 	#
 	# === Signature
 	#
-	# * *Parameters*:
+	# * *Parameters:*
 	#   - +message+:: The message string
 	#   - +options+:: An option hash, containing any of the following options
 	#
-	# * *Options*:
+	# * *Options:*
 	#   - +:stream+:: {optional} The output stream to use. Defaults to the value of the attribute +stderr+.
 	#   - +:program_name+:: {optional} Uses the given value rather than the +program_name+ attribute; does not prefix if the empty string
 	#   - +:exit+:: {optional} The exit code. Defaults to 1. Does not exit if +nil+ specified.
@@ -726,11 +726,11 @@ class Climate
 	#
 	# === Signature
 	#
-	# * *Parameters*
+	# * *Parameters:*
 	#   - +name_or_flag+:: The flag name or instance of CLASP::Flag
 	#   - +options+:: An options hash, containing any of the following options.
 	#
-	# * *Options*
+	# * *Options:*
 	#   - +:help+::
 	#   - +:alias+::
 	#   - +:specifications+::
@@ -752,11 +752,11 @@ class Climate
 	#
 	# === Signature
 	#
-	# * *Parameters*
+	# * *Parameters:*
 	#   - +name_or_option+:: The option name or instance of CLASP::Option
 	#   - +options+:: An options hash, containing any of the following options.
 	#
-	# * *Options*
+	# * *Options:*
 	#   - +:alias+::
 	#   - +:specifications+::
 	#   - +:help+::
@@ -780,7 +780,7 @@ class Climate
 	#
 	# === Signature
 	#
-	# * *Parameters*
+	# * *Parameters:*
 	#   - +name_or_specification+:: The flag/option name or the valued option
 	#   - +aliases+:: One or more aliases
 	#

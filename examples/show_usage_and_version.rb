@@ -6,7 +6,7 @@
 
 require 'libclimate'
 
-# Specify aliases, parse, and checking standard flags
+# Specify specifications, parse, and checking standard flags
 
 climate = LibCLImate::Climate.new do |cl|
 

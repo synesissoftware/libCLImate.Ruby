@@ -1,12 +1,12 @@
 #!/usr/bin/env ruby
 
-# examples/flag_and_option_aliases.rb
+# examples/flag_and_option_specifications.rb
 
 # requires
 
 require 'libclimate'
 
-# Specify aliases, parse, and checking standard flags
+# Specify specifications, parse, and checking standard flags
 
 options = {}
 climate = LibCLImate::Climate.new do |cl|
@@ -27,7 +27,7 @@ climate = LibCLImate::Climate.new do |cl|
 
 		'libCLImate.Ruby examples',
 		:version,
-		"Illustrates use of libCLImate.Ruby's specification of flags, options, and aliases",
+		"Illustrates use of libCLImate.Ruby's specification of flags, options, and specifications",
 		'',
 	]
 end

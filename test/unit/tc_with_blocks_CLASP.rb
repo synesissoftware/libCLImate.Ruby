@@ -21,7 +21,7 @@ class Test_Climate_with_blocks_CLASP < Test::Unit::TestCase
 
 		climate = LibCLImate::Climate.new do |climate|
 
-			climate.aliases << CLASP.Flag('--verbose') { is_verbose = true }
+			climate.add_flag('--verbose') { is_verbose = true }
 		end
 
 		argv = %w{ --verbose }
@@ -37,7 +37,7 @@ class Test_Climate_with_blocks_CLASP < Test::Unit::TestCase
 
 		climate = LibCLImate::Climate.new do |climate|
 
-			climate.aliases << CLASP.Option('--flavour') { |o|  flavour = o.value }
+			climate.add_option('--flavour') { |o|  flavour = o.value }
 		end
 
 		argv = %w{ --flavour=blueberry }

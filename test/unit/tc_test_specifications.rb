@@ -1,6 +1,6 @@
 #!/usr/bin/env ruby
 #
-# test aliases
+# test specifications
 
 $:.unshift File.join(File.dirname(__FILE__), '../..', 'lib')
 
@@ -15,7 +15,7 @@ require 'stringio'
 
 class Test_Climate_minimal < Test::Unit::TestCase
 
-	def test_option_with_flag_aliases
+	def test_option_with_flag_specifications
 
 		options	=	{}
 
@@ -44,7 +44,7 @@ class Test_Climate_minimal < Test::Unit::TestCase
 			assert_equal 'action1', options[:action]
 		end
 
-		# invoke via option alias
+		# invoke via option specification
 		begin
 			options = {}
 
@@ -57,7 +57,7 @@ class Test_Climate_minimal < Test::Unit::TestCase
 			assert_equal 'action2', options[:action]
 		end
 
-		# invoke via flag alias
+		# invoke via flag specification
 		begin
 			options = {}
 
@@ -70,7 +70,7 @@ class Test_Climate_minimal < Test::Unit::TestCase
 			assert_equal 'change', options[:action]
 		end
 
-		# invoke via flag alias
+		# invoke via flag specification
 		begin
 			options = {}
 

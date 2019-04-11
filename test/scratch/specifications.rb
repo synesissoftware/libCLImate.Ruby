@@ -1,9 +1,9 @@
 #!/usr/bin/env ruby
 
 #############################################################################
-# File:         test/scratch/aliases.rb
+# File:         test/scratch/specifications.rb
 #
-# Purpose:      Demonstrates use of aliases in options and flags
+# Purpose:      Demonstrates use of specifications in options and flags
 #
 # Created:      7th February 2018
 # Updated:      7th February 2018
@@ -22,10 +22,10 @@ require 'libclimate'
 # ##########################################################
 # constants
 
-PROGRAM_VER_MAJOR               =   0
-PROGRAM_VER_MINOR               =   1
-PROGRAM_VER_REVISION            =   1
-PROGRAM_VER_BUILD               =   1
+PROGRAM_VER_MAJOR	=	0
+PROGRAM_VER_MINOR	=	1
+PROGRAM_VER_PATCH	=	2
+PROGRAM_VER_BUILD	=	1
 
 # ##########################################################
 # command-line parsing
@@ -43,7 +43,15 @@ r = LibCLImate::Climate.new do |cl|
 	cl.info_lines = [
 
 		:version,
-		'demonstrates use of aliases',
+		'demonstrates use of specifications',
+	]
+
+	cl.version = [
+
+		PROGRAM_VER_MAJOR,
+		PROGRAM_VER_MINOR,
+		PROGRAM_VER_PATCH,
+		PROGRAM_VER_BUILD,
 	]
 end.run
 

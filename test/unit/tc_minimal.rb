@@ -371,7 +371,7 @@ class Test_Climate_minimal < Test::Unit::TestCase
 			climate.add_option('--verbosity', alias: '-v', help: 'determines level of verbose operation', required: true)
 		end
 
-		assert climate.aliases[2].required?
+		assert climate.specifications[2].required?
 
 		r = climate.run %w{ -v 2 }
 
@@ -418,7 +418,7 @@ class Test_Climate_minimal < Test::Unit::TestCase
 
 		r = climate.run %w{ }
 
-		assert climate.aliases[2].required?
+		assert climate.specifications[2].required?
 
 		assert_not_nil r
 		assert_kind_of ::Hash, r
@@ -468,7 +468,7 @@ class Test_Climate_minimal < Test::Unit::TestCase
 
 		r = climate.run %w{ }
 
-		assert climate.aliases[2].required?
+		assert climate.specifications[2].required?
 
 		assert_not_nil r
 		assert_kind_of ::Hash, r
@@ -518,7 +518,7 @@ class Test_Climate_minimal < Test::Unit::TestCase
 
 		r = climate.run %w{ }
 
-		assert climate.aliases[2].required?
+		assert climate.specifications[2].required?
 
 		assert_not_nil r
 		assert_kind_of ::Hash, r

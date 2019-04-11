@@ -17,11 +17,11 @@ END_DESC
 	spec.authors		=	[ 'Matt Wilson' ]
 	spec.email			=	'matthew@synesis.com.au'
 	spec.homepage		=	'http://www.libclimate.org/'
-	spec.license		=	'Modified BSD'
+	spec.license		=	'BSD-3-Clause'
 
 	spec.required_ruby_version = '~> 2.0'
 
-	spec.add_runtime_dependency 'clasp-ruby', [ '~> 0.15' ]
+	spec.add_runtime_dependency 'clasp-ruby', [ '~> 0.18' ]
 	spec.add_runtime_dependency 'xqsr3', [ '~> 0.31' ]
 
 	spec.files			=	Dir[ 'Rakefile', '{bin,examples,lib,man,spec,test}/**/*', 'README*', 'LICENSE*' ] & `git ls-files -z`.split("\0")

@@ -5,7 +5,7 @@
 # Purpose:      Definition of the ::LibCLImate::Climate class
 #
 # Created:      13th July 2015
-# Updated:      12th March 2019
+# Updated:      10th April 2019
 #
 # Home:         http://github.com/synesissoftware/libCLImate.Ruby
 #
@@ -171,12 +171,12 @@ class Climate
 		options[:values] = usage_values if usage_values
 		options[:flags_and_options] = flags_and_options if flags_and_options
 
-		CLASP.show_usage aliases, options
+		CLASP.show_usage specifications, options
 	end
 
 	def show_version_
 
-		CLASP.show_version aliases, stream: stdout, program_name: program_name, version: version, exit: exit_on_usage ? 0 : nil
+		CLASP.show_version specifications, stream: stdout, program_name: program_name, version: version, exit: exit_on_usage ? 0 : nil
 	end
 
 	def infer_version_ ctxt
@@ -272,9 +272,9 @@ class Climate
 	#
 	# * *Options*:
 	#   - +:no_help_flag+:: (boolean) Prevents the use of the
-	#     +CLASP::Flag.Help+ flag-alias
+	#     +CLASP::Flag.Help+ flag-specification
 	#   - +:no_version_flag+:: (boolean) Prevents the use of the
-	#     +CLASP::Flag.Version+ flag-alias
+	#     +CLASP::Flag.Version+ flag-specification
 	#   - +:program_name+:: (::String) An explicit program-name, which is
 	#     inferred from +$0+ if this is +nil+
 	#   - +:version+:: A version specification. If not specified, this is
@@ -301,7 +301,7 @@ class Climate
 			pr_name	=	(pr_name =~ /\.(?:bat|cmd|rb|sh)$/) ? "#$`(#$&)" : pr_name
 		end
 
-		@aliases			=	[]
+		@specifications		=	[]
 		@ignore_unknown		=	false
 		@exit_on_unknown	=	true
 		@exit_on_missing	=	true
@@ -317,8 +317,8 @@ class Climate
 		version_context		=	options[:version_context]
 		@version			=	options[:version] || infer_version_(version_context)
 
-		@aliases << CLASP::Flag.Help(handle: proc { show_usage_ }) unless options[:no_help_flag]
-		@aliases << CLASP::Flag.Version(handle: proc { show_version_ }) unless options[:no_version_flag]
+		@specifications << CLASP::Flag.Help(handle: proc { show_usage_ }) unless options[:no_help_flag]
+		@specifications << CLASP::Flag.Version(handle: proc { show_version_ }) unless options[:no_version_flag]
 
 		yield self if block_given?
 	end
@@ -332,9 +332,11 @@ class Climate
 		@program_name	=	name
 	end
 
-	# An array of aliases attached to the climate instance, whose contents should be modified by adding (or removing) CLASP aliases
-	# @return (::Array) The aliases
-	attr_reader :aliases
+	# An array of specifications attached to the climate instance, whose contents should be modified by adding (or removing) CLASP specifications
+	# @return (::Array) The specifications
+	attr_reader :specifications
+	# [DEPRECATED] Instead, use +specifications+
+	def aliases; specifications; end
 	# Indicates whether exit will be called (with non-zero exit code) when a
 	# required command-line option is missing
 	# @return (boolean)
@@ -400,7 +402,7 @@ class Climate
 
 		raise ArgumentError, "argv may not be nil" if argv.nil?
 
-		arguments	=	CLASP::Arguments.new argv, aliases
+		arguments	=	CLASP::Arguments.new argv, specifications
 		flags		=	arguments.flags
 		options		=	arguments.options
 		values		=	arguments.values.to_a
@@ -430,7 +432,7 @@ class Climate
 
 		flags.each do |f|
 
-			al = aliases.detect do |a|
+			al = specifications.detect do |a|
 
 				a.kind_of?(::CLASP::Flag) && f.name == a.name
 			end
@@ -492,7 +494,7 @@ class Climate
 
 		options.each do |o|
 
-			al = aliases.detect do |a|
+			al = specifications.detect do |a|
 
 				a.kind_of?(::CLASP::Option) && o.name == a.name
 			end
@@ -555,16 +557,16 @@ class Climate
 
 		# now police any required options
 
-		required_aliases = aliases.select do |a|
+		required_specifications = specifications.select do |a|
 
 			a.kind_of?(::CLASP::Option) && a.required?
 		end
 
-		required_aliases = Hash[required_aliases.map { |a| [ a.name, a ] }]
+		required_specifications = Hash[required_specifications.map { |a| [ a.name, a ] }]
 
 		given_options = Hash[results[:options][:given].map { |o| [ o.name, o ]}]
 
-		required_aliases.each do |k, a|
+		required_specifications.each do |k, a|
 
 			unless given_options.has_key? k
 
@@ -720,7 +722,7 @@ class Climate
 		msg
 	end
 
-	# Adds a flag to +aliases+
+	# Adds a flag to +specifications+
 	#
 	# === Signature
 	#
@@ -729,24 +731,24 @@ class Climate
 	#   - +options+:: An options hash, containing any of the following options.
 	#
 	# * *Options*
-	#   - +:help+:: 
-	#   - +:alias+:: 
-	#   - +:aliases+:: 
-	#   - +:extras+:: 
+	#   - +:help+::
+	#   - +:alias+::
+	#   - +:specifications+::
+	#   - +:extras+::
 	def add_flag(name_or_flag, options={}, &block)
 
 		check_parameter name_or_flag, 'name_or_flag', allow_nil: false, types: [ ::String, ::Symbol, ::CLASP::Flag ]
 
 		if ::CLASP::Flag === name_or_flag
 
-			aliases << name_or_flag
+			specifications << name_or_flag
 		else
 
-			aliases << CLASP.Flag(name_or_flag, **options, &block)
+			specifications << CLASP.Flag(name_or_flag, **options, &block)
 		end
 	end
 
-	# Adds an option to +aliases+
+	# Adds an option to +specifications+
 	#
 	# === Signature
 	#
@@ -755,42 +757,42 @@ class Climate
 	#   - +options+:: An options hash, containing any of the following options.
 	#
 	# * *Options*
-	#   - +:alias+:: 
-	#   - +:aliases+:: 
-	#   - +:help+:: 
-	#   - +:values_range+:: 
-	#   - +:default_value+:: 
-	#   - +:extras+:: 
+	#   - +:alias+::
+	#   - +:specifications+::
+	#   - +:help+::
+	#   - +:values_range+::
+	#   - +:default_value+::
+	#   - +:extras+::
 	def add_option(name_or_option, options={}, &block)
 
 		check_parameter name_or_option, 'name_or_option', allow_nil: false, types: [ ::String, ::Symbol, ::CLASP::Option ]
 
 		if ::CLASP::Option === name_or_option
 
-			aliases << name_or_option
+			specifications << name_or_option
 		else
 
-			aliases << CLASP.Option(name_or_option, **options, &block)
+			specifications << CLASP.Option(name_or_option, **options, &block)
 		end
 	end
 
-	# Adds an alias to +aliases+
+	# Adds an alias to +specifications+
 	#
 	# === Signature
 	#
 	# * *Parameters*
-	#   - +name_or_alias+:: The flag/option name or the valued option
+	#   - +name_or_specification+:: The flag/option name or the valued option
 	#   - +aliases+:: One or more aliases
 	#
 	# === Examples
 	#
-	# ==== Alias(es) of a flag (single statement)
+	# ==== Specification(s) of a flag (single statement)
 	#
 	# +climate.add_flag('--mark-missing', alias: '-x')+
 	#
 	# +climate.add_flag('--absolute-path', aliases: [ '-abs', '-p' ])+
 	#
-	# ==== Alias(es) of a flag (multiple statements)
+	# ==== Specification(s) of a flag (multiple statements)
 	#
 	# +climate.add_flag('--mark-missing')+
 	# +climate.add_alias('--mark-missing', '-x')+
@@ -798,35 +800,35 @@ class Climate
 	# +climate.add_flag('--absolute-path')+
 	# +climate.add_alias('--absolute-path', '-abs', '-p')+
 	#
-	# ==== Alias(es) of an option (single statement)
+	# ==== Specification(s) of an option (single statement)
 	#
 	# +climate.add_option('--add-patterns', alias: '-p')+
 	#
-	# ==== Alias(es) of an option (multiple statements)
+	# ==== Specification(s) of an option (multiple statements)
 	#
 	# +climate.add_option('--add-patterns')+
 	# +climate.add_alias('--add-patterns', '-p')+
 	#
-	# ==== Alias of a valued option (which has to be multiple statements)
+	# ==== Specification of a valued option (which has to be multiple statements)
 	#
 	# +climate.add_option('--verbosity')+
 	# +climate.add_alias('--verbosity=succinct', '-s')+
 	# +climate.add_alias('--verbosity=verbose', '-v')+
-	def add_alias(name_or_alias, *aliases)
+	def add_alias(name_or_specification, *aliases)
 
-		check_parameter name_or_alias, 'name_or_alias', allow_nil: false, types: [ ::String, ::Symbol, ::CLASP::Flag, ::CLASP::Option ]
+		check_parameter name_or_specification, 'name_or_specification', allow_nil: false, types: [ ::String, ::Symbol, ::CLASP::Flag, ::CLASP::Option ]
 		raise ArgumentError, "must supply at least one alias" if aliases.empty?
 
-		case name_or_alias
+		case name_or_specification
 		when ::CLASP::Flag
 
-			self.aliases << name_or_alias
+			self.specifications << name_or_specification
 		when ::CLASP::Option
 
-			self.aliases << name_or_alias
+			self.specifications << name_or_specification
 		else
 
-			self.aliases << CLASP.Alias(name_or_alias, aliases: aliases)
+			self.specifications << CLASP.Alias(name_or_specification, aliases: aliases)
 		end
 	end
 end # class Climate

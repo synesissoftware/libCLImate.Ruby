@@ -6,18 +6,23 @@
 # Purpose:      Generates documentation
 #
 # Created:      11th June 2016
-# Updated:      11th June 2016
+# Updated:      13th April 2019
 #
 #############################################################################
 
 rm -rfd doc
 rdoc \
+	-x doc/ \
+	-x gems/ \
+	-x old-gems/ \
+	-x test/scratch/ \
+	-x ts_all.rb \
+	-x tc_.*\.rb \
 	-x build_gem.sh \
 	-x generate_rdoc.sh \
 	-x run_all_unit_tests.sh \
-	-x test \
-	-x lib/clasp/old_module.rb \
-	-x examples \
 	-x CLASP.gemspec \
+	-x lib/clasp/old_module.rb \
+	$*
 
 

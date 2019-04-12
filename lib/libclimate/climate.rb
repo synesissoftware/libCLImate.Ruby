@@ -5,7 +5,7 @@
 # Purpose:      Definition of the ::LibCLImate::Climate class
 #
 # Created:      13th July 2015
-# Updated:      12th April 2019
+# Updated:      13th April 2019
 #
 # Home:         http://github.com/synesissoftware/libCLImate.Ruby
 #
@@ -47,7 +47,9 @@ require 'xqsr3/quality/parameter_checking'
 =begin
 =end
 
-if !defined? Colcon
+#:stopdoc:
+
+if !defined? Colcon # :nodoc:
 
 	begin
 
@@ -58,17 +60,16 @@ if !defined? Colcon
 	end
 end
 
-#:stopdoc:
-
 # We monkey-patch CLASP module's Flag and Option generator methods by
-# added in a 'action' attribute (but only if it does not exist)
+# added in an +action+ attribute (but only if it does not exist)
 # and attaching the given block
 
 class << CLASP
 
-	alias_method :Flag_old, :Flag
-	alias_method :Option_old, :Option
+	alias_method :Flag_old, :Flag # :nodoc:
+	alias_method :Option_old, :Option # :nodoc:
 
+	# Defines a flag, attaching the given block
 	def Flag(name, options={}, &blk)
 
 		f = self.Flag_old(name, options)
@@ -96,6 +97,7 @@ class << CLASP
 		f
 	end
 
+	# Defines an option, attaching the given block
 	def Option(name, options={}, &blk)
 
 		o = self.Option_old(name, options)
@@ -147,6 +149,7 @@ module LibCLImate
 #     end
 #
 #     cl.usage_values = '<value-1> [ ... <value-N> ]'
+#     cl.constrain_values = 1..100000
 #
 #     cl.info_lines = [
 #
@@ -268,21 +271,16 @@ class Climate
 	# === Signature
 	#
 	# * *Parameters:*
-	#   - +options:+:: An options hash, containing any of the following options.
+	#   - +options:+ (Hash) An options hash, containing any of the following options.
 	#
 	# * *Options:*
-	#   - +:no_help_flag+:: (boolean) Prevents the use of the
-	#     +CLASP::Flag.Help+ flag-specification
-	#   - +:no_version_flag+:: (boolean) Prevents the use of the
-	#     +CLASP::Flag.Version+ flag-specification
-	#   - +:program_name+:: (::String) An explicit program-name, which is
-	#     inferred from +$0+ if this is +nil+
-	#   - +:version+:: A version specification. If not specified, this is
-	#     inferred
-	#   - +:version_context+:: Object or class that defines a context for
-	#     searching the version. Ignored if +:version+ is specified
+	#   - +:no_help_flag+ (boolean) Prevents the use of the +CLASP::Flag.Help+ flag-specification
+	#   - +:no_version_flag+ (boolean) Prevents the use of the +CLASP::Flag.Version+ flag-specification
+	#   - +:program_name+ (::String) An explicit program-name, which is inferred from +$0+ if this is +nil+
+	#   - +:version+ (String, [Integer], [String]) A version specification. If not specified, this is inferred
+	#   - +:version_context+ Object or class that defines a context for searching the version. Ignored if +:version+ is specified
 	#
-	# * *Block*:: An optional block which receives the constructing instance, allowing the user to modify the attributes.
+	# * *Block* An optional block which receives the constructing instance, allowing the user to modify the attributes.
 	def initialize(options={}) # :yields: climate
 
 		check_parameter options, 'options', allow_nil: true, type: ::Hash
@@ -323,39 +321,27 @@ class Climate
 		yield self if block_given?
 	end
 
-	# [DEPRECATED] This method is now deprecated. Instead use
-	#  +program_name=+
-	#
-	# @deprecated
+	# [DEPRECATED] This method is now deprecated. Instead use +program_name=+
 	def set_program_name name
 
 		@program_name	=	name
 	end
 
-	# An array of specifications attached to the climate instance, whose contents should be modified by adding (or removing) CLASP specifications
-	# @return (::Array) The specifications
+	# ([CLASP::Specification]) An array of specifications attached to the climate instance, whose contents should be modified by adding (or removing) CLASP specifications
 	attr_reader :specifications
 	# [DEPRECATED] Instead, use +specifications+
 	def aliases; specifications; end
-	# Indicates whether exit will be called (with non-zero exit code) when a
-	# required command-line option is missing
-	# @return (boolean)
-	# @return *true* exit(1) will be called
-	# @return *false* exit will not be called
+	# (boolean) Indicates whether exit will be called (with non-zero exit code) when a required command-line option is missing. Defaults to +true+
 	attr_accessor :exit_on_missing
-	# Indicates whether unknown flags or options will be ignored. This
-	# overrides +:exit_on_unknown+
+	# (boolean) Indicates whether unknown flags or options will be ignored. This overrides +:exit_on_unknown+. Defaults to +false+
 	attr_accessor :ignore_unknown
-	# Indicates whether exit will be called (with non-zero exit code) when an unknown command-line flag or option is encountered
-	# @return (boolean)
-	# @return *true* exit(1) will be called
-	# @return *false* exit will not be called
+	# (boolean) Indicates whether exit will be called (with non-zero exit code) when an unknown command-line flag or option is encountered. Defaults to +true+
 	attr_accessor :exit_on_unknown
-	# @return (boolean) Indicates whether exit will be called (with zero exit code) when usage/version is requested on the command-line
+	# (boolean) Indicates whether exit will be called (with zero exit code) when usage/version is requested on the command-line. Defaults to +true+
 	attr_accessor :exit_on_usage
-	# @return (::Array) Optional array of string of program-information that will be written before the rest of the usage block when usage is requested on the command-line
+	# ([String]) Optional array of string of program-information that will be written before the rest of the usage block when usage is requested on the command-line
 	attr_accessor :info_lines
-	# @return (::String) A program name; defaults to the name of the executing script
+	# (String) A program name; defaults to the name of the executing script
 	def program_name
 
 		name = @program_name
@@ -367,38 +353,35 @@ class Climate
 
 		name
 	end
+	# Sets the +program_name+ attribute
 	attr_writer :program_name
 	# @return (::IO) The output stream for normative output; defaults to $stdout
 	attr_accessor :stdout
 	# @return (::IO) The output stream for contingent output; defaults to $stderr
 	attr_accessor :stderr
-	# @return (::Integer, ::Range) Optional constraint on the values that
-	#  must be provided to the program
+	# (Integer, Range) Optional constraint on the values that must be provided to the program
 	attr_accessor :constrain_values
-	# @return (::String) Optional string to describe the flags and options
-	# section
+	# (String) Optional string to describe the flags and options section. Defaults to "[ +...+ +flags+ +and+ +options+ +...+ ]"
 	attr_accessor :flags_and_options
 	# @return (::String) Optional string to describe the program values, eg \<xyz "[ { <<directory> | &lt;file> } ]"
 	attr_accessor :usage_values
-	# @return (::Array) Zero-based array of names for values to be used when
-	#  that value is not present (according to the +:constrain_values+
-	#  attribute)
+	# ([String]) Zero-based array of names for values to be used when that value is not present (according to the +:constrain_values+ attribute)
 	attr_accessor :value_names
-	# @return (::String, ::Array) A version string or an array of integers representing the version component(s)
+	# (String, [String], [Integer]) A version string or an array of integers/strings representing the version component(s)
 	attr_accessor :version
 
 	# Executes the prepared Climate instance
 	#
-	# == Signature
+	# === Signature
 	#
 	# * *Parameters:*
-	#   - +argv+:: The array of arguments; defaults to <tt>ARGV</tt>
+	#   - +argv+ ([String]) The array of arguments; defaults to <tt>ARGV</tt>
 	#
-	# * *Returns*:
-	#   an instance of a type derived from +::Hash+ with the additional
-	#   attributes +flags+, +options+, +values+, and +argv+.
+	# === Returns
+	# an instance of a type derived from +::Hash+ with the additional
+	# attributes +flags+, +options+, +values+, and +argv+.
 	#
-	def run argv = ARGV
+	def run argv = ARGV # :yields: customised +::Hash+
 
 		raise ArgumentError, "argv may not be nil" if argv.nil?
 
@@ -684,16 +667,16 @@ class Climate
 	# === Signature
 	#
 	# * *Parameters:*
-	#   - +message+:: The message string
-	#   - +options+:: An option hash, containing any of the following options
+	#   - +message+ (String) The message string
+	#   - +options+ (Hash) An option hash, containing any of the following options
 	#
 	# * *Options:*
-	#   - +:stream+:: {optional} The output stream to use. Defaults to the value of the attribute +stderr+.
-	#   - +:program_name+:: {optional} Uses the given value rather than the +program_name+ attribute; does not prefix if the empty string
-	#   - +:exit+:: {optional} The exit code. Defaults to 1. Does not exit if +nil+ specified.
+	#   - +:stream+ {optional} The output stream to use. Defaults to the value of the attribute +stderr+
+	#   - +:program_name+ (String) {optional} Uses the given value rather than the +program_name+ attribute; does not prefix if the empty string
+	#   - +:exit+ {optional} The exit code. Defaults to 1. Does not exit if +nil+ specified explicitly
 	#
-	# * *Return*:
-	#   The combined message string, if <tt>exit()</tt> not called.
+	# === Returns
+	# The combined message string, if <tt>exit()</tt> not called.
 	def abort message, options={}
 
 		prog_name	=	options[:program_name]
@@ -727,14 +710,19 @@ class Climate
 	# === Signature
 	#
 	# * *Parameters:*
-	#   - +name_or_flag+:: The flag name or instance of CLASP::Flag
-	#   - +options+:: An options hash, containing any of the following options.
+	#   - +name_or_flag+ (String, ::CLASP::FlagSpecification) The flag name or instance of CLASP::FlagSpecification
+	#   - +options+ (Hash) An options hash, containing any of the following options
 	#
 	# * *Options:*
-	#   - +:help+::
-	#   - +:alias+::
-	#   - +:specifications+::
-	#   - +:extras+::
+	#   - +:alias+ (String) A single alias
+	#   - +:aliases+ ([String]) An array of aliases
+	#   - +:help+ (String) Description string used when writing response to "+--help+" flag
+	#   - +:required+ (boolean) Indicates whether the flag is required, causing #run to fail with appropriate message if the flag is not specified in the command-line arguments
+	#
+	# === Examples
+	#
+	# ==== Specification(s) of a flag (single statement)
+	#
 	def add_flag(name_or_flag, options={}, &block)
 
 		check_parameter name_or_flag, 'name_or_flag', allow_nil: false, types: [ ::String, ::Symbol, ::CLASP::Flag ]
@@ -753,16 +741,15 @@ class Climate
 	# === Signature
 	#
 	# * *Parameters:*
-	#   - +name_or_option+:: The option name or instance of CLASP::Option
-	#   - +options+:: An options hash, containing any of the following options.
+	#   - +name_or_option+ (String, CLASP::OptionSpecification) The option name or instance of CLASP::OptionSpecification
+	#   - +options+ (Hash) An options hash, containing any of the following options
 	#
 	# * *Options:*
-	#   - +:alias+::
-	#   - +:specifications+::
-	#   - +:help+::
-	#   - +:values_range+::
-	#   - +:default_value+::
-	#   - +:extras+::
+	#   - +:alias+ (String) A single alias
+	#   - +:aliases+ ([String]) An array of aliases
+	#   - +:help+ (String) Description string used when writing response to "+--help+" flag
+	#   - +:values_range+ ([String]) An array of strings representing the valid/expected values used when writing response to "+--help+" flag. NOTE: the current version does not validate against these values, but a future version may do so
+	#   - +:default_value+ (String) The default version used when, say, for the option +--my-opt+ the command-line contain the argument "+--my-opt=+"
 	def add_option(name_or_option, options={}, &block)
 
 		check_parameter name_or_option, 'name_or_option', allow_nil: false, types: [ ::String, ::Symbol, ::CLASP::Option ]
@@ -781,39 +768,39 @@ class Climate
 	# === Signature
 	#
 	# * *Parameters:*
-	#   - +name_or_specification+:: The flag/option name or the valued option
-	#   - +aliases+:: One or more aliases
+	#   - +name_or_specification+ (String) The flag/option name or the valued option
+	#   - +aliases+ (*[String]) One or more aliases
 	#
 	# === Examples
 	#
 	# ==== Specification(s) of a flag (single statement)
 	#
-	# +climate.add_flag('--mark-missing', alias: '-x')+
+	#  climate.add_flag('--mark-missing', alias: '-x')
 	#
-	# +climate.add_flag('--absolute-path', aliases: [ '-abs', '-p' ])+
+	#  climate.add_flag('--absolute-path', aliases: [ '-abs', '-p' ])
 	#
 	# ==== Specification(s) of a flag (multiple statements)
 	#
-	# +climate.add_flag('--mark-missing')+
-	# +climate.add_alias('--mark-missing', '-x')+
+	#  climate.add_flag('--mark-missing')
+	#  climate.add_alias('--mark-missing', '-x')
 	#
-	# +climate.add_flag('--absolute-path')+
-	# +climate.add_alias('--absolute-path', '-abs', '-p')+
+	#  climate.add_flag('--absolute-path')
+	#  climate.add_alias('--absolute-path', '-abs', '-p')
 	#
 	# ==== Specification(s) of an option (single statement)
 	#
-	# +climate.add_option('--add-patterns', alias: '-p')+
+	#  climate.add_option('--add-patterns', alias: '-p')
 	#
 	# ==== Specification(s) of an option (multiple statements)
 	#
-	# +climate.add_option('--add-patterns')+
-	# +climate.add_alias('--add-patterns', '-p')+
+	#  climate.add_option('--add-patterns')
+	#  climate.add_alias('--add-patterns', '-p')
 	#
 	# ==== Specification of a valued option (which has to be multiple statements)
 	#
-	# +climate.add_option('--verbosity')+
-	# +climate.add_alias('--verbosity=succinct', '-s')+
-	# +climate.add_alias('--verbosity=verbose', '-v')+
+	#  climate.add_option('--verbosity', values: [ 'succinct', 'verbose' ])
+	#  climate.add_alias('--verbosity=succinct', '-s')
+	#  climate.add_alias('--verbosity=verbose', '-v')
 	def add_alias(name_or_specification, *aliases)
 
 		check_parameter name_or_specification, 'name_or_specification', allow_nil: false, types: [ ::String, ::Symbol, ::CLASP::Flag, ::CLASP::Option ]
@@ -832,7 +819,6 @@ class Climate
 		end
 	end
 end # class Climate
-
 end # module LibCLImate
 
 # ############################## end of file ############################# #

@@ -6,11 +6,9 @@
 # Purpose:      This filter program converts 0 values in a TSV into blanks
 #
 # Created:      14th May 2016
-# Updated:      5th February 2018
+# Updated:      13th April 2019
 #
 # Author:       Matthew Wilson
-#
-# Copyright:    <<TBD>>
 #
 #############################################################################
 
@@ -22,10 +20,10 @@ require 'libclimate'
 # ##########################################################
 # constants
 
-PROGRAM_VER_MAJOR               =   0
-PROGRAM_VER_MINOR               =   1
-PROGRAM_VER_REVISION            =   3
-PROGRAM_VER_BUILD               =   5
+PROGRAM_VER_MAJOR	=	0
+PROGRAM_VER_MINOR	=	1
+PROGRAM_VER_PATCH	=	4
+PROGRAM_VER_BUILD	=	6
 
 # ##########################################################
 # command-line parsing

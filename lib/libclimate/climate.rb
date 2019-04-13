@@ -44,6 +44,8 @@ require 'clasp'
 require 'xqsr3/extensions/io'
 require 'xqsr3/quality/parameter_checking'
 
+require 'yaml'
+
 =begin
 =end
 
@@ -166,6 +168,11 @@ class Climate
 	#:stopdoc:
 
 	private
+	module Climate_Constants_
+
+		GIVEN_SPECS_ = "_Given_Specs_01B59422_8407_4c89_9432_8160C52BD5AD"
+	end # module Climate_Constants_
+
 	def show_usage_
 
 		options	=	{}
@@ -262,9 +269,165 @@ class Climate
 
 		nil
 	end
+
+	def self.check_type_(v, types)
+
+		return true if v.nil?
+
+		types = [ types ] unless Array === types
+
+		return true if types.empty?
+
+		types.each do |type|
+
+			if false
+
+				;
+			elsif :boolean == type
+
+				return true if [ TrueClass, FalseClass ].include? v.class
+			elsif type.is_a?(Class)
+
+				return true if v.is_a?(type)
+			elsif type.is_a?(Array)
+
+				t0 = type[0]
+
+				if t0
+
+					#return true if v.is_a?
+				else
+
+					# Can be array of anything
+
+					return true if v.is_a?(Array)
+				end
+			else
+
+				warn "Cannot validate type of '#{v}' (#{v.class}) against type specification '#{type}'"
+			end
+		end
+
+		false
+	end
+
+	def self.lookup_element_(h, types, name, path)
+
+		if h.has_key?(name)
+
+			r = h[name]
+
+			unless self.check_type_(r, types)
+
+				raise TypeError, "element '#{name}' is of type '#{r.class}' and '#{types}' is required"
+			end
+
+			return r
+		end
+
+		nil
+	end
+
+	def self.require_element_(h, types, name, path)
+
+		unless h.has_key?(name)
+
+			if (path || '').empty?
+
+				raise ArgumentError, "missing top-level element '#{name}' in load configuration"
+			else
+
+				raise ArgumentError, "missing element '#{path}/#{name}' in load configuration"
+			end
+		else
+
+			r = h[name]
+
+			unless self.check_type_(r, types)
+
+				raise TypeError, "element '#{name}' is of type '#{r.class}' and '#{types}' is required"
+			end
+
+			return r
+		end
+	end
 	#:startdoc:
 
 	public
+
+	# Loads an instance of the class, as specified by +source+, according to the given parameters
+	#
+	# === Signature
+	#
+	# * *Parameters:*
+	#   - +source+:: (+Hash+, +IO+) The arguments specification, either as a Hash or an instance of an IO-implementing type containing a YAML specification
+	#   - +options+:: An options hash, containing any of the following options
+	#
+	# * *Options:*
+	#   - +:no_help_flag+ (boolean) Prevents the use of the +CLASP::Flag.Help+ flag-specification
+	#   - +:no_version_flag+ (boolean) Prevents the use of the +CLASP::Flag.Version+ flag-specification
+	#   - +:program_name+ (::String) An explicit program-name, which is inferred from +$0+ if this is +nil+
+	#   - +:version+ (String, [Integer], [String]) A version specification. If not specified, this is inferred
+	#   - +:version_context+ Object or class that defines a context for searching the version. Ignored if +:version+ is specified
+	#
+	# * *Block* An optional block that receives the initialising Climate instance, allowing the user to modify the attributes.
+	def self.load source, options = (options_defaulted_ = {}), &blk
+
+		check_parameter options, 'options', allow_nil: true, type: ::Hash
+
+		options ||= {}
+
+		h = nil
+
+		case source
+		when ::IO
+
+			h = YAML.load source.read
+		when ::Hash
+
+			h = source
+		else
+
+			if source.respond_to?(:to_hash)
+
+				h = source.to_hash
+			else
+
+				raise TypeError, "#{self}.#{__method__}() 'source' argument must be a #{::Hash}, or an object implementing #{::IO}, or a type implementing 'to_hash'"
+			end
+		end
+
+		_libclimate				=	require_element_(h, Hash, 'libclimate', nil)
+		_exit_on_missing		=	lookup_element_(_libclimate, :boolean, 'exit_on_missing', 'libclimate')
+		_ignore_unknown			=	lookup_element_(_libclimate, :boolean, 'ignore_unknown', 'libclimate')
+		_exit_on_unknown		=	lookup_element_(_libclimate, :boolean, 'exit_on_unknown', 'libclimate')
+		_exit_on_usage			=	lookup_element_(_libclimate, :boolean, 'exit_on_usage', 'libclimate')
+		_info_lines				=	lookup_element_(_libclimate, Array, 'info_lines', 'libclimate')
+		_program_name			=	lookup_element_(_libclimate, String, 'program_name', 'libclimate')
+		_constrain_values		=	lookup_element_(_libclimate, [ Integer, Range ], 'constrain_values', 'libclimate')
+		_flags_and_options		=	lookup_element_(_libclimate, String, 'flags_and_options', 'libclimate')
+		_usage_values			=	lookup_element_(_libclimate, String, 'usage_values', 'libclimate')
+		_value_names			=	lookup_element_(_libclimate, Array, 'value_names', 'libclimate')
+		_version				=	lookup_element_(_libclimate, [ String, [] ], 'version', 'libclimate')
+
+		specs					=	CLASP::Arguments.load_specifications _libclimate, options
+
+		cl						=	Climate.new(options.merge(Climate_Constants_::GIVEN_SPECS_ => specs), &blk)
+
+		cl.exit_on_missing		=	_exit_on_missing unless _exit_on_missing.nil?
+		cl.ignore_unknown		=	_ignore_unknown unless _ignore_unknown.nil?
+		cl.exit_on_unknown		=	_exit_on_unknown unless _exit_on_unknown.nil?
+		cl.exit_on_usage		=	_exit_on_usage unless _exit_on_usage.nil?
+		cl.info_lines			=	_info_lines unless _info_lines.nil?
+		cl.program_name			=	_program_name unless _program_name.nil?
+		cl.constrain_values		=	_constrain_values unless _constrain_values.nil?
+		cl.flags_and_options	=	_flags_and_options unless _flags_and_options.nil?
+		cl.usage_values			=	_usage_values unless _usage_values.nil?
+		cl.value_names			=	_value_names unless _value_names.nil?
+		cl.version				=	_version unless _version.nil?
+
+		cl
+	end
 
 	# Creates an instance of the Climate class.
 	#
@@ -280,8 +443,8 @@ class Climate
 	#   - +:version+ (String, [Integer], [String]) A version specification. If not specified, this is inferred
 	#   - +:version_context+ Object or class that defines a context for searching the version. Ignored if +:version+ is specified
 	#
-	# * *Block* An optional block which receives the constructing instance, allowing the user to modify the attributes.
-	def initialize(options={}) # :yields: climate
+	# * *Block* An optional block that receives the initialising Climate instance, allowing the user to modify the attributes.
+	def initialize(options={}, &blk) # :yields: climate
 
 		check_parameter options, 'options', allow_nil: true, type: ::Hash
 
@@ -298,6 +461,8 @@ class Climate
 			pr_name	=	File.basename($0)
 			pr_name	=	(pr_name =~ /\.(?:bat|cmd|rb|sh)$/) ? "#$`(#$&)" : pr_name
 		end
+
+		given_specs			=	options[Climate_Constants_::GIVEN_SPECS_]
 
 		@specifications		=	[]
 		@ignore_unknown		=	false
@@ -317,6 +482,8 @@ class Climate
 
 		@specifications << CLASP::Flag.Help(handle: proc { show_usage_ }) unless options[:no_help_flag]
 		@specifications << CLASP::Flag.Version(handle: proc { show_version_ }) unless options[:no_version_flag]
+
+		@specifications	=	@specifications + given_specs if given_specs
 
 		yield self if block_given?
 	end
@@ -386,6 +553,13 @@ class Climate
 		raise ArgumentError, "argv may not be nil" if argv.nil?
 
 		arguments	=	CLASP::Arguments.new argv, specifications
+
+		run_ argv, arguments
+	end
+
+	private
+	def run_ argv, arguments # :nodoc:
+
 		flags		=	arguments.flags
 		options		=	arguments.options
 		values		=	arguments.values.to_a
@@ -594,7 +768,7 @@ class Climate
 					message = "wrong number of values: #{values.size} given, #{values_constraint} required; use --help for usage"
 				end
 
-				if exit_on_unknown
+				if exit_on_missing
 
 					self.abort message
 				else
@@ -619,7 +793,7 @@ class Climate
 					message = "wrong number of values: #{values.size} givens, #{values_constraint.begin} - #{values_constraint.end - (values_constraint.exclude_end? ? 1 : 0)} required; use --help for usage"
 				end
 
-				if exit_on_unknown
+				if exit_on_missing
 
 					self.abort message
 				else
@@ -661,6 +835,7 @@ class Climate
 
 		results
 	end
+	public
 
 	# Calls abort() with the given message prefixed by the program_name
 	#
@@ -719,20 +894,22 @@ class Climate
 	#   - +:help+ (String) Description string used when writing response to "+--help+" flag
 	#   - +:required+ (boolean) Indicates whether the flag is required, causing #run to fail with appropriate message if the flag is not specified in the command-line arguments
 	#
+	# * *Block* An optional block that is invoked when the parsed command-line contains the given flag, receiving the argument and the alias
+	#
 	# === Examples
 	#
 	# ==== Specification(s) of a flag (single statement)
 	#
-	def add_flag(name_or_flag, options={}, &block)
+	def add_flag(name_or_flag, options={}, &blk)
 
-		check_parameter name_or_flag, 'name_or_flag', allow_nil: false, types: [ ::String, ::Symbol, ::CLASP::Flag ]
+		check_parameter name_or_flag, 'name_or_flag', allow_nil: false, types: [ ::String, ::Symbol, ::CLASP::FlagSpecification ]
 
 		if ::CLASP::Flag === name_or_flag
 
 			specifications << name_or_flag
 		else
 
-			specifications << CLASP.Flag(name_or_flag, **options, &block)
+			specifications << CLASP.Flag(name_or_flag, **options, &blk)
 		end
 	end
 
@@ -750,16 +927,19 @@ class Climate
 	#   - +:help+ (String) Description string used when writing response to "+--help+" flag
 	#   - +:values_range+ ([String]) An array of strings representing the valid/expected values used when writing response to "+--help+" flag. NOTE: the current version does not validate against these values, but a future version may do so
 	#   - +:default_value+ (String) The default version used when, say, for the option +--my-opt+ the command-line contain the argument "+--my-opt=+"
-	def add_option(name_or_option, options={}, &block)
+	#
+	# * *Block* An optional block that is invoked when the parsed command-line contains the given option, receiving the argument and the alias
+	#
+	def add_option(name_or_option, options={}, &blk)
 
-		check_parameter name_or_option, 'name_or_option', allow_nil: false, types: [ ::String, ::Symbol, ::CLASP::Option ]
+		check_parameter name_or_option, 'name_or_option', allow_nil: false, types: [ ::String, ::Symbol, ::CLASP::OptionSpecification ]
 
 		if ::CLASP::Option === name_or_option
 
 			specifications << name_or_option
 		else
 
-			specifications << CLASP.Option(name_or_option, **options, &block)
+			specifications << CLASP.Option(name_or_option, **options, &blk)
 		end
 	end
 
@@ -803,7 +983,7 @@ class Climate
 	#  climate.add_alias('--verbosity=verbose', '-v')
 	def add_alias(name_or_specification, *aliases)
 
-		check_parameter name_or_specification, 'name_or_specification', allow_nil: false, types: [ ::String, ::Symbol, ::CLASP::Flag, ::CLASP::Option ]
+		check_parameter name_or_specification, 'name_or_specification', allow_nil: false, types: [ ::String, ::Symbol, ::CLASP::FlagSpecification, ::CLASP::OptionSpecification ]
 		raise ArgumentError, "must supply at least one alias" if aliases.empty?
 
 		case name_or_specification
@@ -817,6 +997,80 @@ class Climate
 
 			self.specifications << CLASP.Alias(name_or_specification, aliases: aliases)
 		end
+	end
+
+	# Attaches a block to an already-registered flag
+	#
+	# === Signature
+	#
+	# * *Parameters:*
+	#   - +name_or_flag+ (String, ::CLASP::FlagSpecification) The flag name or instance of CLASP::FlagSpecification
+	#   - +options+ (Hash) An options hash, containing any of the following options. No options are recognised currently
+	#
+	# * *Options:*
+	#
+	# * *Block* A required block that is invoked when the parsed command-line contains the given flag, receiving the argument and the alias
+	#
+	def on_flag(name_or_flag, options={}, &blk)
+
+		check_parameter name_or_flag, 'name_or_flag', allow_nil: false, types: [ ::String, ::Symbol, ::CLASP::FlagSpecification ]
+
+		raise ArgumentError, "on_flag() requires a block to be given" unless block_given?
+
+		specifications.each do |spec|
+
+			case spec
+			when CLASP::FlagSpecification
+
+				if spec == name_or_flag
+
+					spec.action = blk
+
+					return true
+				end
+			end
+		end
+
+		warn "The Climate instance does not contain a FlagSpecification matching '#{name_or_flag}' (#{name_or_flag.class})"
+
+		false
+	end
+
+	# Attaches a block to an already-registered option
+	#
+	# === Signature
+	#
+	# * *Parameters:*
+	#   - +name_or_option+ (String, ::CLASP::OptionSpecification) The option name or instance of CLASP::OptionSpecification
+	#   - +options+ (Hash) An options hash, containing any of the following options. No options are recognised currently
+	#
+	# * *Options:*
+	#
+	# * *Block* A required block that is invoked when the parsed command-line contains the given option, receiving the argument and the alias
+	#
+	def on_option(name_or_option, options={}, &blk)
+
+		check_parameter name_or_option, 'name_or_option', allow_nil: false, types: [ ::String, ::Symbol, ::CLASP::OptionSpecification ]
+
+		raise ArgumentError, "on_option() requires a block to be given" unless block_given?
+
+		specifications.each do |spec|
+
+			case spec
+			when CLASP::OptionSpecification
+
+				if spec == name_or_option
+
+					spec.action = blk
+
+					return true
+				end
+			end
+		end
+
+		warn "The Climate instance does not contain an OptionSpecification matching '#{name_or_option}' (#{name_or_option.class})"
+
+		false
 	end
 end # class Climate
 end # module LibCLImate

@@ -8,11 +8,6 @@
 require 'libclimate'
 
 
-# constants
-
-PROGRAM_VERSION = '0.0.1'
-
-
 # Specify aliases, parse, and checking standard flags
 
 options = {}
@@ -39,6 +34,11 @@ if options[:debug]
 end
 
 
+# some notional output
+
+$stdout.puts "processing in '#{r.values[0]}'" + (r.values.size > 1 ? " and '#{r.values[1]}'" : '')
+
+
 __END__
 ---
 libclimate:
@@ -51,6 +51,7 @@ libclimate:
         required:  false
     - option:
         name:  --verbosity
+        alias: -v
         help:  specifies the verbosity
         values:
         - silent
@@ -66,10 +67,10 @@ libclimate:
   constrain_values: !ruby/range 1..2
   exit_on_missing: true
   flags_and_options: "[... flags/options ...]"
-  usage_values: "<directory-1> [ <directory-2> ]"
+  usage_values: "<dir-1> [ <dir-2> ]"
   value_names:
-  - directory-1
-  - directory-2
+  - first directory
+  - second directory
   info_lines:
   - libCLImate.Ruby examples
   - :version
@@ -77,6 +78,6 @@ libclimate:
   -
   version:
   - 0
-  - 3
-  - "4"
+  - 1
+  - "2"
 

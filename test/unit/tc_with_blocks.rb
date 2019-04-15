@@ -19,9 +19,9 @@ class Test_Climate_with_blocks < Test::Unit::TestCase
 
 		is_verbose	=	false
 
-		climate = LibCLImate::Climate.new do |climate|
+		climate = LibCLImate::Climate.new do |cl|
 
-			climate.add_flag('--verbose') { is_verbose = true }
+			cl.add_flag('--verbose') { is_verbose = true }
 		end
 
 		argv = %w{ --verbose }
@@ -35,9 +35,9 @@ class Test_Climate_with_blocks < Test::Unit::TestCase
 
 		flavour	=	nil
 
-		climate = LibCLImate::Climate.new do |climate|
+		climate = LibCLImate::Climate.new do |cl|
 
-			climate.add_option('--flavour') { |o|  flavour = o.value }
+			cl.add_option('--flavour') { |o|  flavour = o.value }
 		end
 
 		argv = %w{ --flavour=blueberry }

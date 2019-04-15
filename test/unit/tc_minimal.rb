@@ -17,7 +17,7 @@ class Test_Climate_minimal < Test::Unit::TestCase
 
 	def test_no_arguments_no_mods
 
-		climate = LibCLImate::Climate.new do |climate|
+		climate = LibCLImate::Climate.new do |cl|
 
 			;
 		end
@@ -28,10 +28,10 @@ class Test_Climate_minimal < Test::Unit::TestCase
 
 	def test_no_arguments_set_streams
 
-		climate = LibCLImate::Climate.new do |climate|
+		climate = LibCLImate::Climate.new do |cl|
 
-			climate.stdout = $stdout
-			climate.stderr = $stderr
+			cl.stdout = $stdout
+			cl.stderr = $stderr
 		end
 
 		assert $stdout.equal? climate.stdout
@@ -42,11 +42,11 @@ class Test_Climate_minimal < Test::Unit::TestCase
 
 		str = StringIO.new
 
-		climate = LibCLImate::Climate.new do |climate|
+		climate = LibCLImate::Climate.new do |cl|
 
-			climate.program_name = 'program'
-			climate.stdout = str
-			climate.exit_on_usage = false
+			cl.program_name = 'program'
+			cl.stdout = str
+			cl.exit_on_usage = false
 		end
 
 		argv = %w{ --help }
@@ -89,12 +89,12 @@ class Test_Climate_minimal < Test::Unit::TestCase
 
 		str = StringIO.new
 
-		climate = LibCLImate::Climate.new do |climate|
+		climate = LibCLImate::Climate.new do |cl|
 
-			climate.program_name = 'program'
-			climate.info_lines = 'Synesis Software Open Source'
-			climate.stdout = str
-			climate.exit_on_usage = false
+			cl.program_name = 'program'
+			cl.info_lines = 'Synesis Software Open Source'
+			cl.stdout = str
+			cl.exit_on_usage = false
 		end
 
 		argv = %w{ --help }
@@ -139,12 +139,12 @@ class Test_Climate_minimal < Test::Unit::TestCase
 
 		str = StringIO.new
 
-		climate = LibCLImate::Climate.new do |climate|
+		climate = LibCLImate::Climate.new do |cl|
 
-			climate.program_name = 'program'
-			climate.version = [ 1, 2, 3, 4 ]
-			climate.stdout = str
-			climate.exit_on_usage = false
+			cl.program_name = 'program'
+			cl.version = [ 1, 2, 3, 4 ]
+			cl.stdout = str
+			cl.exit_on_usage = false
 		end
 
 		argv = %w{ --version }
@@ -164,12 +164,12 @@ class Test_Climate_minimal < Test::Unit::TestCase
 		strout = StringIO.new
 		strerr = StringIO.new
 
-		climate = LibCLImate::Climate.new do |climate|
+		climate = LibCLImate::Climate.new do |cl|
 
-			climate.program_name	=	'program'
-			climate.stdout			=	strout
-			climate.stderr			=	strerr
-			climate.exit_on_unknown	=	false
+			cl.program_name	=	'program'
+			cl.stdout			=	strout
+			cl.stderr			=	strerr
+			cl.exit_on_unknown	=	false
 		end
 
 		argv = %w{ --unknown }
@@ -189,12 +189,12 @@ class Test_Climate_minimal < Test::Unit::TestCase
 		strout = StringIO.new
 		strerr = StringIO.new
 
-		climate = LibCLImate::Climate.new do |climate|
+		climate = LibCLImate::Climate.new do |cl|
 
-			climate.program_name	=	'program'
-			climate.stdout			=	strout
-			climate.stderr			=	strerr
-			climate.exit_on_unknown	=	false
+			cl.program_name	=	'program'
+			cl.stdout			=	strout
+			cl.stderr			=	strerr
+			cl.exit_on_unknown	=	false
 		end
 
 		argv = %w{ --unknown=10 }
@@ -215,16 +215,16 @@ class Test_Climate_minimal < Test::Unit::TestCase
 
 		is_verbose = false
 
-		climate = LibCLImate::Climate.new do |climate|
+		climate = LibCLImate::Climate.new do |cl|
 
-			climate.program_name = 'program'
-			climate.stdout = str
-			climate.exit_on_usage = false
+			cl.program_name = 'program'
+			cl.stdout = str
+			cl.exit_on_usage = false
 
 			bl = false#proc { is_verbose = true }
 
-			climate.add_flag('--succinct', alias: '-s', help: 'operates succinctly')
-			climate.add_flag('--verbose', alias: '-v', help: 'operates verbosely', extras: { :handle => proc { is_verbose = true }})
+			cl.add_flag('--succinct', alias: '-s', help: 'operates succinctly')
+			cl.add_flag('--verbose', alias: '-v', help: 'operates verbosely', extras: { :handle => proc { is_verbose = true }})
 		end
 
 		argv = %w{ --help --verbose --succinct }
@@ -276,13 +276,13 @@ class Test_Climate_minimal < Test::Unit::TestCase
 
 		is_verbose = false
 
-		climate = LibCLImate::Climate.new do |climate|
+		climate = LibCLImate::Climate.new do |cl|
 
-			climate.program_name = 'program'
-			climate.stdout = str
-			climate.exit_on_usage = false
+			cl.program_name = 'program'
+			cl.stdout = str
+			cl.exit_on_usage = false
 
-			climate.add_flag('--verbose', alias: '-v', help: 'operates verbosely', extras: { handle: proc { is_verbose = true }})
+			cl.add_flag('--verbose', alias: '-v', help: 'operates verbosely', extras: { handle: proc { is_verbose = true }})
 		end
 
 		argv = %w{ --verbose }
@@ -321,13 +321,13 @@ class Test_Climate_minimal < Test::Unit::TestCase
 
 		verbosity = 1
 
-		climate = LibCLImate::Climate.new do |climate|
+		climate = LibCLImate::Climate.new do |cl|
 
-			climate.program_name = 'program'
-			climate.stdout = str
-			climate.exit_on_usage = false
+			cl.program_name = 'program'
+			cl.stdout = str
+			cl.exit_on_usage = false
 
-			climate.add_option('--verbosity', alias: '-v', help: 'determines level of verbose operation', extras: { handle: proc { |o| verbosity = o.value }})
+			cl.add_option('--verbosity', alias: '-v', help: 'determines level of verbose operation', extras: { handle: proc { |o| verbosity = o.value }})
 		end
 
 		argv = %w{ -v 2 }
@@ -364,11 +364,11 @@ class Test_Climate_minimal < Test::Unit::TestCase
 
 		str = StringIO.new
 
-		climate = LibCLImate::Climate.new do |climate|
+		climate = LibCLImate::Climate.new do |cl|
 
-			climate.program_name = 'program'
+			cl.program_name = 'program'
 
-			climate.add_option('--verbosity', alias: '-v', help: 'determines level of verbose operation', required: true)
+			cl.add_option('--verbosity', alias: '-v', help: 'determines level of verbose operation', required: true)
 		end
 
 		assert climate.specifications[2].required?
@@ -405,15 +405,15 @@ class Test_Climate_minimal < Test::Unit::TestCase
 		str = StringIO.new
 		stre = StringIO.new
 
-		climate = LibCLImate::Climate.new do |climate|
+		climate = LibCLImate::Climate.new do |cl|
 
-			climate.program_name = 'program'
-			climate.stdout = str
-			climate.stderr = stre
-			climate.exit_on_usage = false
-			climate.exit_on_missing = false
+			cl.program_name = 'program'
+			cl.stdout = str
+			cl.stderr = stre
+			cl.exit_on_usage = false
+			cl.exit_on_missing = false
 
-			climate.add_option('--verbosity', alias: '-v', help: 'determines level of verbose operation', required: true)
+			cl.add_option('--verbosity', alias: '-v', help: 'determines level of verbose operation', required: true)
 		end
 
 		r = climate.run %w{ }
@@ -455,15 +455,15 @@ class Test_Climate_minimal < Test::Unit::TestCase
 		str = StringIO.new
 		stre = StringIO.new
 
-		climate = LibCLImate::Climate.new do |climate|
+		climate = LibCLImate::Climate.new do |cl|
 
-			climate.program_name = 'program'
-			climate.stdout = str
-			climate.stderr = stre
-			climate.exit_on_usage = false
-			climate.exit_on_missing = false
+			cl.program_name = 'program'
+			cl.stdout = str
+			cl.stderr = stre
+			cl.exit_on_usage = false
+			cl.exit_on_missing = false
 
-			climate.add_option('--verbosity', alias: '-v', help: 'determines level of verbose operation', required: true, required_message: 'Verbosity not specified')
+			cl.add_option('--verbosity', alias: '-v', help: 'determines level of verbose operation', required: true, required_message: 'Verbosity not specified')
 		end
 
 		r = climate.run %w{ }
@@ -505,15 +505,15 @@ class Test_Climate_minimal < Test::Unit::TestCase
 		str = StringIO.new
 		stre = StringIO.new
 
-		climate = LibCLImate::Climate.new do |climate|
+		climate = LibCLImate::Climate.new do |cl|
 
-			climate.program_name = 'program'
-			climate.stdout = str
-			climate.stderr = stre
-			climate.exit_on_usage = false
-			climate.exit_on_missing = false
+			cl.program_name = 'program'
+			cl.stdout = str
+			cl.stderr = stre
+			cl.exit_on_usage = false
+			cl.exit_on_missing = false
 
-			climate.add_option('--verbosity', alias: '-v', help: 'determines level of verbose operation', required: true, required_message: "\0Verbosity")
+			cl.add_option('--verbosity', alias: '-v', help: 'determines level of verbose operation', required: true, required_message: "\0Verbosity")
 		end
 
 		r = climate.run %w{ }

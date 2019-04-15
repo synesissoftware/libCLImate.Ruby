@@ -19,11 +19,11 @@ class Test_Climate_minimal < Test::Unit::TestCase
 
 		options	=	{}
 
-		climate = LibCLImate::Climate.new do |climate|
+		climate = LibCLImate::Climate.new do |cl|
 
-			climate.add_option('--action', alias: '-a') { |o, a| options[:action] = o.value }
-			climate.add_alias('--action=list', '-l')
-			climate.add_alias('--action=change', '-c')
+			cl.add_option('--action', alias: '-a') { |o, a| options[:action] = o.value }
+			cl.add_alias('--action=list', '-l')
+			cl.add_alias('--action=change', '-c')
 		end
 
 		# invoke via option

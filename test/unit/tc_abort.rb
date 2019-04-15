@@ -20,11 +20,11 @@ class Test_Climate_abort < Test::Unit::TestCase
 		strout = StringIO.new
 		strerr = StringIO.new
 
-		climate = LibCLImate::Climate.new do |climate|
+		climate = LibCLImate::Climate.new do |cl|
 
-			climate.program_name	=	'myprog'
-			climate.stdout			=	strout
-			climate.stderr			=	strerr
+			cl.program_name	=	'myprog'
+			cl.stdout			=	strout
+			cl.stderr			=	strerr
 		end
 
 		s			=	climate.abort 'something happened', exit: nil
@@ -42,11 +42,11 @@ class Test_Climate_abort < Test::Unit::TestCase
 		strout = StringIO.new
 		strerr = StringIO.new
 
-		climate = LibCLImate::Climate.new do |climate|
+		climate = LibCLImate::Climate.new do |cl|
 
-			climate.program_name	=	'myprog'
-			climate.stdout			=	strout
-			climate.stderr			=	strerr
+			cl.program_name	=	'myprog'
+			cl.stdout			=	strout
+			cl.stderr			=	strerr
 		end
 
 		s			=	climate.abort 'something happened', exit: nil, program_name: ''
@@ -64,11 +64,11 @@ class Test_Climate_abort < Test::Unit::TestCase
 		strout = StringIO.new
 		strerr = StringIO.new
 
-		climate = LibCLImate::Climate.new do |climate|
+		climate = LibCLImate::Climate.new do |cl|
 
-			climate.program_name	=	'myprog'
-			climate.stdout			=	strout
-			climate.stderr			=	strerr
+			cl.program_name	=	'myprog'
+			cl.stdout			=	strout
+			cl.stderr			=	strerr
 		end
 
 		s			=	climate.abort 'something happened', exit: nil, program_name: 'my-prog'

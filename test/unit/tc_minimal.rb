@@ -184,6 +184,32 @@ class Test_Climate_minimal < Test::Unit::TestCase
 		assert_equal "program: unrecognised flag '--unknown'; use --help for usage", lines_err[0]
 	end
 
+	def test_unrecognised_flag_terse
+
+		strout = StringIO.new
+		strerr = StringIO.new
+
+		climate = LibCLImate::Climate.new do |cl|
+
+			cl.program_name		=	'program'
+			cl.stdout				=	strout
+			cl.stderr				=	strerr
+			cl.exit_on_unknown		=	false
+			cl.usage_help_suffix	=	''
+		end
+
+		argv = %w{ --unknown }
+
+		climate.run argv
+
+		lines_out	=	strout.string.split /\n/
+		lines_err	=	strerr.string.split /\n/
+
+		assert_equal 0, lines_out.size
+		assert_equal 1, lines_err.size
+		assert_equal "program: unrecognised flag '--unknown'", lines_err[0]
+	end
+
 	def test_unrecognised_option
 
 		strout = StringIO.new

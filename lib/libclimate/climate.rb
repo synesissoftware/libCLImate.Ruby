@@ -5,7 +5,7 @@
 # Purpose:      Definition of the ::LibCLImate::Climate class
 #
 # Created:      13th July 2015
-# Updated:      13th April 2019
+# Updated:      15th April 2019
 #
 # Home:         http://github.com/synesissoftware/libCLImate.Ruby
 #
@@ -172,6 +172,17 @@ class Climate
 
 		GIVEN_SPECS_ = "_Given_Specs_01B59422_8407_4c89_9432_8160C52BD5AD"
 	end # module Climate_Constants_
+
+	def make_abort_message_ msg
+
+		if 0 != (usage_help_suffix || 0).size
+
+			"#{msg}; #{usage_help_suffix}"
+		else
+
+			msg
+		end
+	end
 
 	def show_usage_
 
@@ -475,6 +486,7 @@ class Climate
 		@stderr				=	$stderr
 		@constrain_values	=	nil
 		@flags_and_options	=	flags_and_options
+		@usage_help_suffix	=	'use --help for usage'
 		@usage_values		=	usage_values
 		@value_names		=	[]
 		version_context		=	options[:version_context]
@@ -530,6 +542,8 @@ class Climate
 	attr_accessor :constrain_values
 	# (String) Optional string to describe the flags and options section. Defaults to "[ +...+ +flags+ +and+ +options+ +...+ ]"
 	attr_accessor :flags_and_options
+	# (String) The string that is appended to #abort calls made during #run. Defaults to "use --help for usage"
+	attr_accessor :usage_help_suffix
 	# @return (::String) Optional string to describe the program values, eg \<xyz "[ { <<directory> | &lt;file> } ]"
 	attr_accessor :usage_values
 	# ([String]) Zero-based array of names for values to be used when that value is not present (according to the +:constrain_values+ attribute)
@@ -625,7 +639,7 @@ class Climate
 				results[:flags][selector] << f
 			else
 
-				message = "unrecognised flag '#{f}'; use --help for usage"
+				message = make_abort_message_("unrecognised flag '#{f}'")
 
 				if false
 
@@ -687,7 +701,7 @@ class Climate
 				results[:options][selector] << o
 			else
 
-				message = "unrecognised option '#{o}'; use --help for usage"
+				message = make_abort_message_("unrecognised option '#{o}'")
 
 				if false
 
@@ -756,16 +770,37 @@ class Climate
 		when nil
 
 			;
+		when ::Array
+
+			warn "value of 'constrain_values' attribute, if an #{::Array}, must not be empty and all elements must be of type #{::Integer}" if values_constraint.empty? || !values_constraint.all? { |v| ::Integer === v }
+
+			unless values_constraint.include? values.size
+
+				message = make_abort_message_("wrong number of values: #{values.size} given, #{values_constraint} required")
+
+				if exit_on_missing
+
+					self.abort message
+				else
+
+					if program_name && !program_name.empty?
+
+						message = "#{program_name}: #{message}"
+					end
+
+					stderr.puts message
+				end
+			end
 		when ::Integer
 
 			unless values.size == values_constraint
 
 				if name = val_names[values.size]
 
-					message = name + ' not specified; use --help for usage'
+					message = make_abort_message_(name + ' not specified')
 				else
 
-					message = "wrong number of values: #{values.size} given, #{values_constraint} required; use --help for usage"
+					message = make_abort_message_("wrong number of values: #{values.size} given, #{values_constraint} required")
 				end
 
 				if exit_on_missing
@@ -787,10 +822,10 @@ class Climate
 
 				if name = val_names[values.size]
 
-					message = name + ' not specified; use --help for usage'
+					message = make_abort_message_(name + ' not specified')
 				else
 
-					message = "wrong number of values: #{values.size} givens, #{values_constraint.begin} - #{values_constraint.end - (values_constraint.exclude_end? ? 1 : 0)} required; use --help for usage"
+					message = make_abort_message_("wrong number of values: #{values.size} givens, #{values_constraint.begin} - #{values_constraint.end - (values_constraint.exclude_end? ? 1 : 0)} required")
 				end
 
 				if exit_on_missing
@@ -808,7 +843,7 @@ class Climate
 			end
 		else
 
-			warn "value of 'constrain_values' attribute - '#{constrain_values}' (#{constrain_values.class}) - of wrong type : must be #{::Integer}, #{::Range}, or nil"
+			warn "value of 'constrain_values' attribute - '#{constrain_values}' (#{constrain_values.class}) - of wrong type : must be #{::Array}, #{::Integer}, #{::Range}, or nil"
 		end
 
 

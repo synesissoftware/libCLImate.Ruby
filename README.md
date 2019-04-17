@@ -3,6 +3,14 @@ libCLImate, for Ruby
 
 [![Gem Version](https://badge.fury.io/rb/libclimate-ruby.svg)](https://badge.fury.io/rb/libclimate-ruby)
 
+## Table of Contents
+
+1. [Introduction](#introduction)
+2. [Installation](#installation)
+3. [Components](#components)
+4. [Examples](#examples)
+5. [Project Information](#project-information)
+
 ## Introduction
 
 **libCLImate** is a portable, lightweight mini-framework that encapsulates the common aspects of **C**ommand-**L**ine **I**nterface boilerplate, including:
@@ -11,14 +19,6 @@ libCLImate, for Ruby
 - provision of de-facto standard CLI facilities, such as responding to '--help' and '--version';
 
 **libCLImate.Ruby** is the Ruby version.
-
-## Table of Contents
-
-1. [Introduction](#introduction)
-2. [Installation](#installation)
-3. [Components](#components)
-4. [Examples](#examples)
-5. [Project Information](#project-information)
 
 ## Installation
 

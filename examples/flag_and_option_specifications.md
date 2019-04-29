@@ -153,7 +153,7 @@ processing in 'dir-1' and 'dir-2'
 If executed with the arguments
 
 ```
-    ruby examples/flag_and_option_specifications.rb -v silent -d
+    ruby examples/flag_and_option_specifications.rb dir-1 dir-2 -v silent -d
 ```
 
 it gives the (same) output:
@@ -161,6 +161,7 @@ it gives the (same) output:
 ```
 verbosity is specified as: silent
 Debug mode is specified
+processing in 'dir-1' and 'dir-2'
 ```
 
 ### Specify flags and options in short-form, including an alias for an option-with-value
@@ -168,7 +169,7 @@ Debug mode is specified
 If executed with the arguments
 
 ```
-    ruby examples/flag_and_option_specifications.rb -c -d
+    ruby examples/flag_and_option_specifications.rb -c -d dir-1 dir-2
 ```
 
 it gives the output:
@@ -176,6 +177,7 @@ it gives the output:
 ```
 verbosity is specified as: chatty
 Debug mode is specified
+processing in 'dir-1' and 'dir-2'
 ```
 
 ### Specify flags and options with combined short-form
@@ -183,7 +185,7 @@ Debug mode is specified
 If executed with the arguments
 
 ```
-    ruby examples/flag_and_option_specifications.rb -dc
+    ruby examples/flag_and_option_specifications.rb -dc dir-1 dir-2
 ```
 
 it gives the (same) output:
@@ -191,5 +193,5 @@ it gives the (same) output:
 ```
 verbosity is specified as: chatty
 Debug mode is specified
+processing in 'dir-1' and 'dir-2'
 ```
-

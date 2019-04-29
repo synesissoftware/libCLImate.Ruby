@@ -51,6 +51,7 @@ require 'yaml'
 
 #:stopdoc:
 
+# TODO: Need to work with other colouring libraries, too
 if !defined? Colcon # :nodoc:
 
 	begin
@@ -77,11 +78,12 @@ class << CLASP
 		f = self.Flag_old(name, options)
 
 		# anticipate this functionality being added to CLASP
-		return f if f.respond_to? :action
+		unless f.respond_to? :action
 
-		class << f
+			class << f
 
-			attr_accessor :action
+				attr_accessor :action
+			end
 		end
 
 		if blk
@@ -105,11 +107,12 @@ class << CLASP
 		o = self.Option_old(name, options)
 
 		# anticipate this functionality being added to CLASP
-		return o if o.respond_to? :action
+		unless o.respond_to? :action
 
-		class << o
+			class << o
 
-			attr_accessor :action
+				attr_accessor :action
+			end
 		end
 
 		if blk
@@ -129,7 +132,6 @@ class << CLASP
 end
 
 #:startdoc:
-
 
 module LibCLImate
 
@@ -165,6 +167,200 @@ class Climate
 
 	include ::Xqsr3::Quality::ParameterChecking
 
+	# Represents the results obtained from +Climate#parse()+
+	class ParseResults
+
+		def initialize(climate, arguments, options)
+
+			@climate				=	climate
+
+			@arguments				=	arguments
+
+			@argv					=	arguments.argv
+			@argv_original_copy		=	arguments.argv_original_copy
+			@specifications			=	arguments.specifications
+			@program_name			=	climate.program_name
+			@flags					=	arguments.flags
+			@options				=	arguments.options
+			@values					=	arguments.values
+		end
+
+		# (Climate) The +Climate+ instance from which this instance was obtained
+		attr_reader :climate
+
+		# ([String]) The original arguments passed into the +Climate#parse()+ method
+		attr_reader :argv
+
+		# (Array) unchanged copy of the original array of arguments passed to parse
+		attr_reader :argv_original_copy
+
+		# (Array) a frozen array of specifications
+		attr_reader :specifications
+
+		# (String) The program name
+		attr_reader :program_name
+
+		# (String) A (frozen) array of flags
+		attr_reader :flags
+
+		# (String) A (frozen) array of options
+		attr_reader :options
+
+		# (String) A (frozen) array of values
+		attr_reader :values
+
+		# Verifies the initiating command-line against the specifications,
+		# raising an exception if any missing, unused, or unrecognised flags,
+		# options, or values are found
+		def verify(**options)
+
+			if v = options[:raise]
+
+				hm = {}
+
+				hm[:raise_on_required] = v unless options.has_key?(:raise_on_required)
+				hm[:raise_on_unrecognised] = v unless options.has_key?(:raise_on_unrecognised)
+				hm[:raise_on_unused] = v unless options.has_key?(:raise_on_unused)
+
+				options = options.merge hm
+			end
+
+			raise_on_required		=	options[:raise_on_required]
+			raise_on_unrecognised	=	options[:raise_on_unrecognised]
+			raise_on_unused			=	options[:raise_on_unused]
+
+
+			# Verification:
+			#
+			# 1. Check arguments recognised
+			# 1.a Flags
+			# 1.b Options
+			# 2. police any required options
+			# 3. Check values
+
+			# 1.a Flags
+
+			self.flags.each do |flag|
+
+				spec = specifications.detect do |sp|
+
+					sp.kind_of?(::CLASP::FlagSpecification) && flag.name == sp.name
+				end
+
+				if spec
+
+					if spec.respond_to?(:action) && !spec.action.nil?
+
+						spec.action.call(flag, spec)
+					end
+				else
+
+					message = make_abort_message_("unrecognised flag '#{f}'")
+
+					if false
+
+					elsif climate.ignore_unknown
+
+						;
+					elsif raise_on_unrecognised
+
+						if raise_on_unrecognised.is_a?(Class)
+
+							raise raise_on_unrecognised, message
+						else
+
+							raise RuntimeError, message
+						end
+					elsif climate.exit_on_unknown
+
+						climate.abort message
+					else
+
+						if program_name && !program_name.empty?
+
+							message = "#{program_name}: #{message}"
+						end
+
+						climate.stderr.puts message
+					end
+				end
+			end
+
+			# 1.b Options
+
+			self.options.each do |option|
+
+				spec = specifications.detect do |sp|
+
+					sp.kind_of?(::CLASP::OptionSpecification) && option.name == sp.name
+				end
+
+				if spec
+
+					if spec.respond_to?(:action) && !spec.action.nil?
+
+						spec.action.call(option, spec)
+					end
+				else
+
+					message = make_abort_message_("unrecognised option '#{f}'")
+
+					if false
+
+					elsif climate.ignore_unknown
+
+						;
+					elsif raise_on_unrecognised
+
+						if raise_on_unrecognised.is_a?(Class)
+
+							raise raise_on_unrecognised, message
+						else
+
+							raise RuntimeError, message
+						end
+					elsif climate.exit_on_unknown
+
+						climate.abort message
+					else
+
+						if program_name && !program_name.empty?
+
+							message = "#{program_name}: #{message}"
+						end
+
+						climate.stderr.puts message
+					end
+				end
+			end
+
+			# 2. police any required options
+
+			climate.check_required_options_(specifications, self.options, [], raise_on_required)
+
+			# 3. Check values
+
+			climate.check_value_constraints_(values)
+		end
+
+		def flag_is_specified(id)
+
+			!@arguments.find_flag(id).nil?
+		end
+
+		def lookup_flag(id)
+
+			@arguments.find_flag(id)
+		end
+
+		def lookup_option(id)
+
+			@arguments.find_option(id)
+		end
+
+	end # end class ParseResults
+
+
 	#:stopdoc:
 
 	private
@@ -173,7 +369,7 @@ class Climate
 		GIVEN_SPECS_ = "_Given_Specs_01B59422_8407_4c89_9432_8160C52BD5AD"
 	end # module Climate_Constants_
 
-	def make_abort_message_ msg
+	def make_abort_message_(msg)
 
 		if 0 != (usage_help_suffix || 0).size
 
@@ -184,7 +380,7 @@ class Climate
 		end
 	end
 
-	def show_usage_
+	def show_usage_()
 
 		options	=	{}
 		options.merge! stream: stdout, program_name: program_name, version: version, exit: exit_on_usage ? 0 : nil
@@ -195,12 +391,12 @@ class Climate
 		CLASP.show_usage specifications, options
 	end
 
-	def show_version_
+	def show_version_()
 
 		CLASP.show_version specifications, stream: stdout, program_name: program_name, version: version, exit: exit_on_usage ? 0 : nil
 	end
 
-	def infer_version_ ctxt
+	def infer_version_(ctxt)
 
 		# algorithm:
 		#
@@ -362,6 +558,144 @@ class Climate
 			return r
 		end
 	end
+
+	public
+	def check_required_options_(specifications, options, missing, raise_on_required)
+
+		required_specifications = specifications.select do |sp|
+
+			sp.kind_of?(::CLASP::OptionSpecification) && sp.required?
+		end
+
+		required_specifications = Hash[required_specifications.map { |sp| [ sp.name, sp ] }]
+
+		given_options = Hash[options.map { |o| [ o.name, o ]}]
+
+		required_specifications.each do |k, sp|
+
+			unless given_options.has_key? k
+
+				message = sp.required_message
+
+				if false
+
+					;
+				elsif raise_on_required
+
+					if raise_on_required.is_a?(Class)
+
+						raise raise_on_required, message
+					else
+
+						raise RuntimeError, message
+					end
+				elsif exit_on_missing
+
+					self.abort message
+				else
+
+					if program_name && !program_name.empty?
+
+						message = "#{program_name}: #{message}"
+					end
+
+					stderr.puts message
+				end
+
+				missing << sp
+				#results[:missing_option_aliases] << sp
+			end
+		end
+	end
+
+	def check_value_constraints_(values)
+
+		# now police the values
+
+		values_constraint	=	constrain_values
+		values_constraint	=	values_constraint.begin if ::Range === values_constraint && values_constraint.end == values_constraint.begin
+		val_names			=	::Array === value_names ? value_names : []
+
+		case values_constraint
+		when nil
+
+			;
+		when ::Array
+
+			warn "value of 'constrain_values' attribute, if an #{::Array}, must not be empty and all elements must be of type #{::Integer}" if values_constraint.empty? || !values_constraint.all? { |v| ::Integer === v }
+
+			unless values_constraint.include? values.size
+
+				message = make_abort_message_("wrong number of values: #{values.size} given, #{values_constraint} required")
+
+				if exit_on_missing
+
+					self.abort message
+				else
+
+					if program_name && !program_name.empty?
+
+						message = "#{program_name}: #{message}"
+					end
+
+					stderr.puts message
+				end
+			end
+		when ::Integer
+
+			unless values.size == values_constraint
+
+				if name = val_names[values.size]
+
+					message = make_abort_message_(name + ' not specified')
+				else
+
+					message = make_abort_message_("wrong number of values: #{values.size} given, #{values_constraint} required")
+				end
+
+				if exit_on_missing
+
+					self.abort message
+				else
+
+					if program_name && !program_name.empty?
+
+						message = "#{program_name}: #{message}"
+					end
+
+					stderr.puts message
+				end
+			end
+		when ::Range
+
+			unless values_constraint.include? values.size
+
+				if name = val_names[values.size]
+
+					message = make_abort_message_(name + ' not specified')
+				else
+
+					message = make_abort_message_("wrong number of values: #{values.size} givens, #{values_constraint.begin} - #{values_constraint.end - (values_constraint.exclude_end? ? 1 : 0)} required")
+				end
+
+				if exit_on_missing
+
+					self.abort message
+				else
+
+					if program_name && !program_name.empty?
+
+						message = "#{program_name}: #{message}"
+					end
+
+					stderr.puts message
+				end
+			end
+		else
+
+			warn "value of 'constrain_values' attribute - '#{constrain_values}' (#{constrain_values.class}) - of wrong type : must be #{::Array}, #{::Integer}, #{::Range}, or nil"
+		end
+	end
 	#:startdoc:
 
 	public
@@ -382,7 +716,7 @@ class Climate
 	#   - +:version_context+ Object or class that defines a context for searching the version. Ignored if +:version+ is specified
 	#
 	# * *Block* An optional block that receives the initialising Climate instance, allowing the user to modify the attributes.
-	def self.load source, options = (options_defaulted_ = {}), &blk
+	def self.load(source, options = (options_defaulted_ = {}), &blk) # :yields: climate
 
 		check_parameter options, 'options', allow_nil: true, type: ::Hash
 
@@ -492,8 +826,39 @@ class Climate
 		version_context		=	options[:version_context]
 		@version			=	options[:version] || infer_version_(version_context)
 
-		@specifications << CLASP::Flag.Help(handle: proc { show_usage_ }) unless options[:no_help_flag]
-		@specifications << CLASP::Flag.Version(handle: proc { show_version_ }) unless options[:no_version_flag]
+		unless options[:no_help_flag]
+
+			f	=	CLASP::Flag.Help()
+
+			unless f.respond_to?(:action)
+
+				class << f
+
+					attr_accessor :action
+				end
+			end
+
+			f.action = Proc.new { show_usage_ }
+
+			@specifications << f
+		end
+
+		unless options[:no_version_flag]
+
+			f	=	CLASP::Flag.Version()
+
+			unless f.respond_to?(:action)
+
+				class << f
+
+					attr_accessor :action
+				end
+			end
+
+			f.action = Proc.new { show_version_ }
+
+			@specifications << f
+		end
 
 		@specifications	=	@specifications + given_specs if given_specs
 
@@ -501,9 +866,9 @@ class Climate
 	end
 
 	# [DEPRECATED] This method is now deprecated. Instead use +program_name=+
-	def set_program_name name
+	def set_program_name(name)
 
-		@program_name	=	name
+		@program_name = name
 	end
 
 	# ([CLASP::Specification]) An array of specifications attached to the climate instance, whose contents should be modified by adding (or removing) CLASP specifications
@@ -551,7 +916,52 @@ class Climate
 	# (String, [String], [Integer]) A version string or an array of integers/strings representing the version component(s)
 	attr_accessor :version
 
-	# Executes the prepared Climate instance
+	# Parse the given command-line (passed as +argv+) by the given instance
+	#
+	# === Signature
+	#
+	# * *Parameters:*
+	#   - +argv+ ([String]) The array of arguments; defaults to <tt>ARGV</tt>
+	#
+	# === Returns
+	# (ParseResults) Results
+	def parse(argv = ARGV) # :yields: ParseResults
+
+		raise ArgumentError, "argv may not be nil" if argv.nil?
+
+		arguments = CLASP::Arguments.new argv, specifications
+
+		ParseResults.new(self, arguments, argv)
+	end
+
+	# Parse the given command-line (passed as +argv+) by the given instance,
+	# and verifies it
+	#
+	# === Signature
+	#
+	# * *Parameters:*
+	#   - +argv+ ([String]) The array of arguments; defaults to <tt>ARGV</tt>
+	#   - +options+ (Hash) Options
+	#
+	# * *Options:*
+	#   - +:raise_on_required+ (boolean, Exception) Causes an/the given exception to be raised if any required options are not specified in the command-line
+	#   - +:raise_on_unrecognised+ (boolean, Exception) Causes an/the given exception to be raised if any unrecognised flags/options are specified in the command-line
+	#   - +:raise_on_unused+ (boolean, Exception) Causes an/the given exception to be raised if any given flags/options are not used
+	#   - +:raise+ (boolean, Exception) Causes an/the given exception to be raised in all conditions
+	#
+	# === Returns
+	# (ParseResults) Results
+	def parse_and_verify(argv = ARGV, **options) # :yields: ParseResults
+
+		r = parse argv
+
+		r.verify(**options)
+
+		r
+	end
+
+	# [DEPRECATED] Use +Climate#parse_and_verify()+ (but be aware that the
+	# returned result is of a different type
 	#
 	# === Signature
 	#
@@ -562,17 +972,17 @@ class Climate
 	# an instance of a type derived from +::Hash+ with the additional
 	# attributes +flags+, +options+, +values+, and +argv+.
 	#
-	def run argv = ARGV # :yields: customised +::Hash+
+	def run(argv = ARGV) # :yields: customised +::Hash+
 
 		raise ArgumentError, "argv may not be nil" if argv.nil?
 
-		arguments	=	CLASP::Arguments.new argv, specifications
+		arguments = CLASP::Arguments.new argv, specifications
 
 		run_ argv, arguments
 	end
 
 	private
-	def run_ argv, arguments # :nodoc:
+	def run_(argv, arguments) # :nodoc:
 
 		flags		=	arguments.flags
 		options		=	arguments.options
@@ -601,39 +1011,32 @@ class Climate
 			missing_option_aliases: [],
 		}
 
+		# Verification:
+		#
+		# 1. Check arguments recognised
+		# 1.a Flags
+		# 1.b Options
+		# 2. police any required options
+		# 3. Check values
+
+		# 1.a Flags
+
 		flags.each do |f|
 
-			al = specifications.detect do |sp|
+			spec = specifications.detect do |sp|
 
-				sp.kind_of?(::CLASP::Flag) && f.name == sp.name
+				sp.kind_of?(::CLASP::FlagSpecification) && f.name == sp.name
 			end
 
-			if al
+			if spec
 
 				selector	=	:unhandled
 
-				# see if it has an :action attribute (which will have been
-				# monkey-patched to CLASP.Flag()
+				if spec.respond_to?(:action) && !spec.action.nil?
 
-				if al.respond_to?(:action) && !al.action.nil?
-
-					al.action.call(f, al)
+					spec.action.call(f, spec)
 
 					selector = :handled
-				else
-
-					ex = al.extras
-
-					case ex
-					when ::Hash
-
-						if ex.has_key? :handle
-
-							ex[:handle].call(f, al)
-
-							selector = :handled
-						end
-					end
 				end
 
 				results[:flags][selector] << f
@@ -663,39 +1066,24 @@ class Climate
 			end
 		end
 
+		# 1.b Options
+
 		options.each do |o|
 
-			al = specifications.detect do |sp|
+			spec = specifications.detect do |sp|
 
-				sp.kind_of?(::CLASP::Option) && o.name == sp.name
+				sp.kind_of?(::CLASP::OptionSpecification) && o.name == sp.name
 			end
 
-			if al
+			if spec
 
 				selector	=	:unhandled
 
-				# see if it has an :action attribute (which will have been
-				# monkey-patched to CLASP.Option()
+				if spec.respond_to?(:action) && !spec.action.nil?
 
-				if al.respond_to?(:action) && !al.action.nil?
-
-					al.action.call(o, al)
+					spec.action.call(o, spec)
 
 					selector = :handled
-				else
-
-					ex = al.extras
-
-					case ex
-					when ::Hash
-
-						if ex.has_key? :handle
-
-							ex[:handle].call(o, al)
-
-							selector = :handled
-						end
-					end
 				end
 
 				results[:options][selector] << o
@@ -725,126 +1113,13 @@ class Climate
 			end
 		end
 
+		# 2. police any required options
 
-		# now police any required options
+		check_required_options_(specifications, results[:options][:given], results[:missing_option_aliases], false)
 
-		required_specifications = specifications.select do |sp|
+		# 3. Check values
 
-			sp.kind_of?(::CLASP::Option) && sp.required?
-		end
-
-		required_specifications = Hash[required_specifications.map { |sp| [ sp.name, sp ] }]
-
-		given_options = Hash[results[:options][:given].map { |o| [ o.name, o ]}]
-
-		required_specifications.each do |k, sp|
-
-			unless given_options.has_key? k
-
-				message = sp.required_message
-
-				if exit_on_missing
-
-					self.abort message
-				else
-
-					if program_name && !program_name.empty?
-
-						message = "#{program_name}: #{message}"
-					end
-
-					stderr.puts message
-				end
-
-				results[:missing_option_aliases] << sp
-			end
-		end
-
-		# now police the values
-
-		values_constraint	=	constrain_values
-		values_constraint	=	values_constraint.begin if ::Range === values_constraint && values_constraint.end == values_constraint.begin
-		val_names			=	::Array === value_names ? value_names : []
-
-		case values_constraint
-		when nil
-
-			;
-		when ::Array
-
-			warn "value of 'constrain_values' attribute, if an #{::Array}, must not be empty and all elements must be of type #{::Integer}" if values_constraint.empty? || !values_constraint.all? { |v| ::Integer === v }
-
-			unless values_constraint.include? values.size
-
-				message = make_abort_message_("wrong number of values: #{values.size} given, #{values_constraint} required")
-
-				if exit_on_missing
-
-					self.abort message
-				else
-
-					if program_name && !program_name.empty?
-
-						message = "#{program_name}: #{message}"
-					end
-
-					stderr.puts message
-				end
-			end
-		when ::Integer
-
-			unless values.size == values_constraint
-
-				if name = val_names[values.size]
-
-					message = make_abort_message_(name + ' not specified')
-				else
-
-					message = make_abort_message_("wrong number of values: #{values.size} given, #{values_constraint} required")
-				end
-
-				if exit_on_missing
-
-					self.abort message
-				else
-
-					if program_name && !program_name.empty?
-
-						message = "#{program_name}: #{message}"
-					end
-
-					stderr.puts message
-				end
-			end
-		when ::Range
-
-			unless values_constraint.include? values.size
-
-				if name = val_names[values.size]
-
-					message = make_abort_message_(name + ' not specified')
-				else
-
-					message = make_abort_message_("wrong number of values: #{values.size} givens, #{values_constraint.begin} - #{values_constraint.end - (values_constraint.exclude_end? ? 1 : 0)} required")
-				end
-
-				if exit_on_missing
-
-					self.abort message
-				else
-
-					if program_name && !program_name.empty?
-
-						message = "#{program_name}: #{message}"
-					end
-
-					stderr.puts message
-				end
-			end
-		else
-
-			warn "value of 'constrain_values' attribute - '#{constrain_values}' (#{constrain_values.class}) - of wrong type : must be #{::Array}, #{::Integer}, #{::Range}, or nil"
-		end
+		check_value_constraints_(values)
 
 
 
@@ -887,7 +1162,7 @@ class Climate
 	#
 	# === Returns
 	# The combined message string, if <tt>exit()</tt> not called.
-	def abort message, options={}
+	def abort(message, options={})
 
 		prog_name	=	options[:program_name]
 		prog_name	||=	program_name
@@ -939,7 +1214,7 @@ class Climate
 
 		check_parameter name_or_flag, 'name_or_flag', allow_nil: false, types: [ ::String, ::Symbol, ::CLASP::FlagSpecification ]
 
-		if ::CLASP::Flag === name_or_flag
+		if ::CLASP::FlagSpecification === name_or_flag
 
 			specifications << name_or_flag
 		else
@@ -969,7 +1244,7 @@ class Climate
 
 		check_parameter name_or_option, 'name_or_option', allow_nil: false, types: [ ::String, ::Symbol, ::CLASP::OptionSpecification ]
 
-		if ::CLASP::Option === name_or_option
+		if ::CLASP::OptionSpecification === name_or_option
 
 			specifications << name_or_option
 		else
@@ -1022,10 +1297,10 @@ class Climate
 		raise ArgumentError, "must supply at least one alias" if aliases.empty?
 
 		case name_or_specification
-		when ::CLASP::Flag
+		when ::CLASP::FlagSpecification
 
 			self.specifications << name_or_specification
-		when ::CLASP::Option
+		when ::CLASP::OptionSpecification
 
 			self.specifications << name_or_specification
 		else

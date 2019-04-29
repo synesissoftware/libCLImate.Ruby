@@ -21,7 +21,7 @@ climate = LibCLImate::Climate.new do |cl|
 	end
 	cl.add_alias('--verbosity=chatty', '-c')
 
-	cl.version = [ 0, 0, 1 ]
+	cl.version = [ 0, 1, 0 ]
 
 	cl.info_lines =  [
 
@@ -30,9 +30,17 @@ climate = LibCLImate::Climate.new do |cl|
 		"Illustrates use of libCLImate.Ruby's specification of flags, options, and specifications",
 		'',
 	]
+
+	cl.constrain_values = 1..2
+	cl.usage_values = "<dir-1> [ <dir-2> ]"
+	cl.value_names = [
+
+		"first directory",
+		"second directory",
+	]
 end
 
-r = climate.run ARGV
+r = climate.parse_and_verify ARGV
 
 
 
@@ -49,5 +57,7 @@ if options[:debug]
 end
 
 
+# some notional output
 
+$stdout.puts "processing in '#{r.values[0]}'" + (r.values.size > 1 ? " and '#{r.values[1]}'" : '')
 

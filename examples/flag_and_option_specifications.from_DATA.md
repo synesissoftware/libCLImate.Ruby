@@ -27,7 +27,7 @@ climate = LibCLImate::Climate.load DATA do |cl|
 	cl.on_option('--verbosity') { |o, a| options[:verbosity] = o.value }
 end
 
-r = climate.run ARGV
+r = climate.parse_and_verify ARGV
 
 
 # Program-specific processing of flags/options
@@ -87,10 +87,8 @@ libclimate:
   -
   version:
   - 0
-  - 1
-  - "2"
-```
-```ruby
+  - 2
+  - "0"
 ```
 
 ## Usage
@@ -130,7 +128,7 @@ it gives the output:
 
 ```
 libCLImate.Ruby examples
-flag_and_option_specifications.from_DATA(.rb) 0.1.2
+flag_and_option_specifications.from_DATA(.rb) 0.2.0
 Illustrates use of libCLImate.Ruby's specification of flags, options, and aliases, from DATA
 
 USAGE: flag_and_option_specifications.from_DATA(.rb) [... flags/options ...] <dir-1> [ <dir-2> ]

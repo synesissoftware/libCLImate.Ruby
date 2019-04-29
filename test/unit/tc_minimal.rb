@@ -250,7 +250,7 @@ class Test_Climate_minimal < Test::Unit::TestCase
 			bl = false#proc { is_verbose = true }
 
 			cl.add_flag('--succinct', alias: '-s', help: 'operates succinctly')
-			cl.add_flag('--verbose', alias: '-v', help: 'operates verbosely', extras: { :handle => proc { is_verbose = true }})
+			cl.add_flag('--verbose', alias: '-v', help: 'operates verbosely') { is_verbose = true }
 		end
 
 		argv = %w{ --help --verbose --succinct }
@@ -308,7 +308,7 @@ class Test_Climate_minimal < Test::Unit::TestCase
 			cl.stdout = str
 			cl.exit_on_usage = false
 
-			cl.add_flag('--verbose', alias: '-v', help: 'operates verbosely', extras: { handle: proc { is_verbose = true }})
+			cl.add_flag('--verbose', alias: '-v', help: 'operates verbosely') { is_verbose = true }
 		end
 
 		argv = %w{ --verbose }
@@ -353,7 +353,7 @@ class Test_Climate_minimal < Test::Unit::TestCase
 			cl.stdout = str
 			cl.exit_on_usage = false
 
-			cl.add_option('--verbosity', alias: '-v', help: 'determines level of verbose operation', extras: { handle: proc { |o| verbosity = o.value }})
+			cl.add_option('--verbosity', alias: '-v', help: 'determines level of verbose operation') { |o| verbosity = o.value }
 		end
 
 		argv = %w{ -v 2 }

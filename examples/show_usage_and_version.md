@@ -19,7 +19,7 @@ require 'libclimate'
 
 climate = LibCLImate::Climate.new do |cl|
 
-	cl.version = [ 0, 0, 1 ]
+	cl.version = [ 0, 1, 0 ]
 
 	cl.info_lines =  [
 
@@ -30,7 +30,7 @@ climate = LibCLImate::Climate.new do |cl|
 	]
 end
 
-climate.run ARGV
+climate.parse_and_verify ARGV
 
 
 
@@ -71,7 +71,7 @@ it gives the output:
 
 ```
 libCLImate.Ruby examples
-show_usage_and_version.rb 0.0.1
+show_usage_and_version.rb 0.1.0
 Illustrates use of libCLImate.Ruby's automatic support for '--help' and '--version'
 
 USAGE: show_usage_and_version.rb [ ... flags and options ... ]
@@ -96,7 +96,7 @@ If executed with the arguments
 it gives the output:
 
 ```
-show_usage_and_version.rb 0.0.1
+show_usage_and_version.rb 0.1.0
 ```
 
 ### Unknown option
@@ -114,4 +114,3 @@ show_usage_and_version.rb: unrecognised flag/option: --unknown=value
 ```
 
 with an exit code of 1
-

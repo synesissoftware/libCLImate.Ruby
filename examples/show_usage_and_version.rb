@@ -10,7 +10,7 @@ require 'libclimate'
 
 climate = LibCLImate::Climate.new do |cl|
 
-	cl.version = [ 0, 0, 1 ]
+	cl.version = [ 0, 1, 0 ]
 
 	cl.info_lines =  [
 
@@ -21,7 +21,7 @@ climate = LibCLImate::Climate.new do |cl|
 	]
 end
 
-climate.run ARGV
+climate.parse_and_verify ARGV
 
 
 

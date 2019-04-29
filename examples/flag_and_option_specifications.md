@@ -30,7 +30,7 @@ climate = LibCLImate::Climate.new do |cl|
 	end
 	cl.add_alias('--verbosity=chatty', '-c')
 
-	cl.version = [ 0, 0, 1 ]
+	cl.version = [ 0, 1, 0 ]
 
 	cl.info_lines =  [
 
@@ -39,9 +39,17 @@ climate = LibCLImate::Climate.new do |cl|
 		"Illustrates use of libCLImate.Ruby's specification of flags, options, and specifications",
 		'',
 	]
+
+	cl.constrain_values = 1..2
+	cl.usage_values = "<dir-1> [ <dir-2> ]"
+	cl.value_names = [
+
+		"first directory",
+		"second directory",
+	]
 end
 
-r = climate.run ARGV
+r = climate.parse_and_verify ARGV
 
 
 
@@ -56,6 +64,10 @@ if options[:debug]
 
 	$stdout.puts 'Debug mode is specified'
 end
+
+# some notional output
+
+$stdout.puts "processing in '#{r.values[0]}'" + (r.values.size > 1 ? " and '#{r.values[1]}'" : '')
 ```
 
 ## Usage
@@ -77,6 +89,7 @@ or (in a Unix shell):
 it gives the output:
 
 ```
+flag_and_option_specifications(.rb): first directory not specified; use --help for usage
 ```
 
 ### Show usage
@@ -91,7 +104,7 @@ it gives the output:
 
 ```
 libCLImate.Ruby examples
-flag_and_option_specifications.rb 0.0.1
+flag_and_option_specifications.rb 0.1.0
 Illustrates use of libCLImate.Ruby's specification of flags, options, and specifications
 
 USAGE: flag_and_option_specifications.rb [ ... flags and options ... ]
@@ -124,7 +137,7 @@ flags/options:
 If executed with the arguments
 
 ```
-    ruby examples/flag_and_option_specifications.rb --debug --verbosity=silent
+    ruby examples/flag_and_option_specifications.rb dir-1 dir-2 --debug --verbosity=silent
 ```
 
 it gives the output:
@@ -132,6 +145,7 @@ it gives the output:
 ```
 verbosity is specified as: silent
 Debug mode is specified
+processing in 'dir-1' and 'dir-2'
 ```
 
 ### Specify flags and options in short-form

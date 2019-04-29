@@ -1,0 +1,15 @@
+GEM
+  remote: https://rubygems.org/
+  specs:
+    clasp-ruby (0.21.0)
+    xqsr3 (0.33.0.1)
+
+PLATFORMS
+  ruby
+
+DEPENDENCIES
+  clasp-ruby (~> 0.21)
+  xqsr3 (~> 0.33)
+
+BUNDLED WITH
+   2.0.1

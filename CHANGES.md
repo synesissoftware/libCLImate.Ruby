@@ -1,5 +1,9 @@
 # **libCLImate.Ruby** Changes
 
+## 0.14.1 - 29th April 2019
+
+* + added Gemfile
+
 ## 0.14.0 - 15th April 2019
 
 * + Climate#constrain_values now supports Array type (as well as Integer and Range)

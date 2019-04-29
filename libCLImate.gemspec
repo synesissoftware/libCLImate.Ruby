@@ -3,6 +3,7 @@
 $:.unshift File.join(File.dirname(__FILE__), 'lib')
 
 require 'libclimate'
+
 require 'date'
 
 Gem::Specification.new do |spec|
@@ -21,8 +22,8 @@ END_DESC
 
 	spec.required_ruby_version = '~> 2.0'
 
-	spec.add_runtime_dependency 'clasp-ruby', [ '~> 0.19' ]
-	spec.add_runtime_dependency 'xqsr3', [ '~> 0.31' ]
+	spec.add_runtime_dependency 'clasp-ruby', [ '~> 0.21' ]
+	spec.add_runtime_dependency 'xqsr3', [ '~> 0.33' ]
 
 	spec.files			=	Dir[ 'Rakefile', '{bin,examples,lib,man,spec,test}/**/*', 'README*', 'LICENSE*' ] & `git ls-files -z`.split("\0")
 end

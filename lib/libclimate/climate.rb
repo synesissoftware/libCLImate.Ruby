@@ -5,7 +5,7 @@
 # Purpose:      Definition of the ::LibCLImate::Climate class
 #
 # Created:      13th July 2015
-# Updated:      15th April 2019
+# Updated:      29th April 2019
 #
 # Home:         http://github.com/synesissoftware/libCLImate.Ruby
 #
@@ -145,7 +145,7 @@ module LibCLImate
 #
 #     cl.add_flag('--verbose', alias: '-v', help: 'Makes program output verbose') { program_options[:verbose] = true }
 #
-#     cl.add_option('--flavour', alias: '-f', help: 'Specifies the flavour') do |o, a|
+#     cl.add_option('--flavour', alias: '-f', help: 'Specifies the flavour') do |o, sp|
 #
 #       program_options[:flavour] = check_flavour(o.value) or cl.abort "Invalid flavour '#{o.value}'; use --help for usage"
 #     end
@@ -603,9 +603,9 @@ class Climate
 
 		flags.each do |f|
 
-			al = specifications.detect do |a|
+			al = specifications.detect do |sp|
 
-				a.kind_of?(::CLASP::Flag) && f.name == a.name
+				sp.kind_of?(::CLASP::Flag) && f.name == sp.name
 			end
 
 			if al
@@ -665,9 +665,9 @@ class Climate
 
 		options.each do |o|
 
-			al = specifications.detect do |a|
+			al = specifications.detect do |sp|
 
-				a.kind_of?(::CLASP::Option) && o.name == a.name
+				sp.kind_of?(::CLASP::Option) && o.name == sp.name
 			end
 
 			if al
@@ -728,20 +728,20 @@ class Climate
 
 		# now police any required options
 
-		required_specifications = specifications.select do |a|
+		required_specifications = specifications.select do |sp|
 
-			a.kind_of?(::CLASP::Option) && a.required?
+			sp.kind_of?(::CLASP::Option) && sp.required?
 		end
 
-		required_specifications = Hash[required_specifications.map { |a| [ a.name, a ] }]
+		required_specifications = Hash[required_specifications.map { |sp| [ sp.name, sp ] }]
 
 		given_options = Hash[results[:options][:given].map { |o| [ o.name, o ]}]
 
-		required_specifications.each do |k, a|
+		required_specifications.each do |k, sp|
 
 			unless given_options.has_key? k
 
-				message = a.required_message
+				message = sp.required_message
 
 				if exit_on_missing
 
@@ -756,7 +756,7 @@ class Climate
 					stderr.puts message
 				end
 
-				results[:missing_option_aliases] << a
+				results[:missing_option_aliases] << sp
 			end
 		end
 

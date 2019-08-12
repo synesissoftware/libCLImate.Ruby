@@ -15,7 +15,9 @@ libCLImate, for Ruby
 
 **libCLImate** is a portable, lightweight mini-framework that encapsulates the common aspects of **C**ommand-**L**ine **I**nterface boilerplate, including:
 
-- command-line argument parsing and sorting;
+- command-line argument parsing and sorting, into flags, options, and values;
+- validating given and/or missing arguments;
+- a declarative form of specifying the CLI elements for a program, including associating blocks with flag/option specifications;
 - provision of de-facto standard CLI facilities, such as responding to '--help' and '--version';
 
 **libCLImate.Ruby** is the Ruby version.
@@ -48,7 +50,7 @@ climate = LibCLImate::Climate.new do |cl|
 
 		options[:debug] = true
 	end
-	cl.add_option('--verbosity', alias: '-v', help: 'specifies the verbosity', values: [ 'terse', 'quiet', 'silent', 'chatty' ]) do |o, a|
+	cl.add_option('--verbosity', alias: '-v', help: 'specifies the verbosity', values: [ 'terse', 'quiet', 'silent', 'chatty' ]) do |o, sp|
 
 		options[:verbosity] = o.value
 	end
@@ -102,10 +104,13 @@ Defect reports, feature requests, and pull requests are welcome on https://githu
 * [**CLASP**](https://github.com/synesissoftware/CLASP/)
 * [**CLASP.Go**](https://github.com/synesissoftware/CLASP.Go/)
 * [**CLASP.js**](https://github.com/synesissoftware/CLASP.js/)
+* [**CLASP.NET**](https://github.com/synesissoftware/CLASP.NET/)
+* [**CLASP.Python**](https://github.com/synesissoftware/CLASP.Python/)
 * [**CLASP.Ruby**](https://github.com/synesissoftware/CLASP.Ruby/)
-* [**libCLImate** (C/C++)](https://github.com/synesissoftware/libCLImate.Ruby)
+* [**libCLImate** (C/C++)](https://github.com/synesissoftware/libCLImate)
 * [**xqsr3**](https://github.com/synesissoftware.com/libCLImate.Ruby-xml/)
 
 ### License
 
 **libCLImate.Ruby** is released under the 3-clause BSD license. See [LICENSE](./LICENSE) for details.
+

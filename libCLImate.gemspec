@@ -13,11 +13,18 @@ Gem::Specification.new do |spec|
 	spec.date			=	Date.today.to_s
 	spec.summary		=	'libCLImate.Ruby'
 	spec.description	=	<<END_DESC
+libCLImate is a portable, lightweight mini-framework that encapsulates the common aspects of Command-Line Interface boilerplate, including:
 
+- command-line argument parsing and sorting, into flags, options, and values;
+- validating given and/or missing arguments;
+- a declarative form of specifying the CLI elements for a program, including associating blocks with flag/option specifications;
+- provision of de-facto standard CLI facilities, such as responding to '--help' and '--version';
+
+libCLImate.Ruby is the Ruby version.
 END_DESC
 	spec.authors		=	[ 'Matt Wilson' ]
 	spec.email			=	'matthew@synesis.com.au'
-	spec.homepage		=	'http://www.libclimate.org/'
+	spec.homepage		=	'https://github.com/synesissoftware/libCLImate.Ruby'
 	spec.license		=	'BSD-3-Clause'
 
 	spec.required_ruby_version = '~> 2.0'

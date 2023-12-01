@@ -1,4 +1,4 @@
-#!/usr/bin/env ruby
+#! /usr/bin/env ruby
 
 #############################################################################
 # File:         test/scratch/specifications.rb
@@ -6,7 +6,7 @@
 # Purpose:      Demonstrates use of specifications in options and flags
 #
 # Created:      7th February 2018
-# Updated:      7th February 2018
+# Updated:      22nd July 2022
 #
 # Author:       Matthew Wilson
 #

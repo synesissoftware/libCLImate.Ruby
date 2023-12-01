@@ -5,12 +5,13 @@
 # Purpose:      Definition of the ::LibCLImate::Climate class
 #
 # Created:      13th July 2015
-# Updated:      29th April 2019
+# Updated:      24th July 2022
 #
 # Home:         http://github.com/synesissoftware/libCLImate.Ruby
 #
 # Author:       Matthew Wilson
 #
+# Copyright (c) 2019-2022, Matthew Wilson and Synesis Information Systems
 # Copyright (c) 2015-2019, Matthew Wilson and Synesis Software
 # All rights reserved.
 #
@@ -183,6 +184,7 @@ class Climate
 			@flags					=	arguments.flags
 			@options				=	arguments.options
 			@values					=	arguments.values
+			@double_slash_index		=	arguments.double_slash_index
 		end
 
 		# (Climate) The +Climate+ instance from which this instance was obtained
@@ -208,6 +210,8 @@ class Climate
 
 		# (String) A (frozen) array of values
 		attr_reader :values
+
+		attr_reader :double_slash_index
 
 		# Verifies the initiating command-line against the specifications,
 		# raising an exception if any missing, unused, or unrecognised flags,
@@ -970,8 +974,8 @@ class Climate
 	#
 	# === Returns
 	# an instance of a type derived from +::Hash+ with the additional
-	# attributes +flags+, +options+, +values+, and +argv+.
-	#
+	# attributes +flags+, +options+, +values+, +double_slash_index+ and
+	# +argv+.
 	def run(argv = ARGV) # :yields: customised +::Hash+
 
 		raise ArgumentError, "argv may not be nil" if argv.nil?
@@ -987,6 +991,8 @@ class Climate
 		flags		=	arguments.flags
 		options		=	arguments.options
 		values		=	arguments.values.to_a
+
+		double_slash_index	=	arguments.double_slash_index
 
 		results		=	{
 
@@ -1136,6 +1142,11 @@ class Climate
 		def results.values
 
 			self[:values]
+		end
+
+		results.define_singleton_method(:double_slash_index) do
+
+			double_slash_index
 		end
 
 		results.define_singleton_method(:argv) do

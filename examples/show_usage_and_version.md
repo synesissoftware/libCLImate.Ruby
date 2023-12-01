@@ -7,7 +7,7 @@ Simple example supporting ```--help``` and ```--version```.
 ## Source
 
 ```ruby
-#!/usr/bin/env ruby
+#! /usr/bin/env ruby
 
 # examples/show_usage_and_version.rb
 

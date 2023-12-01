@@ -1,4 +1,4 @@
-#!/usr/bin/env ruby
+#! /usr/bin/env ruby
 #
 # test version inference
 
@@ -44,6 +44,7 @@ class Test_Climate_parse < Test::Unit::TestCase
 		assert_equal 0, r.flags.size
 		assert_equal 0, r.options.size
 		assert_equal 0, r.values.size
+		assert_nil r.double_slash_index
 
 		r.verify()
 	end
@@ -69,6 +70,7 @@ class Test_Climate_parse < Test::Unit::TestCase
 		argv = [
 
 			'-d',
+			'--',
 		]
 
 		r = climate.parse argv
@@ -79,6 +81,7 @@ class Test_Climate_parse < Test::Unit::TestCase
 		assert_equal 1, r.flags.size
 		assert_equal 0, r.options.size
 		assert_equal 0, r.values.size
+		assert_equal 1, r.double_slash_index
 
 		flag0 = r.flags[0]
 
@@ -125,6 +128,7 @@ class Test_Climate_parse < Test::Unit::TestCase
 		assert_equal 0, r.flags.size
 		assert_equal 1, r.options.size
 		assert_equal 0, r.values.size
+		assert_nil r.double_slash_index
 
 		option0 = r.options[0]
 
@@ -156,6 +160,7 @@ class Test_Climate_parse < Test::Unit::TestCase
 		assert $stderr.equal? climate.stderr
 
 		argv = [
+			'--',
 		]
 
 		r = climate.parse argv
@@ -164,6 +169,7 @@ class Test_Climate_parse < Test::Unit::TestCase
 		assert_equal 0, r.flags.size
 		assert_equal 0, r.options.size
 		assert_equal 0, r.values.size
+		assert_equal 0, r.double_slash_index
 
 		assert_raise_with_message(MissingRequiredException, /.*verbosity.*not specified/) { r.verify(raise_on_required: MissingRequiredException) }
 	end

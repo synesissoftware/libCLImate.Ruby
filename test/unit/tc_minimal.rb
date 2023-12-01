@@ -1,4 +1,4 @@
-#!/usr/bin/env ruby
+#! /usr/bin/env ruby
 #
 # test simple scenarios
 
@@ -71,6 +71,7 @@ class Test_Climate_minimal < Test::Unit::TestCase
 		assert_equal 0, r[:options][:unhandled].size
 		assert_equal 0, r[:options][:unknown].size
 		assert_equal 0, r[:values].size
+		assert_nil r.double_slash_index
 
 		lines	=	str.string.split(/\n/)
 		lines	=	lines.reject { |line| line.chomp.strip.empty? }
@@ -119,6 +120,7 @@ class Test_Climate_minimal < Test::Unit::TestCase
 		assert_equal 0, r[:options][:unhandled].size
 		assert_equal 0, r[:options][:unknown].size
 		assert_equal 0, r[:values].size
+		assert_nil r.double_slash_index
 
 		lines	=	str.string.split(/\n/)
 		lines	=	lines.reject { |line| line.chomp.strip.empty? }

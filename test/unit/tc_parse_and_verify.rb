@@ -1,4 +1,4 @@
-#!/usr/bin/env ruby
+#! /usr/bin/env ruby
 #
 # test version inference
 
@@ -44,6 +44,7 @@ class Test_Climate_parse_and_verify < Test::Unit::TestCase
 		assert_equal 0, r.flags.size
 		assert_equal 0, r.options.size
 		assert_equal 0, r.values.size
+		assert_nil r.double_slash_index
 	end
 
 	def test_one_flag_with_block
@@ -77,6 +78,7 @@ class Test_Climate_parse_and_verify < Test::Unit::TestCase
 		assert_equal 1, r.flags.size
 		assert_equal 0, r.options.size
 		assert_equal 0, r.values.size
+		assert_nil r.double_slash_index
 
 		flag0 = r.flags[0]
 
@@ -119,6 +121,7 @@ class Test_Climate_parse_and_verify < Test::Unit::TestCase
 		assert_equal 0, r.flags.size
 		assert_equal 1, r.options.size
 		assert_equal 0, r.values.size
+		assert_nil r.double_slash_index
 
 		option0 = r.options[0]
 

@@ -7,7 +7,7 @@ Example illustrating various kinds of *flag* and *option* specifications, includ
 ## Source
 
 ```ruby
-#!/usr/bin/env ruby
+#! /usr/bin/env ruby
 
 # examples/flag_and_option_specifications.rb
 

@@ -1,17 +1,17 @@
 
 # ######################################################################## #
-# File:         lib/libclimate/climate.rb
+# File:     lib/libclimate/climate.rb
 #
-# Purpose:      Definition of the ::LibCLImate::Climate class
+# Purpose:  Definition of the ::LibCLImate::Climate class
 #
-# Created:      13th July 2015
-# Updated:      24th July 2022
+# Created:  13th July 2015
+# Updated:  10th August 2024
 #
-# Home:         http://github.com/synesissoftware/libCLImate.Ruby
+# Home:     http://github.com/synesissoftware/libCLImate.Ruby
 #
-# Author:       Matthew Wilson
+# Author:   Matthew Wilson
 #
-# Copyright (c) 2019-2022, Matthew Wilson and Synesis Information Systems
+# Copyright (c) 2019-2024, Matthew Wilson and Synesis Information Systems
 # Copyright (c) 2015-2019, Matthew Wilson and Synesis Software
 # All rights reserved.
 #
@@ -144,7 +144,7 @@ module LibCLImate
 #
 #   program_options = {}
 #
-#   climate = LibCLImate::Climate.new do |cl|
+#   climate = LibCLImate::Climate.new(value_attributes: true)  do |cl|
 #
 #     cl.add_flag('--verbose', alias: '-v', help: 'Makes program output verbose') { program_options[:verbose] = true }
 #
@@ -153,8 +153,9 @@ module LibCLImate
 #       program_options[:flavour] = check_flavour(o.value) or cl.abort "Invalid flavour '#{o.value}'; use --help for usage"
 #     end
 #
-#     cl.usage_values = '<value-1> [ ... <value-N> ]'
-#     cl.constrain_values = 1..100000
+#     cl.usage_values = '<source-path> [ <destination-path> ]'
+#     cl.constrain_values = 1..2
+#     cl.value_names = %w{ source-path destination-path }
 #
 #     cl.info_lines = [
 #
@@ -163,6 +164,10 @@ module LibCLImate
 #       'An example program',
 #     ]
 #   end
+#
+#   r = climate.run ARGV
+#
+#   puts "copying from '#{r.source_path}' to '#{r.destination_path || '.'}'"
 #
 class Climate
 
@@ -789,6 +794,7 @@ class Climate
 	#   - +:no_help_flag+ (boolean) Prevents the use of the +CLASP::Flag.Help+ flag-specification
 	#   - +:no_version_flag+ (boolean) Prevents the use of the +CLASP::Flag.Version+ flag-specification
 	#   - +:program_name+ (::String) An explicit program-name, which is inferred from +$0+ if this is +nil+
+	#   - +:value_attributes+ (boolean) Causes any possible value-names, as described in `#value_names`, to be applied as attributes with the given values, if any, on the command-line
 	#   - +:version+ (String, [Integer], [String]) A version specification. If not specified, this is inferred
 	#   - +:version_context+ Object or class that defines a context for searching the version. Ignored if +:version+ is specified
 	#
@@ -829,6 +835,8 @@ class Climate
 		@value_names		=	[]
 		version_context		=	options[:version_context]
 		@version			=	options[:version] || infer_version_(version_context)
+
+		@value_attributes	=	options[:value_attributes]
 
 		unless options[:no_help_flag]
 
@@ -929,7 +937,7 @@ class Climate
 	#
 	# === Returns
 	# (ParseResults) Results
-	def parse(argv = ARGV) # :yields: ParseResults
+	def parse(argv = ARGV, **options) # :yields: ParseResults
 
 		raise ArgumentError, "argv may not be nil" if argv.nil?
 
@@ -957,7 +965,7 @@ class Climate
 	# (ParseResults) Results
 	def parse_and_verify(argv = ARGV, **options) # :yields: ParseResults
 
-		r = parse argv
+		r = parse argv, **options
 
 		r.verify(**options)
 
@@ -976,17 +984,17 @@ class Climate
 	# an instance of a type derived from +::Hash+ with the additional
 	# attributes +flags+, +options+, +values+, +double_slash_index+ and
 	# +argv+.
-	def run(argv = ARGV) # :yields: customised +::Hash+
+	def run(argv = ARGV, **options) # :yields: customised +::Hash+
 
 		raise ArgumentError, "argv may not be nil" if argv.nil?
 
 		arguments = CLASP::Arguments.new argv, specifications
 
-		run_ argv, arguments
+		run_ argv, arguments, **options
 	end
 
 	private
-	def run_(argv, arguments) # :nodoc:
+	def run_(argv, arguments, **opts) # :nodoc:
 
 		flags		=	arguments.flags
 		options		=	arguments.options
@@ -1153,6 +1161,31 @@ class Climate
 
 			argv
 		end
+
+
+		if opts[:value_attributes] || @value_attributes
+
+		  (value_names || []).each_with_index do |name, index|
+
+			name = name.gsub(/-/, '_').to_sym
+
+			if results.respond_to? name
+
+			  warn "cannot create attribute `#{name}` on instance of `#{results.class}` because that name is already used"
+			else
+
+			  value = results.values[index]
+
+			  results.define_singleton_method(name) do
+
+				value
+			  end
+			end
+		  end
+		end
+
+
+		results.freeze
 
 		results
 	end
@@ -1395,6 +1428,7 @@ class Climate
 	end
 end # class Climate
 end # module LibCLImate
+
 
 # ############################## end of file ############################# #
 

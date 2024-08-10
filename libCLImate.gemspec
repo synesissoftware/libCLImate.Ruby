@@ -29,8 +29,8 @@ END_DESC
 
 	spec.required_ruby_version = [ '>= 2.0', '< 4' ]
 
-	spec.add_runtime_dependency 'clasp-ruby', [ '~> 0.23'  ]
-	spec.add_runtime_dependency 'xqsr3', [ '~> 0.38' ]
+	spec.add_runtime_dependency 'clasp-ruby', [ '~> 0.23', '>= 0.23.0.2'  ]
+	spec.add_runtime_dependency 'xqsr3', [ '~> 0.39' ]
 
 	spec.files			=	Dir[ 'Rakefile', '{bin,examples,lib,man,spec,test}/**/*', 'README*', 'LICENSE*' ] & `git ls-files -z`.split("\0")
 end

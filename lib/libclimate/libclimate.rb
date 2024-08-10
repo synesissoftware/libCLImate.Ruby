@@ -1,14 +1,14 @@
 # ######################################################################## #
-# File:         libclimate/libclimate.rb
+# File:     libclimate/libclimate.rb
 #
-# Purpose:      Main file for libclimate.Ruby library
+# Purpose:  Main file for libclimate.Ruby library
 #
-# Created:      13th July 2015
-# Updated:      13th April 2019
+# Created:  13th July 2015
+# Updated:  10th August 2024
 #
-# Home:         http://github.com/synesissoftware/libCLImate.Ruby
+# Home:     http://github.com/synesissoftware/libCLImate.Ruby
 #
-# Copyright (c) 2015-2019, Matthew Wilson and Synesis Software
+# Copyright (c) 2015-2024, Matthew Wilson and Synesis Software
 # All rights reserved.
 #
 # Redistribution and use in source and binary forms, with or without
@@ -49,6 +49,7 @@ require 'libclimate/version'
 # * ::LibCLImate::Climate
 module LibCLImate
 end # module LibCLImate
+
 
 # ############################## end of file ############################# #
 

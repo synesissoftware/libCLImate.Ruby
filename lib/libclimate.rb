@@ -1,14 +1,14 @@
 # ######################################################################## #
-# File:         libclimate.rb
+# File:     libclimate.rb
 #
-# Purpose:      Top-level include for libclimate.Ruby library
+# Purpose:  Top-level include for libclimate.Ruby library
 #
-# Created:      13th July 2015
-# Updated:      14th May 2016
+# Created:  13th July 2015
+# Updated:  3rd February 2025
 #
-# Home:         http://github.com/synesissoftware/libCLImate.Ruby
+# Home:     http://github.com/synesissoftware/libCLImate.Ruby
 #
-# Copyright (c) 2015-2016, Matthew Wilson and Synesis Software
+# Copyright (c) 2015-2025, Matthew Wilson and Synesis Software
 # All rights reserved.
 #
 # Redistribution and use in source and binary forms, with or without
@@ -38,6 +38,7 @@
 
 
 require 'libclimate/libclimate'
+
 
 # ############################## end of file ############################# #
 

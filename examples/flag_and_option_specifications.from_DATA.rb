@@ -13,9 +13,9 @@ require 'libclimate'
 options = {}
 climate = LibCLImate::Climate.load DATA do |cl|
 
-	cl.on_flag('--debug') { options[:debug] = true }
+  cl.on_flag('--debug') { options[:debug] = true }
 
-	cl.on_option('--verbosity') { |o, a| options[:verbosity] = o.value }
+  cl.on_option('--verbosity') { |o, a| options[:verbosity] = o.value }
 end
 
 r = climate.parse_and_verify ARGV
@@ -25,12 +25,12 @@ r = climate.parse_and_verify ARGV
 
 if options[:verbosity]
 
-	$stdout.puts "verbosity is specified as: #{options[:verbosity]}"
+  $stdout.puts "verbosity is specified as: #{options[:verbosity]}"
 end
 
 if options[:debug]
 
-	$stdout.puts 'Debug mode is specified'
+  $stdout.puts 'Debug mode is specified'
 end
 
 

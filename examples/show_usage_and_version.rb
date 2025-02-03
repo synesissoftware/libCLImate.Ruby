@@ -10,15 +10,15 @@ require 'libclimate'
 
 climate = LibCLImate::Climate.new do |cl|
 
-	cl.version = [ 0, 1, 0 ]
+  cl.version = [ 0, 1, 0 ]
 
-	cl.info_lines =  [
+  cl.info_lines =  [
 
-		'libCLImate.Ruby examples',
-		:version,
-		"Illustrates use of libCLImate.Ruby's automatic support for '--help' and '--version'",
-		'',
-	]
+    'libCLImate.Ruby examples',
+    :version,
+    "Illustrates use of libCLImate.Ruby's automatic support for '--help' and '--version'",
+    '',
+  ]
 end
 
 climate.parse_and_verify ARGV

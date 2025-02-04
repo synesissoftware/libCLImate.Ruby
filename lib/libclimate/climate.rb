@@ -5,7 +5,7 @@
 # Purpose:  Definition of the ::LibCLImate::Climate class
 #
 # Created:  13th July 2015
-# Updated:  3rd February 2025
+# Updated:  4th February 2025
 #
 # Home:     http://github.com/synesissoftware/libCLImate.Ruby
 #
@@ -52,17 +52,50 @@ require 'yaml'
 
 #:stopdoc:
 
-# TODO: Need to work with other colouring libraries, too
-if !defined? Colcon # :nodoc:
+# TODO: Need to work with other colouring libraries: try Colcon, HighLine
 
-  begin
+def libCLImate_embolden_ s # :nodoc:
 
-    require 'colcon'
-  rescue LoadError #=> x
+  s
+end # libCLImate_embolden_()
 
-    warn "could not load colcon library" if $DEBUG
+if $stdout.tty? # :nodoc:
+
+  if !defined?(Colcon) && !defined?(HighLine)
+
+    begin
+
+      require 'colcon'
+    rescue LoadError #=> x
+
+      warn "could not load colcon library" if $DEBUG
+
+      begin
+
+        require 'highline'
+      rescue LoadError #=> x
+
+        warn "could not load HighLine library" if $DEBUG
+      end
+    end
+  end
+
+  if false
+  elsif defined?(Colcon)
+
+    def libCLImate_embolden_ s
+
+      "#{::Colcon::Decorations::Bold}#{s}#{::Colcon::Decorations::Unbold}"
+    end # libCLImate_embolden_()
+  elsif defined?(HighLine)
+
+    def libCLImate_embolden_ s
+
+      HighLine.color(s, :bold)
+    end # libCLImate_embolden_()
   end
 end
+
 
 # We monkey-patch CLASP module's Flag and Option generator methods by
 # added in an +action+ attribute (but only if it does not exist)
@@ -450,15 +483,15 @@ class Climate
       end
     else
 
-      return PROGRAM_VERSION if defined? PROGRAM_VERSION
+      return PROGRAM_VERSION if defined?(PROGRAM_VERSION)
 
       ver = []
 
-      if defined? PROGRAM_VER_MAJOR
+      if defined?(PROGRAM_VER_MAJOR)
 
         ver << PROGRAM_VER_MAJOR
 
-        if defined? PROGRAM_VER_MINOR
+        if defined?(PROGRAM_VER_MINOR)
 
           ver << PROGRAM_VER_MINOR
 
@@ -472,7 +505,7 @@ class Climate
               ver << PROGRAM_VER_REVISION
             end
 
-            if defined? PROGRAM_VER_BUILD
+            if defined?(PROGRAM_VER_BUILD)
 
               ver << PROGRAM_VER_BUILD
             end
@@ -900,14 +933,7 @@ class Climate
   # (String) A program name; defaults to the name of the executing script
   def program_name
 
-    name = @program_name
-
-    if defined?(Colcon) && @stdout.tty?
-
-      name = "#{::Colcon::Decorations::Bold}#{name}#{::Colcon::Decorations::Unbold}"
-    end
-
-    name
+    libCLImate_embolden_ @program_name
   end
   # Sets the +program_name+ attribute
   attr_writer :program_name

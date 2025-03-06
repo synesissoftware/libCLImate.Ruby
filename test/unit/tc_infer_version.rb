@@ -13,96 +13,96 @@ require 'test/unit'
 
 require 'stringio'
 
-PROGRAM_VER_MAJOR	=	3
+PROGRAM_VER_MAJOR = 3
 
 class Test_Climate_infer_version_3_22 < Test::Unit::TestCase
 
-	PROGRAM_VER_MINOR	=	22
+  PROGRAM_VER_MINOR = 22
 
-	def test_inference_of_version
+  def test_inference_of_version
 
-		strout = StringIO.new
+    strout = StringIO.new
 
-		climate = LibCLImate::Climate.new(version_context: self) do |cl|
+    climate = LibCLImate::Climate.new(version_context: self) do |cl|
 
-			cl.program_name		=	'myprog'
-			cl.stdout			=	strout
+      cl.program_name   = 'myprog'
+      cl.stdout         = strout
 
-			cl.exit_on_usage	=	false
-		end.run [ 'myprog', '--version' ]
+      cl.exit_on_usage  = false
+    end.run [ 'myprog', '--version' ]
 
-		s = strout.string
+    s = strout.string
 
-		assert_equal "myprog 3.22", s.chomp
-	end
+    assert_equal "myprog 3.22", s.chomp
+  end
 end
 
 class Test_Climate_infer_version_3_2_99 < Test::Unit::TestCase
 
-	PROGRAM_VER_MINOR		=	2
-	PROGRAM_VER_REVISION	=	99
+  PROGRAM_VER_MINOR     = 2
+  PROGRAM_VER_REVISION  = 99
 
-	def test_inference_of_version
+  def test_inference_of_version
 
-		strout = StringIO.new
+    strout = StringIO.new
 
-		climate = LibCLImate::Climate.new(version_context: self) do |cl|
+    climate = LibCLImate::Climate.new(version_context: self) do |cl|
 
-			cl.program_name		=	'myprog'
-			cl.stdout			=	strout
+      cl.program_name   = 'myprog'
+      cl.stdout         = strout
 
-			cl.exit_on_usage	=	false
-		end.run [ 'myprog', '--version' ]
+      cl.exit_on_usage  = false
+    end.run [ 'myprog', '--version' ]
 
-		s = strout.string
+    s = strout.string
 
-		assert_equal "myprog 3.2.99", s.chomp
-	end
+    assert_equal "myprog 3.2.99", s.chomp
+  end
 end
 
 class Test_Climate_infer_PROGRAM_VERSION_as_array < Test::Unit::TestCase
 
-	PROGRAM_VERSION	=	[ 11, 12, 13 ]
+  PROGRAM_VERSION = [ 11, 12, 13 ]
 
-	def test_inference_of_version
+  def test_inference_of_version
 
-		strout = StringIO.new
+    strout = StringIO.new
 
-		climate = LibCLImate::Climate.new(version_context: self) do |cl|
+    climate = LibCLImate::Climate.new(version_context: self) do |cl|
 
-			cl.program_name		=	'myprog'
-			cl.stdout			=	strout
+      cl.program_name   = 'myprog'
+      cl.stdout         = strout
 
-			cl.exit_on_usage	=	false
-		end.run [ 'myprog', '--version' ]
+      cl.exit_on_usage  = false
+    end.run [ 'myprog', '--version' ]
 
-		s = strout.string
+    s = strout.string
 
-		assert_equal "myprog 11.12.13", s.chomp
-	end
+    assert_equal "myprog 11.12.13", s.chomp
+  end
 end
 
 class Test_Climate_infer_version_3_2_99_via_PATCH < Test::Unit::TestCase
 
-	PROGRAM_VER_MINOR	=	7
-	PROGRAM_VER_PATCH	=	101
+  PROGRAM_VER_MINOR = 7
+  PROGRAM_VER_PATCH = 101
 
-	def test_inference_of_version
+  def test_inference_of_version
 
-		strout = StringIO.new
+    strout = StringIO.new
 
-		climate = LibCLImate::Climate.new(version_context: self) do |cl|
+    climate = LibCLImate::Climate.new(version_context: self) do |cl|
 
-			cl.program_name		=	'myprog'
-			cl.stdout			=	strout
+      cl.program_name   = 'myprog'
+      cl.stdout         = strout
 
-			cl.exit_on_usage	=	false
-		end.run [ 'myprog', '--version' ]
+      cl.exit_on_usage  = false
+    end.run [ 'myprog', '--version' ]
 
-		s = strout.string
+    s = strout.string
 
-		assert_equal "myprog 3.7.101", s.chomp
-	end
+    assert_equal "myprog 3.7.101", s.chomp
+  end
 end
 
 # ############################## end of file ############################# #

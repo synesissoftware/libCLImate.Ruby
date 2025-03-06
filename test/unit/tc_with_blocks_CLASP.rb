@@ -15,37 +15,37 @@ require 'stringio'
 
 class Test_Climate_with_blocks_CLASP < Test::Unit::TestCase
 
-	def test_flag_with_block
+  def test_flag_with_block
 
-		is_verbose	=	false
+    is_verbose = false
 
-		climate = LibCLImate::Climate.new do |cl|
+    climate = LibCLImate::Climate.new do |cl|
 
-			cl.add_flag('--verbose') { is_verbose = true }
-		end
+      cl.add_flag('--verbose') { is_verbose = true }
+    end
 
-		argv = %w{ --verbose }
+    argv = %w{ --verbose }
 
-		climate.run argv
+    climate.run argv
 
-		assert is_verbose, "block associated with flag '--verbose' was not executed"
-	end
+    assert is_verbose, "block associated with flag '--verbose' was not executed"
+  end
 
-	def test_option_with_block
+  def test_option_with_block
 
-		flavour	=	nil
+    flavour = nil
 
-		climate = LibCLImate::Climate.new do |cl|
+    climate = LibCLImate::Climate.new do |cl|
 
-			cl.add_option('--flavour') { |o|  flavour = o.value }
-		end
+      cl.add_option('--flavour') { |o|  flavour = o.value }
+    end
 
-		argv = %w{ --flavour=blueberry }
+    argv = %w{ --flavour=blueberry }
 
-		climate.run argv
+    climate.run argv
 
-		assert_equal 'blueberry', flavour
-	end
+    assert_equal 'blueberry', flavour
+  end
 end
 
 # ############################## end of file ############################# #

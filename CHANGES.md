@@ -1,6 +1,11 @@
 # **libCLImate.Ruby** Changes <!-- omit in toc -->
 
 
+## 0.17.1 - 30th July 2026
+
+* fixed unrecognised flag/option reporting defect;
+
+
 ## 0.17.0.2 - 30th July 2026
 
 * + added `TODO.md` and updated existing boilerplate files to use the end-of-file marker;

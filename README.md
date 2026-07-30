@@ -2,7 +2,12 @@
 
 libCLImate, for Ruby
 
+![Language](https://img.shields.io/badge/Ruby-CC342D?style=flat&logo=ruby&logoColor=white)
+[![License](https://img.shields.io/badge/License-BSD_3--Clause-blue.svg)](https://opensource.org/licenses/BSD-3-Clause)
 [![Gem Version](https://badge.fury.io/rb/libclimate-ruby.svg)](https://badge.fury.io/rb/libclimate-ruby)
+[![Gem Downloads](https://img.shields.io/gem/dt/libclimate-ruby.svg)](https://rubygems.org/gems/libclimate-ruby)
+[![GitHub release](https://img.shields.io/github/v/release/synesissoftware/libCLImate.Ruby.svg)](https://github.com/synesissoftware/libCLImate.Ruby/releases/latest)
+[![Last Commit](https://img.shields.io/github/last-commit/synesissoftware/libCLImate.Ruby)](https://github.com/synesissoftware/libCLImate.Ruby/commits/master)
 
 
 ## Table of Contents <!-- omit in toc -->
@@ -12,6 +17,11 @@ libCLImate, for Ruby
 - [Components](#components)
 - [Examples](#examples)
 - [Project Information](#project-information)
+	- [Where to get help](#where-to-get-help)
+	- [Contribution guidelines](#contribution-guidelines)
+	- [Dependencies](#dependencies)
+	- [Related projects](#related-projects)
+	- [License](#license)
 
 
 ## Introduction
@@ -45,7 +55,7 @@ require 'libclimate'
 
 ## Components
 
-In common with several other variants of **libCLImate**, **libCLImate.Ruby** revolves around a ``Climate`` ``class`` whose initialiser takes a block and acts as a lightweight DSL for concise definition of a command-line parsing instance, as in:
+In common with several other variants of **libCLImate**, **libCLImate.Ruby** revolves around a ``Climate`` class whose initialiser takes a block and acts as a lightweight DSL for concise definition of a command-line parsing instance, as in:
 
 ```Ruby
 options = {}
@@ -104,10 +114,12 @@ Defect reports, feature requests, and pull requests are welcome on https://githu
 
 ### Dependencies
 
-**libCLImate.Ruby** depends on:
+This library has efferent dependencies on:
 
 * the [**CLASP.Ruby**](https://github.com/synesissoftware/CLASP.Ruby) library; and
 * the [**xqsr3**](https://github.com/synesissoftware/xqsr3) library.
+
+It has no known afferent dependencies.
 
 
 ### Related projects

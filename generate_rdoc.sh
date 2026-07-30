@@ -1,12 +1,12 @@
-#!/bin/bash
+#! /bin/bash
 
 #############################################################################
-# File:         generate_rdoc.sh
+# File:     generate_rdoc.sh
 #
-# Purpose:      Generates documentation
+# Purpose:  Generates documentation
 #
-# Created:      11th June 2016
-# Updated:      13th April 2019
+# Created:  11th June 2016
+# Updated:  30th July 2026
 #
 #############################################################################
 

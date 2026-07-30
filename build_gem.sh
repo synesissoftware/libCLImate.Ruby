@@ -1,16 +1,14 @@
-#!/bin/bash
+#! /bin/bash
 
 #############################################################################
-# File:         build_gem.sh
+# File:     build_gem.sh
 #
-# Purpose:      Builds the gem
+# Purpose:  Builds the gem
 #
-# Created:      14 07 2015
-# Updated:      14 07 2015
+# Created:  14th July 2015
+# Updated:  30th July 2026
 #
-# Author:       Matthew Wilson
-#
-# Copyright:    <<TBD>>
+# Author:   Matthew Wilson
 #
 #############################################################################
 

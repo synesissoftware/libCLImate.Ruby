@@ -22,9 +22,9 @@ require 'libclimate'
 options = {}
 climate = LibCLImate::Climate.load DATA do |cl|
 
-	cl.on_flag('--debug') { options[:debug] = true }
+  cl.on_flag('--debug') { options[:debug] = true }
 
-	cl.on_option('--verbosity') { |o, a| options[:verbosity] = o.value }
+  cl.on_option('--verbosity') { |o, a| options[:verbosity] = o.value }
 end
 
 r = climate.parse_and_verify ARGV
@@ -34,12 +34,12 @@ r = climate.parse_and_verify ARGV
 
 if options[:verbosity]
 
-	$stdout.puts "verbosity is specified as: #{options[:verbosity]}"
+  $stdout.puts "verbosity is specified as: #{options[:verbosity]}"
 end
 
 if options[:debug]
 
-	$stdout.puts 'Debug mode is specified'
+  $stdout.puts 'Debug mode is specified'
 end
 
 
@@ -93,20 +93,20 @@ libclimate:
 
 ## Usage
 
-NOTE: in order to demonstrate fully the utility of the *loading-from-source-file-YAML* facility, I've added a constraint for 1-2 values - notionally directories - 
+NOTE: in order to demonstrate fully the utility of the *loading-from-source-file-YAML* facility, I've added a constraint for 1-2 values - notionally directories -
 
 ### No arguments
 
 If executed with no arguments
 
 ```
-    ruby examples/flag_and_option_specifications.from_DATA.rb
+ruby examples/flag_and_option_specifications.from_DATA.rb
 ```
 
 or (in a Unix shell):
 
 ```
-    ./examples/flag_and_option_specifications.from_DATA.rb
+./examples/flag_and_option_specifications.from_DATA.rb
 ```
 
 it gives the output (with an exit code of **1**):
@@ -121,7 +121,7 @@ flag_and_option_specifications.from_DATA(.rb): first directory not specified; us
 If executed with the arguments
 
 ```
-    ruby examples/flag_and_option_specifications.from_DATA.rb --help
+ruby examples/flag_and_option_specifications.from_DATA.rb --help
 ```
 
 it gives the output:
@@ -135,26 +135,26 @@ USAGE: flag_and_option_specifications.from_DATA(.rb) [... flags/options ...] <di
 
 flags/options:
 
-	--help
-		shows this help and terminates
+  --help
+    shows this help and terminates
 
-	--version
-		shows version and terminates
+  --version
+    shows version and terminates
 
-	-d
-	--debug
-		runs in Debug mode
+  -d
+  --debug
+    runs in Debug mode
 
-	--chatty --verbosity=chatty
-	-c --verbosity=chatty
-	--verbosity=<value>
-		specifies the verbosity
-		where <value> one of:
-			silent
-			quiet
-			terse
-			chatty
-			verbose
+  --chatty --verbosity=chatty
+  -c --verbosity=chatty
+  --verbosity=<value>
+    specifies the verbosity
+    where <value> one of:
+      silent
+      quiet
+      terse
+      chatty
+      verbose
 
 ```
 
@@ -163,7 +163,7 @@ flags/options:
 If executed with the arguments
 
 ```
-    ruby examples/flag_and_option_specifications.from_DATA.rb dir-1 dir-2 --debug --verbosity=silent
+ruby examples/flag_and_option_specifications.from_DATA.rb dir-1 dir-2 --debug --verbosity=silent
 ```
 
 it gives the output:
@@ -179,7 +179,7 @@ processing in 'dir-1' and 'dir-2'
 If executed with the arguments
 
 ```
-    ruby examples/flag_and_option_specifications.from_DATA.rb dir-1 dir-2 -v silent -d
+ruby examples/flag_and_option_specifications.from_DATA.rb dir-1 dir-2 -v silent -d
 ```
 
 it gives the (same) output:
@@ -195,7 +195,7 @@ processing in 'dir-1' and 'dir-2'
 If executed with the arguments
 
 ```
-    ruby examples/flag_and_option_specifications.from_DATA.rb dir-1 dir-2 -c -d
+ruby examples/flag_and_option_specifications.from_DATA.rb dir-1 dir-2 -c -d
 ```
 
 it gives the output:
@@ -211,7 +211,7 @@ processing in 'dir-1' and 'dir-2'
 If executed with the arguments
 
 ```
-    ruby examples/flag_and_option_specifications.from_DATA.rb dir-1 dir-2 -dc
+ruby examples/flag_and_option_specifications.from_DATA.rb dir-1 dir-2 -dc
 ```
 
 it gives the (same) output:

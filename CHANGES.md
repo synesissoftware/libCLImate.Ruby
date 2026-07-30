@@ -1,4 +1,4 @@
-# **libCLImate.Ruby** Changes
+# **libCLImate.Ruby** Changes <!-- omit in toc -->
 
 ## 0.17.0 - 10th August 2024
 
@@ -60,3 +60,4 @@
 T.B.C.
 
 
+<!-- ########################### end of file ########################### -->

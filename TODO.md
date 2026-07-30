@@ -10,7 +10,7 @@
 
 ## Functional improvements
 
-* \<none>
+* [ ] Take `make_abort_message_()` to non-`public` again;
 
 
 ## Performance improvements

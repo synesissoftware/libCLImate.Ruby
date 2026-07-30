@@ -156,5 +156,85 @@ class Test_Climate_parse_and_verify < Test::Unit::TestCase
       climate.parse_and_verify argv, raise_on_required: MissingRequiredException
     end
   end
+
+  def test_unrecognized_flag_raises_unrecognised_argument_exception
+
+    stdout = StringIO.new
+    stderr = StringIO.new
+
+    climate = LibCLImate::Climate.new do |cl|
+
+      cl.stdout = $stdout
+      cl.stderr = $stderr
+    end
+
+    assert $stdout.equal? climate.stdout
+    assert $stderr.equal? climate.stderr
+
+    argv = [
+
+      '--unrecognised-flag',
+    ]
+
+    assert_raise_with_message(UnrecognisedArgumentException, /unrecognised flag '--unrecognised-flag'/) do
+
+      climate.parse_and_verify argv, raise_on_unrecognised: UnrecognisedArgumentException
+    end
+  end
+
+  def test_unrecognized_option_raises_unrecognised_argument_exception
+
+    stdout = StringIO.new
+    stderr = StringIO.new
+
+    climate = LibCLImate::Climate.new do |cl|
+
+      cl.stdout = $stdout
+      cl.stderr = $stderr
+    end
+
+    assert $stdout.equal? climate.stdout
+    assert $stderr.equal? climate.stderr
+
+    argv = [
+
+      '--unrecognised-option=some_value',
+    ]
+
+    assert_raise_with_message(UnrecognisedArgumentException, /unrecognised option '--unrecognised-option=some_value'/) do
+
+      climate.parse_and_verify argv, raise_on_unrecognised: UnrecognisedArgumentException
+    end
+  end
+
+  def test_add_flag_method_exists_and_is_callable
+
+    climate = LibCLImate::Climate.new {}
+
+    # Assert that calling add_flag does not raise an exception
+    assert_nothing_raised do
+
+      climate.add_flag('--test-flag')
+    end
+
+    # Verify that the flag is added to specifications
+    assert_equal 3, climate.specifications.size
+    assert_equal '--test-flag', climate.specifications[2].name
+  end
+
+  def test_add_option_method_exists_and_is_callable
+
+    climate = LibCLImate::Climate.new {}
+
+    # Assert that calling add_option does not raise an exception
+    assert_nothing_raised do
+
+      climate.add_option('--test-option')
+    end
+
+    # Verify that the option is added to specifications
+    assert_equal 3, climate.specifications.size
+    assert_equal '--test-option', climate.specifications[2].name
+  end
 end
 

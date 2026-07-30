@@ -1,4 +1,4 @@
-# libCLImate.Ruby Examples
+# libCLImate.Ruby Examples <!-- omit in toc -->
 
 |Name|Source & Description|Summary|
 |---|---|---|
@@ -6,3 +6,5 @@
 |**flag_and_option_specifications**|[examples/flag_and_option_specifications.rb](/examples/flag_and_option_specifications.rb)<br/>[examples/flag_and_option_specifications.md](/examples/flag_and_option_specifications.md)|Example illustrating various kinds of *flag* and *option* specifications|
 |**flag_and_option_specifications**|[examples/flag_and_option_specifications.from_DATA.rb](/examples/flag_and_option_specifications.from_DATA.rb)<br/>[examples/flag_and_option_specifications.from_DATA.md](/examples/flag_and_option_specifications.from_DATA.md)|Example illustrating various kinds of *flag* and *option* specifications loaded from the ``__END__``/``DATA`` section of the program file as **YAML**|
 
+
+<!-- ########################### end of file ########################### -->

@@ -1,5 +1,22 @@
 # **libCLImate.Ruby** Changes <!-- omit in toc -->
 
+
+## 0.17.0.1 - 30th July 2026
+
+* + added `TODO.md` and updated existing boilerplate files to use the end-of-file marker;
+* ~ updated boilerplate:
+  * ~ `README.md`: updated tagline placement, added license and other badges, and enhanced dependencies section with Efferent/Afferent coupling information;
+  * ~ `LICENSE`: updated copyright years and format;
+  * ~ `libCLImate.gemspec`: updated comment header and date;
+  * ~ `.vscode/settings.json`: updated various language settings for indentation, rulers, and file associations;
+  * ~ `build_gem.sh`, `generate_rdoc.sh`, `test/scratch/blankzeroes.rb`: updated dates;
+* ~ updated dependencies;
+* ~ tidying;
+
+
+## 0.17.0.2 - 30th July 2026
+
+
 ## 0.17.0 - 10th August 2024
 
 * + added option `:value_attributes` to cause any possible value-names, as described by `#value_names`, to be applied as attributes with the given value, if any, on the command-line;

@@ -1,7 +1,7 @@
 # **libCLImate.Ruby** Changes <!-- omit in toc -->
 
 
-## 0.17.0.1 - 30th July 2026
+## 0.17.0.2 - 30th July 2026
 
 * + added `TODO.md` and updated existing boilerplate files to use the end-of-file marker;
 * ~ updated boilerplate:
@@ -14,7 +14,20 @@
 * ~ tidying;
 * added **.vimrc**;
 
-## 0.17.0.2 - 30th July 2026
+
+## 0.17.0.1 - 5th March 2025
+
+* **Documentation**:
+  * Improved `README.md` tagline placement, expanded dependencies section with Efferent/Afferent coupling details, and added license badge;
+  * Updated `CHANGES.md` with a summary of these changes;
+  * Added `TODO.md` for project task tracking;
+  * Updated `EXAMPLES.md` to use end-of-file marker;
+* **IDE Settings (`.vscode/settings.json`)**:
+  * Expanded language-specific settings for indentation, rulers, and formatting for C, C++, C#, Go, JSON, Markdown, Python, Ruby, Rust, Shellscript, and TypeScript;
+  * Configured Go formatting and linting;
+  * Updated file associations and search exclusions;
+  * Set `git.mergeEditor` to `false`;
+* **Code Formatting**: Applied consistent indentation (spaces over tabs, 2-space where applicable) in various Ruby example and test files (`examples/*.rb`, `test/unit/*.rb`, `test/scratch/*.rb`) to adhere to `.cursor/rules/ruby-standards.mdc`;
 
 
 ## 0.17.0 - 10th August 2024

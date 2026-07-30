@@ -9,9 +9,9 @@ require 'libclimate'
 
 require 'xqsr3/extensions/test/unit'
 
+require 'stringio'
 require 'test/unit'
 
-require 'stringio'
 
 PROGRAM_VER_MAJOR = 3
 

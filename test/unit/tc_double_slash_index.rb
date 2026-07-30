@@ -9,9 +9,9 @@ require 'libclimate'
 
 require 'xqsr3/extensions/test/unit'
 
+require 'stringio'
 require 'test/unit'
 
-require 'stringio'
 
 class Test_Climate_double_slash_index < Test::Unit::TestCase
 

@@ -9,9 +9,9 @@ require 'libclimate'
 
 require 'xqsr3/extensions/test/unit'
 
+require 'stringio'
 require 'test/unit'
 
-require 'stringio'
 
 class Test_Climate_parse_and_verify < Test::Unit::TestCase
 

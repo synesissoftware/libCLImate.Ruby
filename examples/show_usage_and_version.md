@@ -19,15 +19,15 @@ require 'libclimate'
 
 climate = LibCLImate::Climate.new do |cl|
 
-	cl.version = [ 0, 1, 0 ]
+  cl.version = [ 0, 1, 0 ]
 
-	cl.info_lines =  [
+  cl.info_lines =  [
 
-		'libCLImate.Ruby examples',
-		:version,
-		"Illustrates use of libCLImate.Ruby's automatic support for '--help' and '--version'",
-		'',
-	]
+    'libCLImate.Ruby examples',
+    :version,
+    "Illustrates use of libCLImate.Ruby's automatic support for '--help' and '--version'",
+    '',
+  ]
 end
 
 climate.parse_and_verify ARGV
@@ -44,13 +44,13 @@ $stdout.puts 'no flags specified'
 If executed with no arguments
 
 ```
-    ruby examples/show_usage_and_version.rb
+ruby examples/show_usage_and_version.rb
 ```
 
 or (in a Unix shell):
 
 ```
-    ./examples/show_usage_and_version.rb
+./examples/show_usage_and_version.rb
 ```
 
 it gives the output:
@@ -64,7 +64,7 @@ no flags specified
 If executed with the arguments
 
 ```
-    ruby examples/show_usage_and_version.rb --help
+ruby examples/show_usage_and_version.rb --help
 ```
 
 it gives the output:
@@ -78,11 +78,11 @@ USAGE: show_usage_and_version.rb [ ... flags and options ... ]
 
 flags/options:
 
-	--help
-		shows this help and terminates
+  --help
+    shows this help and terminates
 
-	--version
-		shows version and terminates
+  --version
+    shows version and terminates
 ```
 
 ### Show version
@@ -90,7 +90,7 @@ flags/options:
 If executed with the arguments
 
 ```
-    ruby examples/show_usage_and_version.rb --version
+ruby examples/show_usage_and_version.rb --version
 ```
 
 it gives the output:
@@ -104,7 +104,7 @@ show_usage_and_version.rb 0.1.0
 If executed with the arguments
 
 ```
-    ruby examples/show_usage_and_version.rb --unknown=value
+ruby examples/show_usage_and_version.rb --unknown=value
 ```
 
 it gives the output (on the standard error stream):

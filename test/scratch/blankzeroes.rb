@@ -1,4 +1,4 @@
-#!/usr/bin/ruby
+#! /usr/bin/ruby
 
 #############################################################################
 # File:     test/scratch/blankzeroes.rb
@@ -6,7 +6,7 @@
 # Purpose:  This filter program converts 0 values in a TSV into blanks
 #
 # Created:  14th May 2016
-# Updated:  6th March 2025
+# Updated:  30th July 2026
 #
 # Author:   Matthew Wilson
 #

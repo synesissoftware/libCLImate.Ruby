@@ -1,15 +1,28 @@
-# libCLImate.Ruby
+# libCLImate.Ruby <!-- omit in toc -->
+
 libCLImate, for Ruby
 
+![Language](https://img.shields.io/badge/Ruby-CC342D?style=flat&logo=ruby&logoColor=white)
+[![License](https://img.shields.io/badge/License-BSD_3--Clause-blue.svg)](https://opensource.org/licenses/BSD-3-Clause)
 [![Gem Version](https://badge.fury.io/rb/libclimate-ruby.svg)](https://badge.fury.io/rb/libclimate-ruby)
+[![Gem Downloads](https://img.shields.io/gem/dt/libclimate-ruby.svg)](https://rubygems.org/gems/libclimate-ruby)
+[![GitHub release](https://img.shields.io/github/v/release/synesissoftware/libCLImate.Ruby.svg)](https://github.com/synesissoftware/libCLImate.Ruby/releases/latest)
+[![Last Commit](https://img.shields.io/github/last-commit/synesissoftware/libCLImate.Ruby)](https://github.com/synesissoftware/libCLImate.Ruby/commits/master)
 
-## Table of Contents
 
-1. [Introduction](#introduction)
-2. [Installation](#installation)
-3. [Components](#components)
-4. [Examples](#examples)
-5. [Project Information](#project-information)
+## Table of Contents <!-- omit in toc -->
+
+- [Introduction](#introduction)
+- [Installation](#installation)
+- [Components](#components)
+- [Examples](#examples)
+- [Project Information](#project-information)
+  - [Where to get help](#where-to-get-help)
+  - [Contribution guidelines](#contribution-guidelines)
+  - [Dependencies](#dependencies)
+  - [Related projects](#related-projects)
+  - [License](#license)
+
 
 ## Introduction
 
@@ -22,12 +35,13 @@ libCLImate, for Ruby
 
 **libCLImate.Ruby** is the Ruby version.
 
+
 ## Installation
 
 Install via **gem** as in:
 
 ```
-	gem install libclimate-ruby
+gem install libclimate-ruby
 ```
 
 or add it to your `Gemfile`.
@@ -38,43 +52,45 @@ Use via **require**, as in:
 require 'libclimate'
 ```
 
+
 ## Components
 
-In common with several other variants of **libCLImate**, **libCLImate.Ruby** revolves around a ``Climate`` ``class`` whose initialiser takes a block and acts as a lightweight DSL for concise definition of a command-line parsing instance, as in:
+In common with several other variants of **libCLImate**, **libCLImate.Ruby** revolves around a ``Climate`` class whose initialiser takes a block and acts as a lightweight DSL for concise definition of a command-line parsing instance, as in:
 
 ```Ruby
 options = {}
 climate = LibCLImate::Climate.new do |cl|
 
-	cl.add_flag('--debug', alias: '-d', help: 'runs in Debug mode') do
+  cl.add_flag('--debug', alias: '-d', help: 'runs in Debug mode') do
 
-		options[:debug] = true
-	end
-	cl.add_option('--verbosity', alias: '-v', help: 'specifies the verbosity', values: [ 'terse', 'quiet', 'silent', 'chatty' ]) do |o, sp|
+    options[:debug] = true
+  end
+  cl.add_option('--verbosity', alias: '-v', help: 'specifies the verbosity', values: [ 'terse', 'quiet', 'silent', 'chatty' ]) do |o, sp|
 
-		options[:verbosity] = o.value
-	end
-	cl.add_alias('--verbosity=chatty', '-c')
+    options[:verbosity] = o.value
+  end
+  cl.add_alias('--verbosity=chatty', '-c')
 
-	cl.version = [ 0, 1, 0 ]
+  cl.version = [ 0, 1, 0 ]
 
-	cl.info_lines =  [
+  cl.info_lines =  [
 
-		'libCLImate.Ruby examples',
-		:version,
-		"Illustrates use of libCLImate.Ruby's specification of flags, options, and specifications",
-		'',
-	]
+    'libCLImate.Ruby examples',
+    :version,
+    "Illustrates use of libCLImate.Ruby's specification of flags, options, and specifications",
+    '',
+  ]
 
-	cl.constrain_values = 1..2
-	cl.usage_values = "<dir-1> [ <dir-2> ]"
-	cl.value_names = [
+  cl.constrain_values = 1..2
+  cl.usage_values = "<dir-1> [ <dir-2> ]"
+  cl.value_names = [
 
-		"first directory",
-		"second directory",
-	]
+    "first directory",
+    "second directory",
+  ]
 end
 ```
+
 
 ## Examples
 
@@ -82,22 +98,29 @@ Examples are provided in the ```examples``` directory, along with a markdown des
 
 It is instructive to see how much more succinct they are than those (offering precisely the same functionality) presented in [**CLASP.Ruby**](https://github.com/synesissoftware/CLASP.Ruby).
 
+
 ## Project Information
+
 
 ### Where to get help
 
 [GitHub Page](https://github.com/synesissoftware/libCLImate.Ruby "GitHub Page")
 
+
 ### Contribution guidelines
 
 Defect reports, feature requests, and pull requests are welcome on https://github.com/synesissoftware/libCLImate.Ruby.
 
+
 ### Dependencies
 
-**libCLImate.Ruby** depends on:
+This library has efferent dependencies on:
 
 * the [**CLASP.Ruby**](https://github.com/synesissoftware/CLASP.Ruby) library; and
 * the [**xqsr3**](https://github.com/synesissoftware/xqsr3) library.
+
+It has no known afferent dependencies.
+
 
 ### Related projects
 
@@ -108,9 +131,13 @@ Defect reports, feature requests, and pull requests are welcome on https://githu
 * [**CLASP.Python**](https://github.com/synesissoftware/CLASP.Python/)
 * [**CLASP.Ruby**](https://github.com/synesissoftware/CLASP.Ruby/)
 * [**libCLImate** (C/C++)](https://github.com/synesissoftware/libCLImate)
+* [**libCLImate.Go** (Go)](https://github.com/synesissoftware/libCLImate.Go)
 * [**xqsr3**](https://github.com/synesissoftware.com/libCLImate.Ruby-xml/)
+
 
 ### License
 
 **libCLImate.Ruby** is released under the 3-clause BSD license. See [LICENSE](./LICENSE) for details.
 
+
+<!-- ########################### end of file ########################### -->

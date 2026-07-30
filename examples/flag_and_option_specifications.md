@@ -20,33 +20,33 @@ require 'libclimate'
 options = {}
 climate = LibCLImate::Climate.new do |cl|
 
-	cl.add_flag('--debug', alias: '-d', help: 'runs in Debug mode') do
+  cl.add_flag('--debug', alias: '-d', help: 'runs in Debug mode') do
 
-		options[:debug] = true
-	end
-	cl.add_option('--verbosity', alias: '-v', help: 'specifies the verbosity', values: [ 'terse', 'quiet', 'silent', 'chatty' ]) do |o, a|
+    options[:debug] = true
+  end
+  cl.add_option('--verbosity', alias: '-v', help: 'specifies the verbosity', values: [ 'terse', 'quiet', 'silent', 'chatty' ]) do |o, a|
 
-		options[:verbosity] = o.value
-	end
-	cl.add_alias('--verbosity=chatty', '-c')
+    options[:verbosity] = o.value
+  end
+  cl.add_alias('--verbosity=chatty', '-c')
 
-	cl.version = [ 0, 1, 0 ]
+  cl.version = [ 0, 1, 0 ]
 
-	cl.info_lines =  [
+  cl.info_lines =  [
 
-		'libCLImate.Ruby examples',
-		:version,
-		"Illustrates use of libCLImate.Ruby's specification of flags, options, and specifications",
-		'',
-	]
+    'libCLImate.Ruby examples',
+    :version,
+    "Illustrates use of libCLImate.Ruby's specification of flags, options, and specifications",
+    '',
+  ]
 
-	cl.constrain_values = 1..2
-	cl.usage_values = "<dir-1> [ <dir-2> ]"
-	cl.value_names = [
+  cl.constrain_values = 1..2
+  cl.usage_values = "<dir-1> [ <dir-2> ]"
+  cl.value_names = [
 
-		"first directory",
-		"second directory",
-	]
+    "first directory",
+    "second directory",
+  ]
 end
 
 r = climate.parse_and_verify ARGV
@@ -57,12 +57,12 @@ r = climate.parse_and_verify ARGV
 
 if options[:verbosity]
 
-	$stdout.puts "verbosity is specified as: #{options[:verbosity]}"
+  $stdout.puts "verbosity is specified as: #{options[:verbosity]}"
 end
 
 if options[:debug]
 
-	$stdout.puts 'Debug mode is specified'
+  $stdout.puts 'Debug mode is specified'
 end
 
 # some notional output
@@ -77,13 +77,13 @@ $stdout.puts "processing in '#{r.values[0]}'" + (r.values.size > 1 ? " and '#{r.
 If executed with no arguments
 
 ```
-    ruby examples/flag_and_option_specifications.rb
+ruby examples/flag_and_option_specifications.rb
 ```
 
 or (in a Unix shell):
 
 ```
-    ./examples/flag_and_option_specifications.rb
+./examples/flag_and_option_specifications.rb
 ```
 
 it gives the output:
@@ -97,7 +97,7 @@ flag_and_option_specifications(.rb): first directory not specified; use --help f
 If executed with the arguments
 
 ```
-    ruby examples/flag_and_option_specifications.rb --help
+ruby examples/flag_and_option_specifications.rb --help
 ```
 
 it gives the output:
@@ -111,25 +111,25 @@ USAGE: flag_and_option_specifications.rb [ ... flags and options ... ]
 
 flags/options:
 
-	-d
-	--debug
-		runs in Debug mode
+  -d
+  --debug
+    runs in Debug mode
 
-	-c --verbosity=chatty
-	-v <value>
-	--verbosity=<value>
-		specifies the verbosity
-		where <value> one of:
-			terse
-			quiet
-			silent
-			chatty
+  -c --verbosity=chatty
+  -v <value>
+  --verbosity=<value>
+    specifies the verbosity
+    where <value> one of:
+      terse
+      quiet
+      silent
+      chatty
 
-	--help
-		Shows usage and terminates
+  --help
+    Shows usage and terminates
 
-	--version
-		Shows version and terminates
+  --version
+    Shows version and terminates
 ```
 
 ### Specify flags and options in long-form
@@ -137,7 +137,7 @@ flags/options:
 If executed with the arguments
 
 ```
-    ruby examples/flag_and_option_specifications.rb dir-1 dir-2 --debug --verbosity=silent
+ruby examples/flag_and_option_specifications.rb dir-1 dir-2 --debug --verbosity=silent
 ```
 
 it gives the output:
@@ -153,7 +153,7 @@ processing in 'dir-1' and 'dir-2'
 If executed with the arguments
 
 ```
-    ruby examples/flag_and_option_specifications.rb dir-1 dir-2 -v silent -d
+ruby examples/flag_and_option_specifications.rb dir-1 dir-2 -v silent -d
 ```
 
 it gives the (same) output:
@@ -169,7 +169,7 @@ processing in 'dir-1' and 'dir-2'
 If executed with the arguments
 
 ```
-    ruby examples/flag_and_option_specifications.rb -c -d dir-1 dir-2
+ruby examples/flag_and_option_specifications.rb -c -d dir-1 dir-2
 ```
 
 it gives the output:
@@ -185,7 +185,7 @@ processing in 'dir-1' and 'dir-2'
 If executed with the arguments
 
 ```
-    ruby examples/flag_and_option_specifications.rb -dc dir-1 dir-2
+ruby examples/flag_and_option_specifications.rb -dc dir-1 dir-2
 ```
 
 it gives the (same) output:

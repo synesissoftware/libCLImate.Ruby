@@ -12,7 +12,7 @@
   * ~ `build_gem.sh`, `generate_rdoc.sh`, `test/scratch/blankzeroes.rb`: updated dates;
 * ~ updated dependencies;
 * ~ tidying;
-
+* added **.vimrc**;
 
 ## 0.17.0.2 - 30th July 2026
 

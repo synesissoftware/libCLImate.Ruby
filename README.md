@@ -1,15 +1,18 @@
-# libCLImate.Ruby
+# libCLImate.Ruby <!-- omit in toc -->
+
 libCLImate, for Ruby
 
 [![Gem Version](https://badge.fury.io/rb/libclimate-ruby.svg)](https://badge.fury.io/rb/libclimate-ruby)
 
-## Table of Contents
 
-1. [Introduction](#introduction)
-2. [Installation](#installation)
-3. [Components](#components)
-4. [Examples](#examples)
-5. [Project Information](#project-information)
+## Table of Contents <!-- omit in toc -->
+
+- [Introduction](#introduction)
+- [Installation](#installation)
+- [Components](#components)
+- [Examples](#examples)
+- [Project Information](#project-information)
+
 
 ## Introduction
 
@@ -22,12 +25,13 @@ libCLImate, for Ruby
 
 **libCLImate.Ruby** is the Ruby version.
 
+
 ## Installation
 
 Install via **gem** as in:
 
 ```
-	gem install libclimate-ruby
+gem install libclimate-ruby
 ```
 
 or add it to your `Gemfile`.
@@ -37,6 +41,7 @@ Use via **require**, as in:
 ```Ruby
 require 'libclimate'
 ```
+
 
 ## Components
 
@@ -76,21 +81,26 @@ climate = LibCLImate::Climate.new do |cl|
 end
 ```
 
+
 ## Examples
 
 Examples are provided in the ```examples``` directory, along with a markdown description for each. A detailed list TOC of them is provided in [EXAMPLES.md](./EXAMPLES.md).
 
 It is instructive to see how much more succinct they are than those (offering precisely the same functionality) presented in [**CLASP.Ruby**](https://github.com/synesissoftware/CLASP.Ruby).
 
+
 ## Project Information
+
 
 ### Where to get help
 
 [GitHub Page](https://github.com/synesissoftware/libCLImate.Ruby "GitHub Page")
 
+
 ### Contribution guidelines
 
 Defect reports, feature requests, and pull requests are welcome on https://github.com/synesissoftware/libCLImate.Ruby.
+
 
 ### Dependencies
 
@@ -98,6 +108,7 @@ Defect reports, feature requests, and pull requests are welcome on https://githu
 
 * the [**CLASP.Ruby**](https://github.com/synesissoftware/CLASP.Ruby) library; and
 * the [**xqsr3**](https://github.com/synesissoftware/xqsr3) library.
+
 
 ### Related projects
 
@@ -108,9 +119,13 @@ Defect reports, feature requests, and pull requests are welcome on https://githu
 * [**CLASP.Python**](https://github.com/synesissoftware/CLASP.Python/)
 * [**CLASP.Ruby**](https://github.com/synesissoftware/CLASP.Ruby/)
 * [**libCLImate** (C/C++)](https://github.com/synesissoftware/libCLImate)
+* [**libCLImate.Go** (Go)](https://github.com/synesissoftware/libCLImate.Go)
 * [**xqsr3**](https://github.com/synesissoftware.com/libCLImate.Ruby-xml/)
+
 
 ### License
 
 **libCLImate.Ruby** is released under the 3-clause BSD license. See [LICENSE](./LICENSE) for details.
 
+
+<!-- ########################### end of file ########################### -->

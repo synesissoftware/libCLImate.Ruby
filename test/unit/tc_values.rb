@@ -6,9 +6,10 @@ $:.unshift File.join(File.dirname(__FILE__), '../..', 'lib')
 require 'libclimate'
 
 require 'xqsr3/extensions/test/unit'
-require 'test/unit'
 
 require 'stringio'
+require 'test/unit'
+
 
 class Test_Climate_values_constraints < Test::Unit::TestCase
 

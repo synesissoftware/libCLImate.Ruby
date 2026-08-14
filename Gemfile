@@ -2,13 +2,4 @@
 
 source "https://rubygems.org"
 
-gem 'clasp-ruby', [ '~> 0.23', '>= 0.23.1' ]
-
-if RUBY_VERSION >= '2'
-
-  gem "xqsr3", [ '~> 0.39', '>= 0.39.4' ]
-else
-
-  gem 'xqsr3', '~> 0.21.3'
-end
-
+gemspec

@@ -40,6 +40,13 @@ END_DESC
 
   spec.required_ruby_version = [ '>= 2.0', '< 4' ]
 
+  spec.metadata = {
+    'bug_tracker_uri' => 'https://github.com/synesissoftware/libCLImate.Ruby/issues',
+    'changelog_uri' => 'https://github.com/synesissoftware/libCLImate.Ruby/blob/master/CHANGES.md',
+    'homepage_uri' => 'https://github.com/synesissoftware/libCLImate.Ruby',
+    'source_code_uri' => 'https://github.com/synesissoftware/libCLImate.Ruby',
+  }
+
   spec.add_runtime_dependency "clasp-ruby", [ '~> 0.23', '>= 0.23.0.2' ]
   spec.add_runtime_dependency "xqsr3", [ '>= 0.39.5', '< 1.0' ]
 

@@ -5,12 +5,9 @@
 #
 # Purpose:  Builds the gem
 #
-# Created:  14th July 2015
-# Updated:  30th July 2026
-#
-# Author:   Matthew Wilson
+# Created:  9th June 2016
+# Updated:  14th August 2026
 #
 #############################################################################
 
-gem build libCLImate.gemspec $*
-
+gem build *.gemspec $*

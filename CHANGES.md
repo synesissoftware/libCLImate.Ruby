@@ -1,4 +1,4 @@
-# **libCLImate.Ruby** Changes <!-- omit in toc -->
+# libCLImate.Ruby Changes <!-- omit in toc -->
 
 
 ## 0.17.1 - 30th July 2026

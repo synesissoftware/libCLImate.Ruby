@@ -1,4 +1,4 @@
-# libCLImate.Ruby Example - **flag_and_option_specifications**
+# libCLImate.Ruby - Example - **flag_and_option_specifications**
 
 ## Summary
 

@@ -1,15 +1,16 @@
 GEM
   remote: https://rubygems.org/
   specs:
-    clasp-ruby (0.23.0.2)
-    xqsr3 (0.39.3)
+    clasp-ruby (0.23.1)
+    xqsr3 (0.39.4.1)
 
 PLATFORMS
-  x86_64-darwin-20
+  arm64-darwin-25
+  ruby
 
 DEPENDENCIES
-  clasp-ruby (~> 0.23, >= 0.23.0.2)
-  xqsr3 (~> 0.39)
+  clasp-ruby (~> 0.23, >= 0.23.1)
+  xqsr3 (~> 0.39, >= 0.39.4)
 
 BUNDLED WITH
-   2.3.16
+   2.6.9

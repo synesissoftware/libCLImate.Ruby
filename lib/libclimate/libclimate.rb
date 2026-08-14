@@ -1,10 +1,11 @@
+# frozen_string_literal: true
 # ######################################################################## #
 # File:     libclimate/libclimate.rb
 #
 # Purpose:  Main file for libclimate.Ruby library
 #
 # Created:  13th July 2015
-# Updated:  10th August 2024
+# Updated:  15th August 2026
 #
 # Home:     http://github.com/synesissoftware/libCLImate.Ruby
 #

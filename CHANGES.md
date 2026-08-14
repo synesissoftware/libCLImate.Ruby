@@ -1,6 +1,11 @@
 # libCLImate.Ruby - Changes <!-- omit in toc -->
 
 
+## 0.17.2 - 15th August 2026
+
+T.B.C.
+
+
 ## 0.17.1 - 30th July 2026
 
 * fixed unrecognised flag/option reporting defect;

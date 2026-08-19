@@ -2,10 +2,11 @@
 
 | Date               | News Item                                                                                       |
 | ------------------ | ----------------------------------------------------------------------------------------------- |
+| 19th August 2026   | [**libCLImate.Ruby** 0.17.3](https://github.com/synesissoftware/libCLImate.Ruby/releases/tag/0.17.3) |
 | 15th August 2026   | [**libCLImate.Ruby** 0.17.2](https://github.com/synesissoftware/libCLImate.Ruby/releases/tag/0.17.2) |
 | 30th July 2026     | [**libCLImate.Ruby** 0.17.1](https://github.com/synesissoftware/libCLImate.Ruby/releases/tag/0.17.1) |
 | 30th July 2026     | **libCLImate.Ruby** 0.17.0.2 released                                                           |
-| 6th March 2025     | **libCLImate.Ruby** 0.17.0.1 released                                                           |
+| 5th March 2025     | **libCLImate.Ruby** 0.17.0.1 released                                                           |
 | 10th August 2024   | **libCLImate.Ruby** 0.17.0 released                                                             |
 | 1st December 2023  | **libCLImate.Ruby** 0.16.0.1 released                                                           |
 | 1st December 2023  | **libCLImate.Ruby** 0.16.0 released                                                             |

@@ -5,9 +5,9 @@
 # Purpose:      Top-level include for libclimate.Ruby library
 #
 # Created:      13th July 2015
-# Updated:      15th August 2026
+# Updated:      19th August 2026
 #
-# Home:         http://github.com/synesissoftware/libCLImate.Ruby
+# Home:         https://github.com/synesissoftware/libCLImate.Ruby
 #
 # Copyright (c) 2015-2016, Matthew Wilson and Synesis Software
 # All rights reserved.

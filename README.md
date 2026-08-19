@@ -5,8 +5,6 @@ libCLImate, for Ruby
 ![Language](https://img.shields.io/badge/Ruby-CC342D?style=flat&logo=ruby&logoColor=white)
 [![License](https://img.shields.io/badge/License-BSD_3--Clause-blue.svg)](https://opensource.org/licenses/BSD-3-Clause)
 [![Gem Version](https://badge.fury.io/rb/libclimate-ruby.svg)](https://badge.fury.io/rb/libclimate-ruby)
-[![Gem Downloads](https://img.shields.io/gem/dt/libclimate-ruby.svg)](https://rubygems.org/gems/libclimate-ruby)
-[![GitHub release](https://img.shields.io/github/v/release/synesissoftware/libCLImate.Ruby.svg)](https://github.com/synesissoftware/libCLImate.Ruby/releases/latest)
 [![Last Commit](https://img.shields.io/github/last-commit/synesissoftware/libCLImate.Ruby)](https://github.com/synesissoftware/libCLImate.Ruby/commits/master)
 [![Ruby](https://github.com/synesissoftware/libCLImate.Ruby/actions/workflows/ruby.yml/badge.svg)](https://github.com/synesissoftware/libCLImate.Ruby/actions/workflows/ruby.yml)
 
@@ -21,6 +19,12 @@ libCLImate, for Ruby
   - [Where to get help](#where-to-get-help)
   - [Contribution guidelines](#contribution-guidelines)
   - [Dependencies](#dependencies)
+    - [Efferent (fan-out)](#efferent-fan-out)
+      - [Runtime Dependencies (aka "Normal Dependencies")](#runtime-dependencies-aka-normal-dependencies)
+      - [Development Dependencies](#development-dependencies)
+    - [Afferent (fan-in)](#afferent-fan-in)
+      - [Runtime dependents](#runtime-dependents)
+      - [Development dependents](#development-dependents)
   - [Related projects](#related-projects)
   - [License](#license)
 
@@ -115,25 +119,49 @@ Defect reports, feature requests, and pull requests are welcome on https://githu
 
 ### Dependencies
 
-This library has efferent dependencies on:
 
-* the [**CLASP.Ruby**](https://github.com/synesissoftware/CLASP.Ruby) library; and
-* the [**xqsr3**](https://github.com/synesissoftware/xqsr3) library.
+#### Efferent (fan-out)
 
-It has no known afferent dependencies.
+Libraries upon which **libCLImate.Ruby** depends:
+
+
+##### Runtime Dependencies (aka "Normal Dependencies")
+
+* [**CLASP.Ruby**](https://github.com/synesissoftware/CLASP.Ruby);
+* [**xqsr3**](https://github.com/synesissoftware/xqsr3);
+
+
+##### Development Dependencies
+
+* [**rake**](https://rubygems.org/gems/rake);
+* [**test-unit**](https://rubygems.org/gems/test-unit);
+
+
+#### Afferent (fan-in)
+
+Projects that depend on **libCLImate.Ruby**:
+
+
+##### Runtime dependents
+
+* [**oss-src-tools**](https://github.com/mwsis/oss-src-tools);
+
+
+##### Development dependents
+
+* \<none>;
 
 
 ### Related projects
 
-* [**CLASP**](https://github.com/synesissoftware/CLASP/)
-* [**CLASP.Go**](https://github.com/synesissoftware/CLASP.Go/)
-* [**CLASP.js**](https://github.com/synesissoftware/CLASP.js/)
-* [**CLASP.NET**](https://github.com/synesissoftware/CLASP.NET/)
-* [**CLASP.Python**](https://github.com/synesissoftware/CLASP.Python/)
-* [**CLASP.Ruby**](https://github.com/synesissoftware/CLASP.Ruby/)
-* [**libCLImate** (C/C++)](https://github.com/synesissoftware/libCLImate)
-* [**libCLImate.Go** (Go)](https://github.com/synesissoftware/libCLImate.Go)
-* [**xqsr3**](https://github.com/synesissoftware.com/libCLImate.Ruby-xml/)
+* [**CLASP**](https://github.com/synesissoftware/CLASP/);
+* [**CLASP.Go**](https://github.com/synesissoftware/CLASP.Go/);
+* [**CLASP.js**](https://github.com/synesissoftware/CLASP.js/);
+* [**CLASP.NET**](https://github.com/synesissoftware/CLASP.NET/);
+* [**CLASP.Python**](https://github.com/synesissoftware/CLASP.Python/);
+* [**CLASP.Ruby**](https://github.com/synesissoftware/CLASP.Ruby/);
+* [**libCLImate** (C/C++)](https://github.com/synesissoftware/libCLImate);
+* [**libCLImate.Go**](https://github.com/synesissoftware/libCLImate.Go);
 
 
 ### License

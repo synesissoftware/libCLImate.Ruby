@@ -1,6 +1,18 @@
 # libCLImate.Ruby - Changes <!-- omit in toc -->
 
 
+## 0.17.3 - 28th August 2026
+
+* library source **Home:** URLs now use `https`;
+* renamed **libCLImate.gemspec** to **libclimate-ruby.gemspec** so the filename stem matches `spec.name`;
+* **libclimate-ruby.gemspec**: `required_ruby_version` is the range `>= 2.0`; **Gemfile.lock** and **.ruby-version** excluded from `spec.files`; `spec.summary` matches the README tagline; packaged **AUTHORS**, **CHANGES**, **CONTRIBUTING**, **EXAMPLES**, **FAQ**, **INSTALL**, **NEWS**, **SECURITY**, **TODO**;
+* **Gemfile** sets `lockfile false` when Bundler supports it; stop tracking **Gemfile.lock**;
+* CI uses `bundler-cache: false` and explicit `bundle install`; **Warnings** job on Ruby **3.4**; `gem build libclimate-ruby.gemspec`;
+* updated **run_all_unit_tests.sh** (from https://github.com/synesissoftware/misc-dev-scripts) to skip **tput** when **$TERM** is unset or stdout is not a TTY;
+* **README.md**: dropped Downloads / GitHub-release badges; nested **Dependencies** (Efferent / Afferent); listed **oss-src-tools** as a runtime dependent; dropped the broken **xqsr3** related-project URL;
+* **EXAMPLES.md** example links are repo-relative (`./examples/…`);
+
+
 ## 0.17.2 - 15th August 2026
 
 * added `# frozen_string_literal: true` to all **lib/** sources;

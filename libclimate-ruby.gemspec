@@ -1,12 +1,13 @@
-# ######################################################################### #
-# File:     libclimate.gemspec
+# ######################################################################## #
+# File:     libclimate-ruby.gemspec
 #
 # Purpose:  Gemspec for libCLImate.Ruby library
 #
 # Created:  1st March 2019
-# Updated:  15th August 2026
+# Updated:  19th August 2026
 #
-# ######################################################################### #
+# ######################################################################## #
+
 
 $:.unshift File.join(File.dirname(__FILE__), 'lib')
 
@@ -16,8 +17,8 @@ require 'libclimate/version'
 Gem::Specification.new do |spec|
 
   spec.name         = 'libclimate-ruby'
+  spec.summary      = 'libCLImate, for Ruby'
   spec.version      = LibCLImate::VERSION
-  spec.summary      = 'libCLImate.Ruby'
   spec.description  = <<END_DESC
 libCLImate is a portable, lightweight mini-framework that encapsulates the common aspects of Command-Line Interface boilerplate, including:
 
@@ -38,7 +39,10 @@ END_DESC
   spec.homepage     = 'https://github.com/synesissoftware/libCLImate.Ruby'
   spec.license      = 'BSD-3-Clause'
 
-  spec.required_ruby_version = [ '>= 2.0', '< 4' ]
+  spec.required_ruby_version = [ '>= 2.0' ]
+
+  spec.add_runtime_dependency "clasp-ruby", [ '~> 0.23', '>= 0.23.0.2' ]
+  spec.add_runtime_dependency "xqsr3", [ '>= 0.39.5', '< 1.0' ]
 
   spec.metadata = {
     'bug_tracker_uri' => 'https://github.com/synesissoftware/libCLImate.Ruby/issues',
@@ -47,10 +51,25 @@ END_DESC
     'source_code_uri' => 'https://github.com/synesissoftware/libCLImate.Ruby',
   }
 
-  spec.add_runtime_dependency "clasp-ruby", [ '~> 0.23', '>= 0.23.0.2' ]
-  spec.add_runtime_dependency "xqsr3", [ '>= 0.39.5', '< 1.0' ]
-
-  spec.files        = Dir[ 'Rakefile', '{bin,examples,lib,man,spec,test}/**/*', 'README*', 'LICENSE*' ] & `git ls-files -z`.split("\0")
+  spec.files = Dir[
+    'Rakefile',
+    '{bin,examples,lib,man,spec,test}/**/*',
+    'AUTHORS*',
+    'CHANGES*',
+    'CONTRIBUTING*',
+    'EXAMPLES*',
+    'FAQ*',
+    'INSTALL*',
+    'LICENSE*',
+    'NEWS*',
+    'README*',
+    'SECURITY*',
+    'TODO*',
+  ] & `git ls-files -z`.split("\0")
+  spec.files -= [
+    '.ruby-version',
+    'Gemfile.lock',
+  ]
 end
 
 

@@ -1,10 +1,11 @@
+# frozen_string_literal: true
 # ######################################################################## #
 # File:         libclimate.rb
 #
 # Purpose:      Top-level include for libclimate.Ruby library
 #
 # Created:      13th July 2015
-# Updated:      14th May 2016
+# Updated:      15th August 2026
 #
 # Home:         http://github.com/synesissoftware/libCLImate.Ruby
 #

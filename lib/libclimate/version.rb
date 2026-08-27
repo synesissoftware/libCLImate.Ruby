@@ -1,10 +1,11 @@
+# frozen_string_literal: true
 # ######################################################################## #
 # File:     libclimate/version.rb
 #
 # Purpose:  Version for libclimate.Ruby library
 #
 # Created:  13th July 2015
-# Updated:  30th July 2026
+# Updated:  15th August 2026
 #
 # Home:     http://github.com/synesissoftware/libCLImate.Ruby
 #
@@ -44,7 +45,7 @@
 module LibCLImate
 
   # Current version of the libCLImate.Ruby library
-  VERSION           = '0.17.1'
+  VERSION           = '0.17.2'
 
   private
   VERSION_PARTS_    = VERSION.split(/[.]/).collect { |n| n.to_i } # :nodoc:

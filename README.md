@@ -8,6 +8,7 @@ libCLImate, for Ruby
 [![Gem Downloads](https://img.shields.io/gem/dt/libclimate-ruby.svg)](https://rubygems.org/gems/libclimate-ruby)
 [![GitHub release](https://img.shields.io/github/v/release/synesissoftware/libCLImate.Ruby.svg)](https://github.com/synesissoftware/libCLImate.Ruby/releases/latest)
 [![Last Commit](https://img.shields.io/github/last-commit/synesissoftware/libCLImate.Ruby)](https://github.com/synesissoftware/libCLImate.Ruby/commits/master)
+[![Ruby](https://github.com/synesissoftware/libCLImate.Ruby/actions/workflows/ruby.yml/badge.svg)](https://github.com/synesissoftware/libCLImate.Ruby/actions/workflows/ruby.yml)
 
 
 ## Table of Contents <!-- omit in toc -->

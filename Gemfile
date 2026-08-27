@@ -2,13 +2,15 @@
 
 source "https://rubygems.org"
 
-gem 'clasp-ruby', [ '~> 0.23', '>= 0.23.0.2' ]
+gemspec
 
-if RUBY_VERSION >= '2'
+# rake 13 requires Ruby >= 2.3
+if Gem::Version.new(RUBY_VERSION) >= Gem::Version.new("2.3")
 
-  gem 'xqsr3', '~> 0.39'
+  gem "rake", '~> 13.0'
 else
 
-  gem 'xqsr3', '~> 0.21.3'
+  gem "rake", '~> 12.3'
 end
 
+gem "test-unit", '~> 3.0'

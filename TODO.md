@@ -21,6 +21,7 @@
 ## Packaging improvements
 
 * [ ] GitHub Actions;
+* [ ] Rename gemspec so the filename stem matches `spec.name` (`libCLImate.gemspec` → **libclimate-ruby.gemspec**);
 
 
 <!-- ########################### end of file ########################### -->

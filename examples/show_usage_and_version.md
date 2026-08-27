@@ -1,4 +1,4 @@
-# libCLImate.Ruby Example - **show_usage_and_version**
+# libCLImate.Ruby - Example - **show_usage_and_version**
 
 ## Summary
 

@@ -1,37 +1,38 @@
-
 # directories (by name)
 
-build/
-
+/.bzr/
 /.bundle/
+/.config/
+/.svn/
 /.yardoc/
+
 /_yardoc/
 
 /InstalledFiles/
-
+/build/
 /coverage/
 /doc/
 /lib/bundler/man/
+/old-gems/
 /pkg/
 /rdoc/
+/scratch/
 /spec/reports/
 /test/tmp/
 /test/version_tmp/
 /tmp/
-/vendor/bundle
+/vendor/bundle/
 
 # directories (by pattern)
 
 # files (by name)
 
-/.config
-/.repl_history
-/.ruby-version
-/spec/examples.txt
-
 .DS_Store
 .repl_history
+.ruby-version
 .rvmrc
+
+/spec/examples.txt
 
 # files (by pattern)
 
@@ -42,6 +43,8 @@ build/
 *.bridgesupport
 *.gem
 *.rbc
+*.scc
+*.suo
 *.swp
+*.tmp
 *.zip
-

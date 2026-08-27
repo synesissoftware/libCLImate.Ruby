@@ -5,7 +5,7 @@
 # Purpose:  Version for libclimate.Ruby library
 #
 # Created:  13th July 2015
-# Updated:  19th August 2026
+# Updated:  28th August 2026
 #
 # Home:     https://github.com/synesissoftware/libCLImate.Ruby
 #

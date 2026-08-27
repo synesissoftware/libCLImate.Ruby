@@ -1,7 +1,7 @@
 # libCLImate.Ruby - Changes <!-- omit in toc -->
 
 
-## 0.17.3 - 19th August 2026
+## 0.17.3 - 28th August 2026
 
 * library source **Home:** URLs now use `https`;
 * renamed **libCLImate.gemspec** to **libclimate-ruby.gemspec** so the filename stem matches `spec.name`;

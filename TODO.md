@@ -3,7 +3,7 @@
 
 ## Functional improvements
 
-* [ ] Take `make_abort_message_()` to non-`public` again;
+* [x] ~~~Take `make_abort_message_()` to non-`public` again~~~;
 
 
 ## Performance improvements

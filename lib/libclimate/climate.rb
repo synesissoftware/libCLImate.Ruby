@@ -5,7 +5,7 @@
 # Purpose:  Definition of the ::LibCLImate::Climate class
 #
 # Created:  13th July 2015
-# Updated:  19th August 2026
+# Updated:  28th August 2026
 #
 # Home:     https://github.com/synesissoftware/libCLImate.Ruby
 #
@@ -264,7 +264,7 @@ class Climate
           end
         else
 
-          message = climate.make_abort_message_("unrecognised flag '#{flag}'")
+          message = climate.__send__(:make_abort_message_, "unrecognised flag '#{flag}'")
 
           if false
 
@@ -312,7 +312,7 @@ class Climate
           end
         else
 
-          message = climate.make_abort_message_("unrecognised option '#{option}'")
+          message = climate.__send__(:make_abort_message_, "unrecognised option '#{option}'")
 
           if false
 
@@ -379,6 +379,7 @@ class Climate
   end # module Climate_Constants_
 
   public
+  private
   def make_abort_message_(msg)
 
     if 0 != (usage_help_suffix || 0).size
@@ -389,6 +390,7 @@ class Climate
       msg
     end
   end
+  public
 
   def show_usage_()
 

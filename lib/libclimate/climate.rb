@@ -378,8 +378,6 @@ class Climate
     GIVEN_SPECS_ = "_Given_Specs_01B59422_8407_4c89_9432_8160C52BD5AD"
   end # module Climate_Constants_
 
-  public
-  private
   def make_abort_message_(msg)
 
     if 0 != (usage_help_suffix || 0).size
@@ -390,7 +388,6 @@ class Climate
       msg
     end
   end
-  public
 
   def show_usage_()
 

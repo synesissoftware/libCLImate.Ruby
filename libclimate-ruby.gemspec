@@ -4,7 +4,7 @@
 # Purpose:  Gemspec for libCLImate.Ruby library
 #
 # Created:  1st March 2019
-# Updated:  19th August 2026
+# Updated:  28th August 2026
 #
 # ######################################################################## #
 
@@ -12,6 +12,9 @@
 $:.unshift File.join(File.dirname(__FILE__), 'lib')
 
 require 'libclimate/version'
+
+
+PROJECT_URL = 'https://github.com/synesissoftware/libCLImate.Ruby'
 
 
 Gem::Specification.new do |spec|
@@ -36,7 +39,7 @@ END_DESC
   spec.email        = [
     'matthew@synesis.com.au',
   ]
-  spec.homepage     = 'https://github.com/synesissoftware/libCLImate.Ruby'
+  spec.homepage     = PROJECT_URL
   spec.license      = 'BSD-3-Clause'
 
   spec.required_ruby_version = [ '>= 2.0' ]
@@ -45,10 +48,10 @@ END_DESC
   spec.add_runtime_dependency "xqsr3", [ '>= 0.39.5', '< 1.0' ]
 
   spec.metadata = {
-    'bug_tracker_uri' => 'https://github.com/synesissoftware/libCLImate.Ruby/issues',
-    'changelog_uri' => 'https://github.com/synesissoftware/libCLImate.Ruby/blob/master/CHANGES.md',
-    'homepage_uri' => 'https://github.com/synesissoftware/libCLImate.Ruby',
-    'source_code_uri' => 'https://github.com/synesissoftware/libCLImate.Ruby',
+    'bug_tracker_uri' => "#{PROJECT_URL}/issues",
+    'changelog_uri' => "#{PROJECT_URL}/blob/master/CHANGES.md",
+    'homepage_uri' => PROJECT_URL,
+    'source_code_uri' => PROJECT_URL,
   }
 
   spec.files = Dir[

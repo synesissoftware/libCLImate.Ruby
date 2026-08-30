@@ -5,7 +5,7 @@
 # Purpose:  Version for libclimate.Ruby library
 #
 # Created:  13th July 2015
-# Updated:  28th August 2026
+# Updated:  30th August 2026
 #
 # Home:     https://github.com/synesissoftware/libCLImate.Ruby
 #
@@ -45,7 +45,7 @@
 module LibCLImate
 
   # Current version of the libCLImate.Ruby library
-  VERSION           = '0.17.3'
+  VERSION           = '0.17.4'
 
   private
   VERSION_PARTS_    = VERSION.split(/[.]/).collect { |n| n.to_i } # :nodoc:

@@ -1,6 +1,11 @@
 # libCLImate.Ruby - Changes <!-- omit in toc -->
 
 
+## 0.17.4 - 28th August 2026
+
+* made `Climate#make_abort_message_()` non-public;
+
+
 ## 0.17.3 - 28th August 2026
 
 * library source **Home:** URLs now use `https`;
